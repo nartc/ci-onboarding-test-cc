@@ -222,3 +222,61 @@ jobs:
       - name: Only when everything passed
         if: success()
         run: echo "every job passed"
+
+  # Probes for the report job, which Nx Cloud kills before it gets a machine
+  # (RECONCILIATION_FAILED_WORKFLOW, no steps, no workers) on any resource class.
+  # Each probe takes one thing report does that no job that ran does, and nothing else.
+
+  # An inline job machine (resource-class and image instead of runs-on).
+  probe-inline-machine:
+    name: 'Probe: inline machine'
+    needs: lint
+    resource-class: docker_linux_amd64/medium
+    image: ubuntu22.04-node24.14-v1
+    init-steps:
+      - name: Checkout
+        uses: nrwl/nx-cloud-workflows/v6/workflow-steps/checkout/main.yaml
+    workers: false
+    timeout-minutes: 5
+    steps:
+      - name: Say hello
+        run: echo "inline machine works"
+
+  # if: always(), with needs that failed and were skipped.
+  probe-always:
+    name: 'Probe: always() after failed and skipped jobs'
+    needs: [lint, main, e2e]
+    if: always()
+    runs-on: lab-utility
+    workers: false
+    timeout-minutes: 5
+    steps:
+      - name: Say hello
+        run: echo "always() works"
+
+  # A custom step template from the repo (file://), with plain string inputs.
+  probe-file-step:
+    name: 'Probe: file:// step'
+    needs: lint
+    runs-on: lab-utility
+    workers: false
+    timeout-minutes: 5
+    steps:
+      - name: Summarize
+        uses: file:///.nx/pipelines/steps/report/step.yaml
+        with:
+          title: probe
+          results: '{"lint":{"result":"success","outputs":{}}}'
+
+  # toJSON(needs) inside a step.
+  probe-needs-json:
+    name: 'Probe: toJSON(needs)'
+    needs: lint
+    runs-on: lab-utility
+    workers: false
+    timeout-minutes: 5
+    steps:
+      - name: Print the needs context
+        env:
+          NEEDS_JSON: ${{ toJSON(needs) }}
+        run: echo "$NEEDS_JSON"
