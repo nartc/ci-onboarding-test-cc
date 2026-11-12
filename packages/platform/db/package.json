@@ -19,6 +19,12 @@
     "test": "vitest run",
     "clean": "rm -rf dist"
   },
+  "nx": {
+    "tags": [
+      "type:lib",
+      "scope:platform"
+    ]
+  },
   "dependencies": {
     "@ci/config": "workspace:*",
     "@ci/errors": "workspace:*",

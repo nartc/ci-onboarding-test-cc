@@ -17,7 +17,19 @@
     "typecheck": "tsc -p tsconfig.json",
     "lint": "eslint .",
     "test": "vitest run",
-    "clean": "rm -rf dist"
+    "clean": "rm -rf dist",
+    "env-check": "node scripts/env-check.mjs"
+  },
+  "nx": {
+    "tags": [
+      "type:lib",
+      "scope:shared"
+    ],
+    "targets": {
+      "env-check": {
+        "cache": false
+      }
+    }
   },
   "dependencies": {
     "@ci/constants": "workspace:*",

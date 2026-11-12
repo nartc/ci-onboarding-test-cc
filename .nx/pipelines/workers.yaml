@@ -1,0 +1,85 @@
+# Worker setups for the Nx Cloud CI lab. Imported by ci.yaml.
+# Every count names lab-medium, lab-large and lab-arm, because the assignment rules send
+# tasks to each of them.
+
+# Used by the main job. Sized by the work left after cache hits. A run with no stored
+# timings yet (the first one) always picks large: 10 workers plus the main-job worker.
+pr:
+  small:
+    count: 2 lab-medium; 1 lab-large; 1 lab-arm
+    workload: 20%
+  medium:
+    count: 4 lab-medium; 1 lab-large; 1 lab-arm
+    workload: 60%
+  large: 6 lab-medium; 2 lab-large; 2 lab-arm
+  main-job-worker:
+    cpu: 2
+    memory: 4GB
+  # One target from each Nx command in the main job.
+  stop-after:
+    - env-check
+    - test
+  # Keep going after the first failures, to see more of the run.
+  fail-after: 3
+  assignment-rules:
+    # Proves secrets reach an arm64 worker through the launch-template env.
+    - targets:
+        - env-check
+      run-on:
+        - agent: lab-arm
+    - targets:
+        - lint
+      run-on:
+        - agent: lab-arm
+        - agent: lab-medium
+    # The roots of the graph run on the main job's own machine.
+    - projects:
+        - '@ci/types'
+        - '@ci/constants'
+        - '@ci/utils'
+      run-on:
+        - agent: main
+    # Apps sit at the top of the graph and import the most code.
+    - projects:
+        - '@ci/api'
+        - '@ci/worker'
+        - '@ci/scheduler'
+        - '@ci/web'
+        - '@ci/admin'
+        - '@ci/cli'
+      targets:
+        - build
+        - typecheck
+      run-on:
+        - agent: lab-large
+  scheduling-constraints:
+    # Pretend the api and the background apps share a test database.
+    - projects:
+        - '@ci/api'
+      targets:
+        - test
+      cannot-run-with:
+        - projects:
+            - '@ci/worker'
+            - '@ci/scheduler'
+          targets:
+            - test
+
+# Used by the e2e job: a fixed count, no main-job worker, never stops on failures.
+e2e:
+  workers: 2 lab-large
+  main-job-worker: false
+  stop-after:
+    - e2e
+  fail-after: 0
+  assignment-rules:
+    - targets:
+        - e2e
+      run-on:
+        - agent: lab-large
+  scheduling-constraints:
+    - targets:
+        - e2e
+      cannot-run-with:
+        - targets:
+            - e2e

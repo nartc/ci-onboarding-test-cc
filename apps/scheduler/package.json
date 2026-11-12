@@ -20,6 +20,11 @@
     "start": "node dist/main.js",
     "clean": "rm -rf dist"
   },
+  "nx": {
+    "tags": [
+      "type:app"
+    ]
+  },
   "dependencies": {
     "@ci/config": "workspace:*",
     "@ci/date": "workspace:*",

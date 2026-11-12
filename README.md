@@ -1,37 +1,64 @@
 # ci-onboarding-test-cc
 
-A plain pnpm workspace with a large, deep task graph. There is no Nx here yet. Task ordering
-comes only from `pnpm -r`, which runs a script in each package in dependency order.
+A pnpm workspace with a large, deep task graph, run with Nx and Nx Cloud CI.
 
 - **52 projects**: 43 libraries, 6 apps and 3 e2e suites
 - **215 dependency edges**, with a longest path of **16 projects** (`@ci/types` up to the e2e suites)
-- Every project has `build`, `typecheck`, `lint` and `test` scripts. That is about 208 tasks in total.
+- Libraries and apps have `build`, `typecheck`, `lint` and `test`. The e2e suites have
+  `typecheck`, `lint` and `e2e`. With `codegen` and `env-check` that is 208 tasks.
 
 ## Getting started
 
 ```sh
 pnpm install
-pnpm run check   # lint, build, typecheck, test
+pnpm run check      # every task in the workspace
+pnpm run affected   # only what your branch changed
+pnpm run graph      # explore the project graph
 ```
 
 ## How the tasks depend on each other
 
 Packages resolve each other through `exports` that point at `dist/`. So most tasks need the
-dependencies to be built first:
+dependencies to be built first. `nx.json` models this:
 
-| Task        | Needs first                                                |
-| ----------- | ---------------------------------------------------------- |
-| `build`     | `build` of every dependency (+ `codegen` for `@ci/schema`) |
-| `typecheck` | `build` of every dependency (+ `codegen` for `@ci/schema`) |
-| `test`      | `build` of every dependency (+ `codegen` for `@ci/schema`) |
-| `lint`      | nothing (lint is not type-aware)                           |
+| Task        | Depends on                                                 | Cached |
+| ----------- | ---------------------------------------------------------- | ------ |
+| `codegen`   | nothing (only `@ci/schema` has it)                         | yes    |
+| `build`     | `build` of every dependency (+ `codegen` for `@ci/schema`) | yes    |
+| `typecheck` | `build` of every dependency (+ `codegen` for `@ci/schema`) | yes    |
+| `test`      | `build` of every dependency (+ `codegen` for `@ci/schema`) | yes    |
+| `e2e`       | `build` of every dependency                                | yes    |
+| `lint`      | nothing (lint is not type-aware)                           | yes    |
+| `env-check` | nothing (only `@ci/config` has it)                         | no     |
 
-`@ci/schema` has a `codegen` step. It turns `schemas/*.json` into `src/generated/`, which is
-not committed. Its `build`, `typecheck` and `test` scripts run `codegen` first.
+`@ci/schema`'s `codegen` turns `schemas/*.json` into `src/generated/`, which is not committed.
 
-Without a task runner these needs are not modelled. For example, `pnpm run test` on a fresh
-clone fails, because nothing has been built yet. `pnpm run check` works around this by
-building everything first. That is slow, and nothing is cached.
+Projects are tagged `type:lib`, `type:app` or `type:e2e`, and libraries also get
+`scope:<folder>`.
+
+## CI
+
+CI runs on Nx Cloud CI from `.nx/pipelines/`. The pipeline is a lab for Nx Cloud CI, so it
+uses as much of the [pipeline schema](https://nx.dev/docs/reference/nx-cloud/ci-config) as it can:
+
+| File                    | What it does                                                        |
+| ----------------------- | ------------------------------------------------------------------- |
+| `ci.yaml`               | The `CI` pipeline: `main`, `e2e`, `arm-smoke` and `report` jobs     |
+| `format.yaml`           | The `Format` pipeline: Prettier, only when a formatted file changes |
+| `launch-templates.yaml` | `lab-medium`, `lab-large` (amd64) and `lab-arm` (arm64) machines    |
+| `workers.yaml`          | `pr`: 4 to 10 workers sized by the work; `e2e`: 2 fixed workers     |
+| `ultracache.yaml`       | Paths Ultracache ignores                                            |
+
+The pipeline reads two stored variables from the Nx Cloud workspace settings
+(**Environment variables**). `@ci/config:env-check` runs on an arm64 worker and fails if
+they don't arrive:
+
+| Name            | Kind     | Checked how                                      |
+| --------------- | -------- | ------------------------------------------------ |
+| `CI_LAB_SECRET` | secret   | SHA-256 compared with the one in `env-check.mjs` |
+| `CI_LAB_VAR`    | variable | must be `nx-cloud-ci-lab`                        |
+
+`.github/workflows/ci.yml` still runs the same scripts on GitHub Actions, through Nx.
 
 ## Layout
 

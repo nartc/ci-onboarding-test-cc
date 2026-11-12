@@ -14,11 +14,37 @@
   ],
   "scripts": {
     "codegen": "node scripts/codegen.mjs",
-    "build": "pnpm run codegen && tsc -p tsconfig.lib.json",
-    "typecheck": "pnpm run codegen && tsc -p tsconfig.json",
+    "build": "tsc -p tsconfig.lib.json",
+    "typecheck": "tsc -p tsconfig.json",
     "lint": "eslint .",
-    "test": "pnpm run codegen && vitest run",
+    "test": "vitest run",
     "clean": "rm -rf dist src/generated"
+  },
+  "nx": {
+    "tags": [
+      "type:lib",
+      "scope:shared"
+    ],
+    "targets": {
+      "build": {
+        "dependsOn": [
+          "codegen",
+          "^build"
+        ]
+      },
+      "typecheck": {
+        "dependsOn": [
+          "codegen",
+          "^build"
+        ]
+      },
+      "test": {
+        "dependsOn": [
+          "codegen",
+          "^build"
+        ]
+      }
+    }
   },
   "dependencies": {
     "@ci/serializer": "workspace:*",
