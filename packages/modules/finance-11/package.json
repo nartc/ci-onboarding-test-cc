@@ -1,0 +1,38 @@
+{
+  "name": "@ci/finance-11",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.lib.json",
+    "typecheck": "tsc -p tsconfig.json",
+    "lint": "eslint .",
+    "test": "vitest run",
+    "clean": "rm -rf dist"
+  },
+  "nx": {
+    "tags": [
+      "type:lib",
+      "scope:modules",
+      "domain:finance",
+      "kind:light"
+    ]
+  },
+  "dependencies": {
+    "@ci/analytics": "workspace:*",
+    "@ci/crm-10": "workspace:*",
+    "@ci/finance-10": "workspace:*",
+    "@ci/finance-slow-08": "workspace:*",
+    "@ci/inventory": "workspace:*",
+    "@ci/utils": "workspace:*"
+  }
+}

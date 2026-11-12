@@ -1,0 +1,36 @@
+{
+  "name": "@ci/pricing-11",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.lib.json",
+    "typecheck": "tsc -p tsconfig.json",
+    "lint": "eslint .",
+    "test": "vitest run",
+    "clean": "rm -rf dist"
+  },
+  "nx": {
+    "tags": [
+      "type:lib",
+      "scope:modules",
+      "domain:pricing",
+      "kind:light"
+    ]
+  },
+  "dependencies": {
+    "@ci/pricing-06": "workspace:*",
+    "@ci/pricing-10": "workspace:*",
+    "@ci/recommendations": "workspace:*",
+    "@ci/utils": "workspace:*"
+  }
+}

@@ -1,0 +1,16 @@
+# A custom step template, used from ci.yaml with `uses: file:///.nx/pipelines/steps/report/step.yaml`.
+# Validate with: npx nx-cloud validate --workflow-file=./.nx/pipelines/steps/report/step.yaml --step-file
+name: 'Lab report'
+description: 'Writes a job summary from the results of the jobs a job needs, and keeps state for its post script.'
+definition:
+  using: 'node'
+  main: './main.js'
+  post: './post.js'
+inputs:
+  - name: 'title'
+    description: 'Heading of the summary'
+    default: 'CI lab'
+    required: false
+  - name: 'results'
+    description: 'The needs context of the job, as JSON (toJSON(needs))'
+    required: true

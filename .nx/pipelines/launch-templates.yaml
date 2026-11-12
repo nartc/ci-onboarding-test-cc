@@ -22,8 +22,11 @@ amd64-init-steps: &amd64-init-steps
           base-branch: 'main'
   - name: Install Node from .nvmrc
     uses: 'nrwl/nx-cloud-workflows/v6/workflow-steps/install-node/main.yaml'
+  # The full https URL form of a step reference, with its own env.
   - name: Install node modules
-    uses: 'nrwl/nx-cloud-workflows/v6/workflow-steps/install-node-modules/main.yaml'
+    uses: 'https://raw.githubusercontent.com/nrwl/nx-cloud-workflows/v6/workflow-steps/install-node-modules/main.yaml'
+    env:
+      NX_NO_OUTPUT_TIMEOUT: '20m'
   - group-name: Smoke checks
     parallel: true
     steps:

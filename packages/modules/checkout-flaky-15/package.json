@@ -1,0 +1,36 @@
+{
+  "name": "@ci/checkout-flaky-15",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.lib.json",
+    "typecheck": "tsc -p tsconfig.json",
+    "lint": "eslint .",
+    "test": "vitest run",
+    "clean": "rm -rf dist"
+  },
+  "nx": {
+    "tags": [
+      "type:lib",
+      "scope:modules",
+      "domain:checkout",
+      "kind:flaky"
+    ]
+  },
+  "dependencies": {
+    "@ci/checkout-cpu-14": "workspace:*",
+    "@ci/crypto": "workspace:*",
+    "@ci/serializer": "workspace:*",
+    "@ci/utils": "workspace:*"
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "name": "@ci/identity-06",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.lib.json",
+    "typecheck": "tsc -p tsconfig.json",
+    "lint": "eslint .",
+    "test": "vitest run",
+    "clean": "rm -rf dist"
+  },
+  "nx": {
+    "tags": [
+      "type:lib",
+      "scope:modules",
+      "domain:identity",
+      "kind:light"
+    ]
+  },
+  "dependencies": {
+    "@ci/identity-03": "workspace:*",
+    "@ci/identity-flaky-05": "workspace:*",
+    "@ci/shipping": "workspace:*",
+    "@ci/utils": "workspace:*"
+  }
+}

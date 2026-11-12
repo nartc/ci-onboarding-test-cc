@@ -12,7 +12,20 @@
   "nx": {
     "tags": [
       "type:e2e"
-    ]
+    ],
+    "targets": {
+      "e2e": {
+        "dependsOn": [
+          "^build",
+          {
+            "projects": [
+              "@ci/web"
+            ],
+            "target": "serve"
+          }
+        ]
+      }
+    }
   },
   "devDependencies": {
     "@ci/sdk-mocks": "workspace:*",

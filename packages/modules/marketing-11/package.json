@@ -1,0 +1,38 @@
+{
+  "name": "@ci/marketing-11",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.lib.json",
+    "typecheck": "tsc -p tsconfig.json",
+    "lint": "eslint .",
+    "test": "vitest run",
+    "clean": "rm -rf dist"
+  },
+  "nx": {
+    "tags": [
+      "type:lib",
+      "scope:modules",
+      "domain:marketing",
+      "kind:light"
+    ]
+  },
+  "dependencies": {
+    "@ci/billing": "workspace:*",
+    "@ci/marketing-01": "workspace:*",
+    "@ci/marketing-10": "workspace:*",
+    "@ci/notifications": "workspace:*",
+    "@ci/search": "workspace:*",
+    "@ci/utils": "workspace:*"
+  }
+}

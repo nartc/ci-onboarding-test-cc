@@ -1,0 +1,102 @@
+import { depthOf, transitiveNames } from '@ci/utils';
+import { describe, expect, it } from 'vitest';
+import { fulfillment19Module } from './module.js';
+
+describe('@ci/fulfillment-19', () => {
+  it('declares its direct dependencies', () => {
+    expect(fulfillment19Module.deps.map((d) => d.name)).toEqual([
+      '@ci/utils',
+      '@ci/reports',
+      '@ci/validation',
+      '@ci/fulfillment-mem-18',
+      '@ci/finance-13',
+    ]);
+  });
+
+  it('sits at depth 28 of the graph', () => {
+    expect(depthOf(fulfillment19Module)).toBe(28);
+  });
+
+  it('reaches all 78 transitive dependencies', () => {
+    expect(transitiveNames(fulfillment19Module)).toEqual([
+      '@ci/analytics',
+      '@ci/audit',
+      '@ci/auth',
+      '@ci/billing',
+      '@ci/cache',
+      '@ci/catalog-01',
+      '@ci/catalog-02',
+      '@ci/catalog-03',
+      '@ci/catalog-06',
+      '@ci/catalog-10',
+      '@ci/catalog-11',
+      '@ci/catalog-cpu-07',
+      '@ci/catalog-flaky-05',
+      '@ci/catalog-mem-09',
+      '@ci/catalog-slow-04',
+      '@ci/catalog-slow-08',
+      '@ci/checkout-01',
+      '@ci/checkout-02',
+      '@ci/checkout-03',
+      '@ci/checkout-10',
+      '@ci/checkout-flaky-05',
+      '@ci/checkout-slow-04',
+      '@ci/config',
+      '@ci/constants',
+      '@ci/crm-01',
+      '@ci/crm-02',
+      '@ci/crm-03',
+      '@ci/crm-06',
+      '@ci/crm-cpu-07',
+      '@ci/crm-flaky-05',
+      '@ci/crm-slow-04',
+      '@ci/crm-slow-08',
+      '@ci/crypto',
+      '@ci/date',
+      '@ci/db',
+      '@ci/errors',
+      '@ci/events',
+      '@ci/feature-flags',
+      '@ci/finance-01',
+      '@ci/finance-02',
+      '@ci/finance-13',
+      '@ci/finance-slow-12',
+      '@ci/fulfillment-02',
+      '@ci/fulfillment-03',
+      '@ci/fulfillment-06',
+      '@ci/fulfillment-13',
+      '@ci/fulfillment-17',
+      '@ci/fulfillment-cpu-07',
+      '@ci/fulfillment-cpu-14',
+      '@ci/fulfillment-flaky-05',
+      '@ci/fulfillment-flaky-15',
+      '@ci/fulfillment-mem-18',
+      '@ci/fulfillment-slow-04',
+      '@ci/fulfillment-slow-08',
+      '@ci/fulfillment-slow-12',
+      '@ci/fulfillment-slow-16',
+      '@ci/http',
+      '@ci/i18n',
+      '@ci/inventory',
+      '@ci/logger',
+      '@ci/metrics',
+      '@ci/notifications',
+      '@ci/orders',
+      '@ci/payments',
+      '@ci/queue',
+      '@ci/recommendations',
+      '@ci/reports',
+      '@ci/result',
+      '@ci/schema',
+      '@ci/search',
+      '@ci/serializer',
+      '@ci/shipping',
+      '@ci/storage',
+      '@ci/tracing',
+      '@ci/types',
+      '@ci/users',
+      '@ci/utils',
+      '@ci/validation',
+    ]);
+  });
+});

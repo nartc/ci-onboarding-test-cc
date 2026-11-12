@@ -1,11 +1,24 @@
 # ci-onboarding-test-cc
 
-A pnpm workspace with a large, deep task graph, run with Nx and Nx Cloud CI.
+A pnpm workspace with a very large, deep task graph, run with Nx and Nx Cloud CI. It is a lab
+for stretching Nx Cloud CI.
 
-- **52 projects**: 43 libraries, 6 apps and 3 e2e suites
-- **215 dependency edges**, with a longest path of **16 projects** (`@ci/types` up to the e2e suites)
-- Libraries and apps have `build`, `typecheck`, `lint` and `test`. The e2e suites have
-  `typecheck`, `lint` and `e2e`. With `codegen` and `env-check` that is 208 tasks.
+- **264 projects**: 52 hand-written ones (43 libraries, 6 apps, 3 e2e suites) and 212
+  generated ones (200 modules, 10 domain libraries, the `gateway` app and its e2e suite)
+- **1,243 dependency edges between projects**, and a longest path of **36 tasks**
+- **1,108 tasks** in a full CI run, with **3,877 edges** between them
+
+| Target        | Tasks | Notes                                                     |
+| ------------- | ----: | --------------------------------------------------------- |
+| `lint`        |   264 |                                                           |
+| `typecheck`   |   264 |                                                           |
+| `build`       |   260 |                                                           |
+| `test`        |   260 | includes CPU-heavy, memory-heavy, slow and flaky tests    |
+| `codegen`     |    51 | `@ci/schema` and the 50 slow modules                      |
+| `e2e`         |     4 | api, web and gateway run against continuous `serve` tasks |
+| `serve`       |     3 | continuous: `@ci/api`, `@ci/web`, `@ci/gateway`           |
+| `env-check`   |     1 | checks the stored secret and variable reach a worker      |
+| `secret-echo` |     1 | prints the stored secret, to see what the logs redact     |
 
 ## Getting started
 
@@ -16,47 +29,80 @@ pnpm run affected   # only what your branch changed
 pnpm run graph      # explore the project graph
 ```
 
+Heavy tests read their size from the environment, and default to small values locally:
+
+| Variable              | Default (local / CI) | Effect                                        |
+| --------------------- | -------------------- | --------------------------------------------- |
+| `CI_LAB_CPU_SECONDS`  | 5 / 5                | how long CPU-heavy tests keep every core busy |
+| `CI_LAB_MEM_MB`       | 2048 / 2048          | how much memory memory-heavy tests hold       |
+| `CI_LAB_SLOW_SECONDS` | 3 / 3                | how long slow tests hash on one core          |
+| `CI_LAB_FLAKE_RATE`   | 0 / 0.05             | chance that each flaky test fails             |
+
 ## How the tasks depend on each other
 
 Packages resolve each other through `exports` that point at `dist/`. So most tasks need the
-dependencies to be built first. `nx.json` models this:
+dependencies to be built first. `nx.json` and the `nx` field of each `package.json` model this:
 
-| Task        | Depends on                                                 | Cached |
-| ----------- | ---------------------------------------------------------- | ------ |
-| `codegen`   | nothing (only `@ci/schema` has it)                         | yes    |
-| `build`     | `build` of every dependency (+ `codegen` for `@ci/schema`) | yes    |
-| `typecheck` | `build` of every dependency (+ `codegen` for `@ci/schema`) | yes    |
-| `test`      | `build` of every dependency (+ `codegen` for `@ci/schema`) | yes    |
-| `e2e`       | `build` of every dependency                                | yes    |
-| `lint`      | nothing (lint is not type-aware)                           | yes    |
-| `env-check` | nothing (only `@ci/config` has it)                         | no     |
+| Task          | Depends on                                                    | Cached |
+| ------------- | ------------------------------------------------------------- | ------ |
+| `codegen`     | nothing                                                       | yes    |
+| `build`       | `build` of every dependency (+ `codegen` where there is one)  | yes    |
+| `typecheck`   | `build` of every dependency (+ `codegen` where there is one)  | yes    |
+| `test`        | `build` of every dependency (+ `codegen` where there is one)  | yes    |
+| `e2e`         | `build` of every dependency, and the app's continuous `serve` | yes    |
+| `serve`       | the app's own `build`                                         | no     |
+| `lint`        | nothing (lint is not type-aware)                              | yes    |
+| `env-check`   | nothing                                                       | no     |
+| `secret-echo` | nothing                                                       | yes    |
 
-`@ci/schema`'s `codegen` turns `schemas/*.json` into `src/generated/`, which is not committed.
+`codegen` writes into `src/generated/`, which is not committed: `@ci/schema` turns
+`schemas/*.json` into TypeScript, and the slow modules emit 150 type-heavy files each.
 
-Projects are tagged `type:lib`, `type:app` or `type:e2e`, and libraries also get
-`scope:<folder>`.
+Projects are tagged `type:lib`, `type:app` or `type:e2e`. Libraries also get `scope:<folder>`,
+and the generated modules get `domain:<domain>` and `kind:<light|slow|cpu|mem|flaky|domain>`.
+
+## The generated modules
+
+`tools/lab/generate-modules.mjs` writes `packages/modules`, `apps/gateway` and
+`apps/gateway-e2e`. Change its settings (domains, modules per domain, kinds, seed) and run:
+
+```sh
+node tools/lab/generate-modules.mjs && pnpm install && pnpm run format
+```
+
+Each domain has 20 modules: 11 light, 5 slow, 2 CPU-heavy, 2 memory-heavy and 2 flaky. A module
+depends on 1 to 3 hand-written libraries, often on earlier modules of its domain, and sometimes
+on a module of the domain before. Each domain library depends on all of its modules, and the
+gateway depends on every domain library.
 
 ## CI
 
 CI runs on Nx Cloud CI from `.nx/pipelines/`. The pipeline is a lab for Nx Cloud CI, so it
 uses as much of the [pipeline schema](https://nx.dev/docs/reference/nx-cloud/ci-config) as it can:
 
-| File                    | What it does                                                        |
-| ----------------------- | ------------------------------------------------------------------- |
-| `ci.yaml`               | The `CI` pipeline: `main`, `e2e`, `cli-smoke` and `report` jobs     |
-| `format.yaml`           | The `Format` pipeline: Prettier, only when a formatted file changes |
-| `launch-templates.yaml` | `lab-small`, `lab-medium` and `lab-large` machines                  |
-| `workers.yaml`          | `pr`: 4 to 10 workers sized by the work; `e2e`: 3 fixed workers     |
-| `ultracache.yaml`       | Paths Ultracache ignores                                            |
+| File                    | What it does                                                                        |
+| ----------------------- | ----------------------------------------------------------------------------------- |
+| `ci.yaml`               | The `CI` pipeline: `lint`, `main`, `e2e`, `gateway-smoke`, `cli-smoke` and `report` |
+| `format.yaml`           | The `Format` pipeline: Prettier, only when a formatted file changes                 |
+| `launch-templates.yaml` | `lab-small`, `lab-medium` and `lab-large` machines                                  |
+| `workers.yaml`          | `pr`: 5 to 16 workers sized by the work; `e2e`: 3 fixed; `smoke`: 3                 |
+| `ultracache.yaml`       | Paths Ultracache ignores                                                            |
+| `steps/report/`         | A custom step template, with a `post` script that reads its saved state             |
 
-The pipeline reads two stored variables from the Nx Cloud workspace settings
+The pipeline reads stored variables from the Nx Cloud workspace settings
 (**Environment variables**). `@ci/config:env-check` runs on a `lab-small` worker and fails if
-they don't arrive:
+the first two don't arrive:
 
-| Name            | Kind     | Checked how                                      |
-| --------------- | -------- | ------------------------------------------------ |
-| `CI_LAB_SECRET` | secret   | SHA-256 compared with the one in `env-check.mjs` |
-| `CI_LAB_VAR`    | variable | must be `nx-cloud-ci-lab`                        |
+| Name                 | Kind     | Checked how / used for                           |
+| -------------------- | -------- | ------------------------------------------------ |
+| `CI_LAB_SECRET`      | secret   | SHA-256 compared with the one in `env-check.mjs` |
+| `CI_LAB_VAR`         | variable | must be `nx-cloud-ci-lab`                        |
+| `CI_LAB_FLAKE_RATE`  | variable | optional, overrides the CI flake rate            |
+| `CI_LAB_CPU_SECONDS` | variable | optional, overrides how long CPU-heavy tests run |
+| `CI_LAB_MEM_MB`      | variable | optional, overrides how much memory tests hold   |
+
+`CI_LAB_SECRET` is a throwaway lab value: the `main` job and `@ci/config:secret-echo` print it
+on purpose, to check what Nx Cloud CI redacts.
 
 `.github/workflows/ci.yml` still runs the same scripts on GitHub Actions, through Nx.
 
@@ -69,13 +115,15 @@ they don't arrive:
 | `packages/features` | Domain features: users, billing, orders, shipping, reports         |
 | `packages/ui`       | UI building blocks                                                 |
 | `packages/client`   | The SDK and its mocks                                              |
-| `apps`              | api, worker, scheduler, web, admin, cli and their e2e suites       |
+| `packages/modules`  | Generated modules and domain libraries                             |
+| `apps`              | api, worker, scheduler, web, admin, cli, gateway and e2e suites    |
+| `tools/lab`         | The module generator and the slow modules' codegen                 |
 
 Each library exports a `ModuleInfo` that lists its dependencies at runtime. Each test
 checks the direct dependencies, the depth and the full set of transitive dependencies. So
 if the package graph and the imports drift apart, the tests fail.
 
-## Projects
+## Hand-written projects
 
 | Project               | Path                                | Depth | Direct deps | Transitive deps |
 | --------------------- | ----------------------------------- | ----: | ----------: | --------------: |
@@ -133,6 +181,8 @@ if the package graph and the imports drift apart, the tests fail.
 | `@ci/api-e2e`         | `apps/api-e2e`                      |    15 |           2 |              37 |
 
 ## Graph
+
+The hand-written projects only. Run `pnpm run graph` for the whole workspace.
 
 ```mermaid
 flowchart BT

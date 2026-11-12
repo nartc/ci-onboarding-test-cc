@@ -1,0 +1,81 @@
+{
+  "name": "@ci/crm-slow-20",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "codegen": "node ../../../tools/lab/emit-parts.mjs 150",
+    "build": "tsc -p tsconfig.lib.json",
+    "typecheck": "tsc -p tsconfig.json",
+    "lint": "eslint .",
+    "test": "vitest run",
+    "clean": "rm -rf dist src/generated"
+  },
+  "nx": {
+    "tags": [
+      "type:lib",
+      "scope:modules",
+      "domain:crm",
+      "kind:slow"
+    ],
+    "targets": {
+      "codegen": {
+        "inputs": [
+          "{workspaceRoot}/tools/lab/emit-parts.mjs",
+          "{projectRoot}/package.json"
+        ],
+        "outputs": [
+          "{projectRoot}/src/generated"
+        ]
+      },
+      "build": {
+        "dependsOn": [
+          "codegen",
+          "^build"
+        ],
+        "inputs": [
+          "production",
+          "^production",
+          "{workspaceRoot}/tools/lab/emit-parts.mjs"
+        ]
+      },
+      "typecheck": {
+        "dependsOn": [
+          "codegen",
+          "^build"
+        ],
+        "inputs": [
+          "default",
+          "^production",
+          "{workspaceRoot}/tools/lab/emit-parts.mjs"
+        ]
+      },
+      "test": {
+        "dependsOn": [
+          "codegen",
+          "^build"
+        ],
+        "inputs": [
+          "default",
+          "^production",
+          "{workspaceRoot}/tools/lab/emit-parts.mjs"
+        ]
+      }
+    }
+  },
+  "dependencies": {
+    "@ci/checkout-01": "workspace:*",
+    "@ci/inventory": "workspace:*",
+    "@ci/search": "workspace:*",
+    "@ci/utils": "workspace:*"
+  }
+}

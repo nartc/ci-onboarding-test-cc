@@ -1,4 +1,5 @@
-export type Layer = 'shared' | 'platform' | 'features' | 'ui' | 'client' | 'app' | 'e2e';
+export type Layer =
+  'shared' | 'platform' | 'features' | 'ui' | 'client' | 'modules' | 'app' | 'e2e';
 
 export interface ModuleInfo {
   readonly name: string;

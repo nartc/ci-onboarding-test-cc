@@ -1,0 +1,53 @@
+{
+  "name": "@ci/checkout",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.lib.json",
+    "typecheck": "tsc -p tsconfig.json",
+    "lint": "eslint .",
+    "test": "vitest run",
+    "clean": "rm -rf dist"
+  },
+  "nx": {
+    "tags": [
+      "type:lib",
+      "scope:modules",
+      "domain:checkout",
+      "kind:domain"
+    ]
+  },
+  "dependencies": {
+    "@ci/checkout-01": "workspace:*",
+    "@ci/checkout-02": "workspace:*",
+    "@ci/checkout-03": "workspace:*",
+    "@ci/checkout-06": "workspace:*",
+    "@ci/checkout-10": "workspace:*",
+    "@ci/checkout-11": "workspace:*",
+    "@ci/checkout-13": "workspace:*",
+    "@ci/checkout-17": "workspace:*",
+    "@ci/checkout-19": "workspace:*",
+    "@ci/checkout-cpu-07": "workspace:*",
+    "@ci/checkout-cpu-14": "workspace:*",
+    "@ci/checkout-flaky-05": "workspace:*",
+    "@ci/checkout-flaky-15": "workspace:*",
+    "@ci/checkout-mem-09": "workspace:*",
+    "@ci/checkout-mem-18": "workspace:*",
+    "@ci/checkout-slow-04": "workspace:*",
+    "@ci/checkout-slow-08": "workspace:*",
+    "@ci/checkout-slow-12": "workspace:*",
+    "@ci/checkout-slow-16": "workspace:*",
+    "@ci/checkout-slow-20": "workspace:*",
+    "@ci/utils": "workspace:*"
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "name": "@ci/crm",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.lib.json",
+    "typecheck": "tsc -p tsconfig.json",
+    "lint": "eslint .",
+    "test": "vitest run",
+    "clean": "rm -rf dist"
+  },
+  "nx": {
+    "tags": [
+      "type:lib",
+      "scope:modules",
+      "domain:crm",
+      "kind:domain"
+    ]
+  },
+  "dependencies": {
+    "@ci/crm-01": "workspace:*",
+    "@ci/crm-02": "workspace:*",
+    "@ci/crm-03": "workspace:*",
+    "@ci/crm-06": "workspace:*",
+    "@ci/crm-10": "workspace:*",
+    "@ci/crm-11": "workspace:*",
+    "@ci/crm-13": "workspace:*",
+    "@ci/crm-17": "workspace:*",
+    "@ci/crm-19": "workspace:*",
+    "@ci/crm-cpu-07": "workspace:*",
+    "@ci/crm-cpu-14": "workspace:*",
+    "@ci/crm-flaky-05": "workspace:*",
+    "@ci/crm-flaky-15": "workspace:*",
+    "@ci/crm-mem-09": "workspace:*",
+    "@ci/crm-mem-18": "workspace:*",
+    "@ci/crm-slow-04": "workspace:*",
+    "@ci/crm-slow-08": "workspace:*",
+    "@ci/crm-slow-12": "workspace:*",
+    "@ci/crm-slow-16": "workspace:*",
+    "@ci/crm-slow-20": "workspace:*",
+    "@ci/utils": "workspace:*"
+  }
+}

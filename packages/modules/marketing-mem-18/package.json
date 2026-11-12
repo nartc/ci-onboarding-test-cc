@@ -1,0 +1,36 @@
+{
+  "name": "@ci/marketing-mem-18",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.lib.json",
+    "typecheck": "tsc -p tsconfig.json",
+    "lint": "eslint .",
+    "test": "vitest run",
+    "clean": "rm -rf dist"
+  },
+  "nx": {
+    "tags": [
+      "type:lib",
+      "scope:modules",
+      "domain:marketing",
+      "kind:mem"
+    ]
+  },
+  "dependencies": {
+    "@ci/http": "workspace:*",
+    "@ci/marketing-17": "workspace:*",
+    "@ci/marketing-flaky-05": "workspace:*",
+    "@ci/utils": "workspace:*"
+  }
+}

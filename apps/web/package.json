@@ -17,13 +17,22 @@
     "typecheck": "tsc -p tsconfig.json",
     "lint": "eslint .",
     "test": "vitest run",
+    "serve": "PORT=4320 node dist/serve.js",
     "start": "node dist/main.js",
     "clean": "rm -rf dist"
   },
   "nx": {
     "tags": [
       "type:app"
-    ]
+    ],
+    "targets": {
+      "serve": {
+        "continuous": true,
+        "dependsOn": [
+          "build"
+        ]
+      }
+    }
   },
   "dependencies": {
     "@ci/i18n": "workspace:*",

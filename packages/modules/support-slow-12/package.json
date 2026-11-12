@@ -1,0 +1,82 @@
+{
+  "name": "@ci/support-slow-12",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "codegen": "node ../../../tools/lab/emit-parts.mjs 150",
+    "build": "tsc -p tsconfig.lib.json",
+    "typecheck": "tsc -p tsconfig.json",
+    "lint": "eslint .",
+    "test": "vitest run",
+    "clean": "rm -rf dist src/generated"
+  },
+  "nx": {
+    "tags": [
+      "type:lib",
+      "scope:modules",
+      "domain:support",
+      "kind:slow"
+    ],
+    "targets": {
+      "codegen": {
+        "inputs": [
+          "{workspaceRoot}/tools/lab/emit-parts.mjs",
+          "{projectRoot}/package.json"
+        ],
+        "outputs": [
+          "{projectRoot}/src/generated"
+        ]
+      },
+      "build": {
+        "dependsOn": [
+          "codegen",
+          "^build"
+        ],
+        "inputs": [
+          "production",
+          "^production",
+          "{workspaceRoot}/tools/lab/emit-parts.mjs"
+        ]
+      },
+      "typecheck": {
+        "dependsOn": [
+          "codegen",
+          "^build"
+        ],
+        "inputs": [
+          "default",
+          "^production",
+          "{workspaceRoot}/tools/lab/emit-parts.mjs"
+        ]
+      },
+      "test": {
+        "dependsOn": [
+          "codegen",
+          "^build"
+        ],
+        "inputs": [
+          "default",
+          "^production",
+          "{workspaceRoot}/tools/lab/emit-parts.mjs"
+        ]
+      }
+    }
+  },
+  "dependencies": {
+    "@ci/http": "workspace:*",
+    "@ci/pricing-03": "workspace:*",
+    "@ci/recommendations": "workspace:*",
+    "@ci/result": "workspace:*",
+    "@ci/utils": "workspace:*"
+  }
+}
