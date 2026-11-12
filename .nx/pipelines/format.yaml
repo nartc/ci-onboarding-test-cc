@@ -1,0 +1,21 @@
+# yaml-language-server: $schema=https://cloud.nx.app/nx-cloud/static/schemas/workflow.schema.json
+#
+# A second pipeline, so pull requests get two Nx Cloud statuses. It runs only when a
+# formatted file changes, on a pre-built launch template, without workers.
+name: Format
+
+on:
+  pull-requests:
+    event: PR
+    branches: [main]
+    paths: ['**/*.ts', '**/*.js', '**/*.mjs', '**/*.json', '**/*.md', '**/*.yaml', '**/*.yml']
+
+jobs:
+  prettier:
+    name: Prettier
+    runs-on: linux-small-js
+    workers: false
+    timeout-minutes: 10
+    steps:
+      - name: Check formatting
+        run: pnpm run format:check

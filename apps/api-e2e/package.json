@@ -6,8 +6,18 @@
   "scripts": {
     "typecheck": "tsc -p tsconfig.json",
     "lint": "eslint .",
-    "test": "vitest run",
+    "e2e": "vitest run",
     "clean": "rm -rf dist"
+  },
+  "nx": {
+    "tags": [
+      "type:e2e"
+    ],
+    "targets": {
+      "e2e": {
+        "parallelism": false
+      }
+    }
   },
   "devDependencies": {
     "@ci/api": "workspace:*",

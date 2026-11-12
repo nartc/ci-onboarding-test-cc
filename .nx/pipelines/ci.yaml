@@ -1,0 +1,143 @@
+# yaml-language-server: $schema=https://cloud.nx.app/nx-cloud/static/schemas/workflow.schema.json
+#
+# Nx Cloud CI lab pipeline. It uses as much of the pipeline schema as it can on purpose:
+# imported sections, custom launch templates in three sizes, sized and fixed workers,
+# assignment rules, scheduling constraints, job needs and conditions, expressions,
+# step outputs, and stored secrets and variables.
+#
+# Stored variables (Nx Cloud workspace settings > Environment variables):
+#   CI_LAB_SECRET  secret    checked by @ci/config:env-check against a SHA-256
+#   CI_LAB_VAR     variable  must be "nx-cloud-ci-lab"
+name: CI
+
+on:
+  pull-requests:
+    event: PR
+    branches: [main]
+    types: [opened, synchronize, reopened]
+  main-pushes:
+    event: PUSH
+    branches: [main]
+    paths-ignore: ['**/*.md']
+
+launch-templates: .nx/pipelines/launch-templates.yaml
+worker-templates: .nx/pipelines/workers.yaml
+ultracache: .nx/pipelines/ultracache.yaml
+
+self-healing:
+  fix-tasks-patterns: ['*lint*', '*typecheck*', '*test*', '!*e2e*']
+  auto-apply-patterns: ['*lint*']
+
+# Reaches every job and its workers.
+env:
+  CI_LAB_REQUIRE_SECRETS: 'true'
+  CI_LAB_SECRET: ${{ secrets.CI_LAB_SECRET }}
+  CI_LAB_VAR: ${{ vars.CI_LAB_VAR || 'unset' }}
+  CI_LAB_LOCK_HASH: ${{ hashFiles('pnpm-lock.yaml') }}
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  main:
+    name: Lint, typecheck, build, test
+    runs-on: lab-medium
+    workers: pr
+    timeout-minutes: 30
+    env:
+      CI_LAB_JOB: main
+    steps:
+      - name: Put node_modules/.bin on PATH
+        run: echo "$NX_CLOUD_REPOSITORY_DIR/node_modules/.bin" >> "$NX_CLOUD_PATH"
+
+      - name: Describe the run
+        id: describe
+        run: |
+          count=$(nx show projects --affected --json | node -p 'JSON.parse(require("fs").readFileSync(0, "utf8")).length')
+          echo "affected=$count" >> "$NX_CLOUD_OUTPUT"
+          echo "CI_LAB_AFFECTED=$count" >> "$NX_CLOUD_ENV"
+          echo "${{ format('{0} of {1} at {2}', nxcloud.event_name, nxcloud.ref_name, nxcloud.sha) }}: $count affected projects" >> "$NX_CLOUD_STEP_SUMMARY"
+          echo "lockfile hash: $CI_LAB_LOCK_HASH"
+
+      - name: Check that stored variables reach a worker
+        id: env
+        continue-on-error: true
+        run: nx run @ci/config:env-check
+
+      - name: Lint, typecheck, build and test ${{ steps.describe.outputs.affected }} affected projects
+        run: nx affected -t lint typecheck build test
+
+      - name: Explain a failed env-check
+        if: steps.env.outcome == 'failure'
+        run: |
+          echo "env-check failed. Set CI_LAB_SECRET (secret) and CI_LAB_VAR (variable) in the Nx Cloud workspace settings." | tee -a "$NX_CLOUD_STEP_SUMMARY"
+          exit 1
+
+  e2e:
+    name: E2E suites
+    needs: main
+    runs-on: lab-large
+    workers: e2e
+    timeout-minutes: 20
+    steps:
+      - name: Run affected e2e suites
+        run: npx nx affected -t e2e
+
+  cli-smoke:
+    name: CLI from the remote cache
+    needs: main
+    if: needs.main.result == 'success'
+    # A job machine defined inline instead of through runs-on.
+    resource-class: docker_linux_amd64/small
+    image: ubuntu22.04-node24.14-v1
+    init-steps:
+      - name: Checkout
+        uses: nrwl/nx-cloud-workflows/v6/workflow-steps/checkout/main.yaml
+      - name: Install Node from .nvmrc
+        uses: nrwl/nx-cloud-workflows/v6/workflow-steps/install-node/main.yaml
+      - name: Install node modules
+        uses: nrwl/nx-cloud-workflows/v6/workflow-steps/install-node-modules/main.yaml
+    workers: false
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: apps/cli
+    steps:
+      - name: Build the CLI (remote cache hits from the main job)
+        run: npx nx run @ci/cli:build
+      - name: Run the CLI
+        id: cli
+        run: |
+          echo "depth=$(node dist/main.js depth)" >> "$NX_CLOUD_OUTPUT"
+          node dist/main.js graph | head -n 20
+      - name: Check the graph depth
+        if: steps.cli.outputs.depth != '10'
+        run: |
+          echo "Expected @ci/cli at depth 10, got ${{ steps.cli.outputs.depth }}"
+          exit 1
+
+  report:
+    name: Report
+    needs: [main, e2e, cli-smoke]
+    if: always()
+    resource-class: docker_linux_amd64/small
+    image: ubuntu22.04-node24.14-v1
+    init-steps:
+      - name: Checkout
+        uses: nrwl/nx-cloud-workflows/v6/workflow-steps/checkout/main.yaml
+    workers: false
+    timeout-minutes: 5
+    steps:
+      - name: Summarize the jobs
+        run: |
+          {
+            echo "| Job | Result |"
+            echo "| --- | ------ |"
+            echo "| main | ${{ needs.main.result }} |"
+            echo "| e2e | ${{ needs.e2e.result }} |"
+            echo "| cli-smoke | ${{ needs.cli-smoke.result }} |"
+          } | tee -a "$NX_CLOUD_STEP_SUMMARY"
+      - name: Fail when a job failed
+        if: contains(needs.*.result, 'failure')
+        run: exit 1

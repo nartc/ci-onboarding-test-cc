@@ -1,0 +1,61 @@
+# Machine setups for the Nx Cloud CI lab. Imported by ci.yaml.
+# Validate with: npx nx-cloud validate --workflow-file=./.nx/pipelines/launch-templates.yaml
+#
+# All machines are amd64: Nx Cloud only allows ARM resource classes on Pro and Enterprise plans.
+
+amd64-init-steps: &amd64-init-steps
+  - name: Checkout
+    uses: 'nrwl/nx-cloud-workflows/v6/workflow-steps/checkout/main.yaml'
+  - group-name: Restore caches
+    steps:
+      - name: Restore node_modules (amd64)
+        uses: 'nrwl/nx-cloud-workflows/v6/workflow-steps/cache/main.yaml'
+        inputs:
+          key: '"lab-amd64"|pnpm-lock.yaml|.nvmrc'
+          paths: 'node_modules'
+          base-branch: 'main'
+      - name: Restore pnpm store (amd64)
+        uses: 'nrwl/nx-cloud-workflows/v6/workflow-steps/cache/main.yaml'
+        inputs:
+          key: '"lab-amd64-store"|pnpm-lock.yaml'
+          paths: '~/.local/share/pnpm/store'
+          base-branch: 'main'
+  - name: Install Node from .nvmrc
+    uses: 'nrwl/nx-cloud-workflows/v6/workflow-steps/install-node/main.yaml'
+  - name: Install node modules
+    uses: 'nrwl/nx-cloud-workflows/v6/workflow-steps/install-node-modules/main.yaml'
+  - group-name: Smoke checks
+    parallel: true
+    steps:
+      - name: Toolchain
+        script: echo "node $(node -v), pnpm $(pnpm -v), $(uname -m), machine $CI_LAB_MACHINE"
+      - name: Nx
+        script: pnpm exec nx --version
+
+launch-templates:
+  lab-medium:
+    resource-class: 'docker_linux_amd64/medium'
+    image: 'ubuntu22.04-node24.14-v1'
+    no-output-timeout: '15m'
+    env:
+      CI_LAB_MACHINE: 'lab-medium'
+    init-steps: *amd64-init-steps
+
+  lab-large:
+    resource-class: 'docker_linux_amd64/large'
+    image: 'ubuntu22.04-node24.14-v1'
+    no-output-timeout: '15m'
+    env:
+      CI_LAB_MACHINE: 'lab-large'
+      NODE_OPTIONS: '--max-old-space-size=6144'
+    init-steps: *amd64-init-steps
+
+  lab-small:
+    resource-class: 'docker_linux_amd64/small'
+    image: 'ubuntu22.04-node24.14-v1'
+    no-output-timeout: '15m'
+    env:
+      CI_LAB_MACHINE: 'lab-small'
+      # Mapped a second time here, so env-check can tell launch-template env from pipeline env.
+      CI_LAB_SECRET_FROM_TEMPLATE: '${{ secrets.CI_LAB_SECRET }}'
+    init-steps: *amd64-init-steps

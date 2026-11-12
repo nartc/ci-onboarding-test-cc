@@ -19,6 +19,12 @@
     "test": "vitest run",
     "clean": "rm -rf dist"
   },
+  "nx": {
+    "tags": [
+      "type:lib",
+      "scope:client"
+    ]
+  },
   "dependencies": {
     "@ci/auth": "workspace:*",
     "@ci/http": "workspace:*",

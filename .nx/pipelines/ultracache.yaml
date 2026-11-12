@@ -1,0 +1,12 @@
+# Paths Ultracache ignores when it records what each task reads and writes. Imported by ci.yaml.
+ignore-reads:
+  - '**/*.tsbuildinfo'
+ignore-writes:
+  - '**/node_modules/.vite/**'
+  - '**/node_modules/.vitest/**'
+task-exclusions:
+  # codegen deletes and rewrites its own output folder.
+  - project: '@ci/schema'
+    target: codegen
+    ignore-reads:
+      - 'packages/shared/schema/src/generated/**'

@@ -18,5 +18,11 @@
     "lint": "eslint .",
     "test": "vitest run",
     "clean": "rm -rf dist"
+  },
+  "nx": {
+    "tags": [
+      "type:lib",
+      "scope:shared"
+    ]
   }
 }

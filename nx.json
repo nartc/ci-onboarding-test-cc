@@ -1,4 +1,50 @@
 {
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
-  "nxCloudId": "6af603847747f26820f2f69d"
+  "nxCloudId": "6af603847747f26820f2f69d",
+  "namedInputs": {
+    "sharedGlobals": [
+      "{workspaceRoot}/tsconfig.base.json",
+      "{workspaceRoot}/.nvmrc",
+      "{workspaceRoot}/pnpm-lock.yaml"
+    ],
+    "default": ["{projectRoot}/**/*", "sharedGlobals"],
+    "production": [
+      "default",
+      "!{projectRoot}/**/*.test.ts",
+      "!{projectRoot}/vitest.config.ts",
+      "!{projectRoot}/tsconfig.json"
+    ]
+  },
+  "targetDefaults": {
+    "codegen": {
+      "cache": true,
+      "inputs": ["{projectRoot}/schemas/**/*", "{projectRoot}/scripts/codegen.mjs"],
+      "outputs": ["{projectRoot}/src/generated"]
+    },
+    "build": {
+      "cache": true,
+      "dependsOn": ["^build"],
+      "inputs": ["production", "^production"],
+      "outputs": ["{projectRoot}/dist"]
+    },
+    "typecheck": {
+      "cache": true,
+      "dependsOn": ["^build"],
+      "inputs": ["default", "^production"]
+    },
+    "lint": {
+      "cache": true,
+      "inputs": ["default", "{workspaceRoot}/eslint.config.js"]
+    },
+    "test": {
+      "cache": true,
+      "dependsOn": ["^build"],
+      "inputs": ["default", "^production"]
+    },
+    "e2e": {
+      "cache": true,
+      "dependsOn": ["^build"],
+      "inputs": ["default", "^production"]
+    }
+  }
 }
