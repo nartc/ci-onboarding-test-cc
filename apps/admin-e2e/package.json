@@ -1,0 +1,16 @@
+{
+  "name": "@ci/admin-e2e",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json",
+    "lint": "eslint .",
+    "test": "vitest run",
+    "clean": "rm -rf dist"
+  },
+  "devDependencies": {
+    "@ci/admin": "workspace:*",
+    "@ci/sdk-mocks": "workspace:*"
+  }
+}

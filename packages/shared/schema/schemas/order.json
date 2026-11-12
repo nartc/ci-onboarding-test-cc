@@ -1,0 +1,9 @@
+{
+  "name": "Order",
+  "fields": {
+    "id": "string",
+    "userId": "string",
+    "totalCents": "number",
+    "status": "string"
+  }
+}

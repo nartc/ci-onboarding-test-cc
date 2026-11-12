@@ -1,0 +1,28 @@
+{
+  "name": "@ci/schema",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "codegen": "node scripts/codegen.mjs",
+    "build": "pnpm run codegen && tsc -p tsconfig.lib.json",
+    "typecheck": "pnpm run codegen && tsc -p tsconfig.json",
+    "lint": "eslint .",
+    "test": "pnpm run codegen && vitest run",
+    "clean": "rm -rf dist src/generated"
+  },
+  "dependencies": {
+    "@ci/serializer": "workspace:*",
+    "@ci/utils": "workspace:*",
+    "@ci/validation": "workspace:*"
+  }
+}

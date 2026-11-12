@@ -1,0 +1,9 @@
+{
+  "name": "Product",
+  "fields": {
+    "sku": "string",
+    "title": "string",
+    "priceCents": "number",
+    "stock": "number"
+  }
+}

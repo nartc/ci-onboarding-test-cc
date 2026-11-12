@@ -1,0 +1,29 @@
+{
+  "name": "@ci/sdk",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.lib.json",
+    "typecheck": "tsc -p tsconfig.json",
+    "lint": "eslint .",
+    "test": "vitest run",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "@ci/auth": "workspace:*",
+    "@ci/http": "workspace:*",
+    "@ci/result": "workspace:*",
+    "@ci/schema": "workspace:*",
+    "@ci/utils": "workspace:*"
+  }
+}

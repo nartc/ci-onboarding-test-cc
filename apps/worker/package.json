@@ -1,0 +1,33 @@
+{
+  "name": "@ci/worker",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/app.d.ts",
+      "default": "./dist/app.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.lib.json",
+    "typecheck": "tsc -p tsconfig.json",
+    "lint": "eslint .",
+    "test": "vitest run",
+    "start": "node dist/main.js",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "@ci/analytics": "workspace:*",
+    "@ci/config": "workspace:*",
+    "@ci/notifications": "workspace:*",
+    "@ci/queue": "workspace:*",
+    "@ci/reports": "workspace:*",
+    "@ci/shipping": "workspace:*",
+    "@ci/tracing": "workspace:*",
+    "@ci/utils": "workspace:*"
+  }
+}

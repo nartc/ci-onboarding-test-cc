@@ -1,0 +1,30 @@
+{
+  "name": "@ci/cli",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/app.d.ts",
+      "default": "./dist/app.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.lib.json",
+    "typecheck": "tsc -p tsconfig.json",
+    "lint": "eslint .",
+    "test": "vitest run",
+    "start": "node dist/main.js",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "@ci/config": "workspace:*",
+    "@ci/logger": "workspace:*",
+    "@ci/sdk": "workspace:*",
+    "@ci/serializer": "workspace:*",
+    "@ci/utils": "workspace:*"
+  }
+}

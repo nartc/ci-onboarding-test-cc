@@ -1,0 +1,9 @@
+{
+  "name": "Shipment",
+  "fields": {
+    "id": "string",
+    "orderId": "string",
+    "carrier": "string",
+    "delivered": "boolean"
+  }
+}

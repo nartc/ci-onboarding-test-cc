@@ -1,0 +1,9 @@
+{
+  "name": "Invoice",
+  "fields": {
+    "id": "string",
+    "orderId": "string",
+    "amountCents": "number",
+    "paid": "boolean"
+  }
+}

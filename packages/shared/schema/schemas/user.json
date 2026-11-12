@@ -1,0 +1,9 @@
+{
+  "name": "User",
+  "fields": {
+    "id": "string",
+    "email": "string",
+    "displayName": "string",
+    "active": "boolean"
+  }
+}
