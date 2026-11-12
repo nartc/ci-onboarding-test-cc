@@ -43,14 +43,14 @@ uses as much of the [pipeline schema](https://nx.dev/docs/reference/nx-cloud/ci-
 
 | File                    | What it does                                                        |
 | ----------------------- | ------------------------------------------------------------------- |
-| `ci.yaml`               | The `CI` pipeline: `main`, `e2e`, `arm-smoke` and `report` jobs     |
+| `ci.yaml`               | The `CI` pipeline: `main`, `e2e`, `cli-smoke` and `report` jobs     |
 | `format.yaml`           | The `Format` pipeline: Prettier, only when a formatted file changes |
-| `launch-templates.yaml` | `lab-medium`, `lab-large` (amd64) and `lab-arm` (arm64) machines    |
+| `launch-templates.yaml` | `lab-small`, `lab-medium` and `lab-large` machines                  |
 | `workers.yaml`          | `pr`: 4 to 10 workers sized by the work; `e2e`: 2 fixed workers     |
 | `ultracache.yaml`       | Paths Ultracache ignores                                            |
 
 The pipeline reads two stored variables from the Nx Cloud workspace settings
-(**Environment variables**). `@ci/config:env-check` runs on an arm64 worker and fails if
+(**Environment variables**). `@ci/config:env-check` runs on a `lab-small` worker and fails if
 they don't arrive:
 
 | Name            | Kind     | Checked how                                      |

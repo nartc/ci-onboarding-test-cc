@@ -1,7 +1,7 @@
 # yaml-language-server: $schema=https://cloud.nx.app/nx-cloud/static/schemas/workflow.schema.json
 #
 # Nx Cloud CI lab pipeline. It uses as much of the pipeline schema as it can on purpose:
-# imported sections, custom amd64 and arm64 launch templates, sized and fixed workers,
+# imported sections, custom launch templates in three sizes, sized and fixed workers,
 # assignment rules, scheduling constraints, job needs and conditions, expressions,
 # step outputs, and stored secrets and variables.
 #
@@ -84,12 +84,12 @@ jobs:
       - name: Run affected e2e suites
         run: npx nx affected -t e2e
 
-  arm-smoke:
-    name: CLI on arm64
+  cli-smoke:
+    name: CLI from the remote cache
     needs: main
     if: needs.main.result == 'success'
     # A job machine defined inline instead of through runs-on.
-    resource-class: docker_linux_arm64/medium
+    resource-class: docker_linux_amd64/small
     image: ubuntu22.04-node24.14-v1
     init-steps:
       - name: Checkout
@@ -104,7 +104,7 @@ jobs:
       run:
         working-directory: apps/cli
     steps:
-      - name: Build the CLI (remote cache hits from the amd64 main job)
+      - name: Build the CLI (remote cache hits from the main job)
         run: npx nx run @ci/cli:build
       - name: Run the CLI
         id: cli
@@ -119,7 +119,7 @@ jobs:
 
   report:
     name: Report
-    needs: [main, e2e, arm-smoke]
+    needs: [main, e2e, cli-smoke]
     if: always()
     resource-class: docker_linux_amd64/small
     image: ubuntu22.04-node24.14-v1
@@ -136,7 +136,7 @@ jobs:
             echo "| --- | ------ |"
             echo "| main | ${{ needs.main.result }} |"
             echo "| e2e | ${{ needs.e2e.result }} |"
-            echo "| arm-smoke | ${{ needs.arm-smoke.result }} |"
+            echo "| cli-smoke | ${{ needs.cli-smoke.result }} |"
           } | tee -a "$NX_CLOUD_STEP_SUMMARY"
       - name: Fail when a job failed
         if: contains(needs.*.result, 'failure')
