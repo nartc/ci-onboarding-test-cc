@@ -225,38 +225,12 @@ jobs:
 
   # Probes for the report job, which Nx Cloud kills before it gets a machine
   # (RECONCILIATION_FAILED_WORKFLOW, no steps, no workers) on any resource class.
-  # Each probe takes one thing report does that no job that ran does, and nothing else.
+  # Round 1 ruled out the inline machine, if: always() and toJSON(needs): only the job with a
+  # file:// step was killed. Each probe below changes one thing about that step.
 
-  # An inline job machine (resource-class and image instead of runs-on).
-  probe-inline-machine:
-    name: 'Probe: inline machine'
-    needs: lint
-    resource-class: docker_linux_amd64/medium
-    image: ubuntu22.04-node24.14-v1
-    init-steps:
-      - name: Checkout
-        uses: nrwl/nx-cloud-workflows/v6/workflow-steps/checkout/main.yaml
-    workers: false
-    timeout-minutes: 5
-    steps:
-      - name: Say hello
-        run: echo "inline machine works"
-
-  # if: always(), with needs that failed and were skipped.
-  probe-always:
-    name: 'Probe: always() after failed and skipped jobs'
-    needs: [lint, main, e2e]
-    if: always()
-    runs-on: lab-utility
-    workers: false
-    timeout-minutes: 5
-    steps:
-      - name: Say hello
-        run: echo "always() works"
-
-  # A custom step template from the repo (file://), with plain string inputs.
-  probe-file-step:
-    name: 'Probe: file:// step'
+  # The report step again, with its inputs under inputs: instead of with:.
+  probe-file-inputs:
+    name: 'Probe: file:// step, inputs instead of with'
     needs: lint
     runs-on: lab-utility
     workers: false
@@ -264,19 +238,39 @@ jobs:
     steps:
       - name: Summarize
         uses: file:///.nx/pipelines/steps/report/step.yaml
-        with:
+        inputs:
           title: probe
           results: '{"lint":{"result":"success","outputs":{}}}'
 
-  # toJSON(needs) inside a step.
-  probe-needs-json:
-    name: 'Probe: toJSON(needs)'
+  # The smallest file:// step: node, main only, no inputs, no post.
+  probe-file-hello:
+    name: 'Probe: minimal file:// step'
     needs: lint
     runs-on: lab-utility
     workers: false
     timeout-minutes: 5
     steps:
-      - name: Print the needs context
-        env:
-          NEEDS_JSON: ${{ toJSON(needs) }}
-        run: echo "$NEEDS_JSON"
+      - name: Hello
+        uses: file:///.nx/pipelines/steps/hello/step.yaml
+
+  # The same minimal step, fetched from GitHub (owner/repo/ref/path) instead of file://.
+  probe-github-hello:
+    name: 'Probe: minimal step from GitHub'
+    needs: lint
+    runs-on: lab-utility
+    workers: false
+    timeout-minutes: 5
+    steps:
+      - name: Hello
+        uses: nartc/ci-onboarding-test-cc/ci-lab-scale/.nx/pipelines/steps/hello/step.yaml
+
+  # The same minimal file:// step, in a launch template's init steps instead of a job step.
+  probe-template-file-step:
+    name: 'Probe: file:// step in a launch template'
+    needs: lint
+    runs-on: lab-probe
+    workers: false
+    timeout-minutes: 5
+    steps:
+      - name: Say hello
+        run: echo "the launch template's file:// init step ran"

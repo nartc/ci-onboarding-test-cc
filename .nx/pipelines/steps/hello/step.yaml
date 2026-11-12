@@ -1,0 +1,7 @@
+# The smallest custom step: node, main only, no inputs. Used by the probe jobs in ci.yaml
+# and the lab-probe launch template, to find out why file:// steps never get a machine.
+name: 'Lab hello'
+description: 'Prints one line.'
+definition:
+  using: 'node'
+  main: './main.js'
