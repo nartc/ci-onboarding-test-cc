@@ -53,7 +53,7 @@ defaults:
 jobs:
   lint:
     name: Lint
-    runs-on: lab-small
+    runs-on: lab-utility
     # Sized workers written inline. Bare counts reuse the job's own machine setup.
     workers:
       small: 3
@@ -152,7 +152,7 @@ jobs:
     needs: main
     if: needs.main.result == 'success'
     # A job machine defined inline instead of through runs-on.
-    resource-class: docker_linux_amd64/small
+    resource-class: docker_linux_amd64/medium
     image: ubuntu22.04-node24.14-v1
     init-steps:
       - name: Checkout
@@ -184,7 +184,7 @@ jobs:
     name: Report
     needs: [lint, main, e2e, gateway-smoke, cli-smoke]
     if: always()
-    resource-class: docker_linux_amd64/small
+    resource-class: docker_linux_amd64/medium
     image: ubuntu22.04-node24.14-v1
     init-steps:
       - name: Checkout

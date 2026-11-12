@@ -33,7 +33,7 @@ if (!required) {
 
 // Mapped from secrets.CI_LAB_SECRET in the top-level env of the pipeline.
 checkSecret('CI_LAB_SECRET');
-// Mapped again in the env of the lab-small launch template, so only set on those workers.
+// Mapped again in the env of the lab-utility launch template, so only set on those workers.
 checkSecret('CI_LAB_SECRET_FROM_TEMPLATE', { optional: true });
 
 // Mapped from vars.CI_LAB_VAR, a plain (non-secret) variable, so it is safe to print.

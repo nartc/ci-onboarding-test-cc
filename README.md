@@ -29,7 +29,7 @@ pnpm run affected   # only what your branch changed
 pnpm run graph      # explore the project graph
 ```
 
-Heavy tests read their size from the environment, and default to small values locally:
+Heavy tests read their size from the environment:
 
 | Variable              | Default (local / CI) | Effect                                        |
 | --------------------- | -------------------- | --------------------------------------------- |
@@ -84,13 +84,13 @@ uses as much of the [pipeline schema](https://nx.dev/docs/reference/nx-cloud/ci-
 | ----------------------- | ----------------------------------------------------------------------------------- |
 | `ci.yaml`               | The `CI` pipeline: `lint`, `main`, `e2e`, `gateway-smoke`, `cli-smoke` and `report` |
 | `format.yaml`           | The `Format` pipeline: Prettier, only when a formatted file changes                 |
-| `launch-templates.yaml` | `lab-small`, `lab-medium` and `lab-large` machines                                  |
+| `launch-templates.yaml` | `lab-utility`, `lab-medium` (both medium) and `lab-large`                           |
 | `workers.yaml`          | `pr`: 5 to 16 workers sized by the work; `e2e`: 3 fixed; `smoke`: 3                 |
 | `ultracache.yaml`       | Paths Ultracache ignores                                                            |
 | `steps/report/`         | A custom step template, with a `post` script that reads its saved state             |
 
 The pipeline reads stored variables from the Nx Cloud workspace settings
-(**Environment variables**). `@ci/config:env-check` runs on a `lab-small` worker and fails if
+(**Environment variables**). `@ci/config:env-check` runs on a `lab-utility` worker and fails if
 the first two don't arrive:
 
 | Name                 | Kind     | Checked how / used for                           |
