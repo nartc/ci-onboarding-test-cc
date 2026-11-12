@@ -192,9 +192,13 @@ jobs:
     workers: false
     timeout-minutes: 5
     steps:
+      # The custom step comes from GitHub at the lab-steps-v1 tag, not through file://. Any
+      # file:// step (job step or launch-template init step) got the job killed before it had
+      # a machine (RECONCILIATION_FAILED_WORKFLOW). Move the tag, or add a new one, when
+      # anything under .nx/pipelines/steps/report changes.
       - name: Summarize the jobs
         id: report
-        uses: file:///.nx/pipelines/steps/report/step.yaml
+        uses: nartc/ci-onboarding-test-cc/lab-steps-v1/.nx/pipelines/steps/report/step.yaml
         with:
           title: ${{ format('CI lab on {0}', nxcloud.ref_name) }}
           results: ${{ toJSON(needs) }}
@@ -222,55 +226,3 @@ jobs:
       - name: Only when everything passed
         if: success()
         run: echo "every job passed"
-
-  # Probes for the report job, which Nx Cloud kills before it gets a machine
-  # (RECONCILIATION_FAILED_WORKFLOW, no steps, no workers) on any resource class.
-  # Round 1 ruled out the inline machine, if: always() and toJSON(needs): only the job with a
-  # file:// step was killed. Each probe below changes one thing about that step.
-
-  # The report step again, with its inputs under inputs: instead of with:.
-  probe-file-inputs:
-    name: 'Probe: file:// step, inputs instead of with'
-    needs: lint
-    runs-on: lab-utility
-    workers: false
-    timeout-minutes: 5
-    steps:
-      - name: Summarize
-        uses: file:///.nx/pipelines/steps/report/step.yaml
-        inputs:
-          title: probe
-          results: '{"lint":{"result":"success","outputs":{}}}'
-
-  # The smallest file:// step: node, main only, no inputs, no post.
-  probe-file-hello:
-    name: 'Probe: minimal file:// step'
-    needs: lint
-    runs-on: lab-utility
-    workers: false
-    timeout-minutes: 5
-    steps:
-      - name: Hello
-        uses: file:///.nx/pipelines/steps/hello/step.yaml
-
-  # The same minimal step, fetched from GitHub (owner/repo/ref/path) instead of file://.
-  probe-github-hello:
-    name: 'Probe: minimal step from GitHub'
-    needs: lint
-    runs-on: lab-utility
-    workers: false
-    timeout-minutes: 5
-    steps:
-      - name: Hello
-        uses: nartc/ci-onboarding-test-cc/ci-lab-scale/.nx/pipelines/steps/hello/step.yaml
-
-  # The same minimal file:// step, in a launch template's init steps instead of a job step.
-  probe-template-file-step:
-    name: 'Probe: file:// step in a launch template'
-    needs: lint
-    runs-on: lab-probe
-    workers: false
-    timeout-minutes: 5
-    steps:
-      - name: Say hello
-        run: echo "the launch template's file:// init step ran"

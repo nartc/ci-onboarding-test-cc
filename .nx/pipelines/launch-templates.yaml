@@ -65,15 +65,3 @@ launch-templates:
       # Mapped a second time here, so env-check can tell launch-template env from pipeline env.
       CI_LAB_SECRET_FROM_TEMPLATE: '${{ secrets.CI_LAB_SECRET }}'
     init-steps: *amd64-init-steps
-
-  # Probe: a repo-local (file://) step inside a launch template's init steps, after checkout.
-  lab-probe:
-    resource-class: 'docker_linux_amd64/medium'
-    image: 'ubuntu22.04-node24.14-v1'
-    env:
-      CI_LAB_MACHINE: 'lab-probe'
-    init-steps:
-      - name: Checkout
-        uses: 'nrwl/nx-cloud-workflows/v6/workflow-steps/checkout/main.yaml'
-      - name: Hello from a file step
-        uses: 'file:///.nx/pipelines/steps/hello/step.yaml'
