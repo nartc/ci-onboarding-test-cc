@@ -65,9 +65,10 @@ pr:
           targets:
             - test
 
-# Used by the e2e job: a fixed count, no main-job worker, never stops on failures.
+# Used by the e2e job: a fixed count (3 is the minimum Nx Cloud distributes on), no
+# main-job worker, never stops on failures.
 e2e:
-  workers: 2 lab-large
+  workers: 3 lab-large
   main-job-worker: false
   stop-after:
     - e2e

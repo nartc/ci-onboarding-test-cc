@@ -46,7 +46,7 @@ uses as much of the [pipeline schema](https://nx.dev/docs/reference/nx-cloud/ci-
 | `ci.yaml`               | The `CI` pipeline: `main`, `e2e`, `cli-smoke` and `report` jobs     |
 | `format.yaml`           | The `Format` pipeline: Prettier, only when a formatted file changes |
 | `launch-templates.yaml` | `lab-small`, `lab-medium` and `lab-large` machines                  |
-| `workers.yaml`          | `pr`: 4 to 10 workers sized by the work; `e2e`: 2 fixed workers     |
+| `workers.yaml`          | `pr`: 4 to 10 workers sized by the work; `e2e`: 3 fixed workers     |
 | `ultracache.yaml`       | Paths Ultracache ignores                                            |
 
 The pipeline reads two stored variables from the Nx Cloud workspace settings
