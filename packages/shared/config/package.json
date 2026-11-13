@@ -18,7 +18,8 @@
     "lint": "eslint .",
     "test": "vitest run",
     "clean": "rm -rf dist",
-    "env-check": "node scripts/env-check.mjs"
+    "env-check": "node scripts/env-check.mjs",
+    "secret-echo": "node scripts/secret-echo.mjs"
   },
   "nx": {
     "tags": [
@@ -28,6 +29,12 @@
     "targets": {
       "env-check": {
         "cache": false
+      },
+      "secret-echo": {
+        "cache": true,
+        "inputs": [
+          "{projectRoot}/scripts/secret-echo.mjs"
+        ]
       }
     }
   },

@@ -1,0 +1,36 @@
+{
+  "name": "@ci/fulfillment-mem-18",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.lib.json",
+    "typecheck": "tsc -p tsconfig.json",
+    "lint": "eslint .",
+    "test": "vitest run",
+    "clean": "rm -rf dist"
+  },
+  "nx": {
+    "tags": [
+      "type:lib",
+      "scope:modules",
+      "domain:fulfillment",
+      "kind:mem"
+    ]
+  },
+  "dependencies": {
+    "@ci/fulfillment-17": "workspace:*",
+    "@ci/fulfillment-cpu-07": "workspace:*",
+    "@ci/inventory": "workspace:*",
+    "@ci/utils": "workspace:*"
+  }
+}

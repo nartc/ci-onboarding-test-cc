@@ -13,7 +13,7 @@ on:
 jobs:
   prettier:
     name: Prettier
-    runs-on: linux-small-js
+    runs-on: linux-medium-js
     workers: false
     timeout-minutes: 10
     steps:

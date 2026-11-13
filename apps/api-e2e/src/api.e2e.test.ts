@@ -1,21 +1,22 @@
-import type { AddressInfo } from 'node:net';
-import { apiModule, createApp } from '@ci/api';
+import { apiModule } from '@ci/api';
 import { sdkMocksModule } from '@ci/sdk-mocks';
-import { afterAll, beforeAll, describe, expect, it } from 'vitest';
+import { beforeAll, describe, expect, it } from 'vitest';
 
-const server = createApp();
-let base = '';
+// Started by the continuous @ci/api:serve task this e2e target depends on.
+const base = process.env['API_URL'] ?? 'http://127.0.0.1:4310';
 
 beforeAll(async () => {
-  await new Promise<void>((resolve) => server.listen(0, resolve));
-  base = `http://127.0.0.1:${(server.address() as AddressInfo).port}`;
-});
-
-afterAll(async () => {
-  await new Promise<void>((resolve, reject) =>
-    server.close((err) => (err ? reject(err) : resolve())),
-  );
-});
+  const end = Date.now() + 60_000;
+  while (Date.now() < end) {
+    try {
+      if ((await fetch(`${base}/health`)).ok) return;
+    } catch {
+      // not up yet
+    }
+    await new Promise((resolve) => setTimeout(resolve, 250));
+  }
+  throw new Error(`${base} did not come up within 60s`);
+}, 70_000);
 
 describe('api over http', () => {
   it('is healthy', async () => {

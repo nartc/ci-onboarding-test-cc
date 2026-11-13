@@ -1,0 +1,43 @@
+{
+  "name": "@ci/identity-cpu-14",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.lib.json",
+    "typecheck": "tsc -p tsconfig.json",
+    "lint": "eslint .",
+    "test": "vitest run",
+    "clean": "rm -rf dist"
+  },
+  "nx": {
+    "tags": [
+      "type:lib",
+      "scope:modules",
+      "domain:identity",
+      "kind:cpu"
+    ],
+    "targets": {
+      "test": {
+        "parallelism": false
+      }
+    }
+  },
+  "dependencies": {
+    "@ci/billing": "workspace:*",
+    "@ci/feature-flags": "workspace:*",
+    "@ci/identity-13": "workspace:*",
+    "@ci/identity-mem-09": "workspace:*",
+    "@ci/reports": "workspace:*",
+    "@ci/utils": "workspace:*"
+  }
+}

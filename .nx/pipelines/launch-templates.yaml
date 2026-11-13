@@ -2,6 +2,9 @@
 # Validate with: npx nx-cloud validate --workflow-file=./.nx/pipelines/launch-templates.yaml
 #
 # All machines are amd64: Nx Cloud only allows ARM resource classes on Pro and Enterprise plans.
+# None use the small resource class: it had no capacity ("no downstream controllers available
+# for resource class docker_linux_amd64/small_standard"). lab-utility is a medium machine kept
+# apart from lab-medium, so assignment rules can single it out.
 
 amd64-init-steps: &amd64-init-steps
   - name: Checkout
@@ -22,8 +25,11 @@ amd64-init-steps: &amd64-init-steps
           base-branch: 'main'
   - name: Install Node from .nvmrc
     uses: 'nrwl/nx-cloud-workflows/v6/workflow-steps/install-node/main.yaml'
+  # The full https URL form of a step reference, with its own env.
   - name: Install node modules
-    uses: 'nrwl/nx-cloud-workflows/v6/workflow-steps/install-node-modules/main.yaml'
+    uses: 'https://raw.githubusercontent.com/nrwl/nx-cloud-workflows/v6/workflow-steps/install-node-modules/main.yaml'
+    env:
+      NX_NO_OUTPUT_TIMEOUT: '20m'
   - group-name: Smoke checks
     parallel: true
     steps:
@@ -50,12 +56,12 @@ launch-templates:
       NODE_OPTIONS: '--max-old-space-size=6144'
     init-steps: *amd64-init-steps
 
-  lab-small:
-    resource-class: 'docker_linux_amd64/small'
+  lab-utility:
+    resource-class: 'docker_linux_amd64/medium'
     image: 'ubuntu22.04-node24.14-v1'
     no-output-timeout: '15m'
     env:
-      CI_LAB_MACHINE: 'lab-small'
+      CI_LAB_MACHINE: 'lab-utility'
       # Mapped a second time here, so env-check can tell launch-template env from pipeline env.
       CI_LAB_SECRET_FROM_TEMPLATE: '${{ secrets.CI_LAB_SECRET }}'
     init-steps: *amd64-init-steps

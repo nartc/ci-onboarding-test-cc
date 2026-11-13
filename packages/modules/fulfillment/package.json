@@ -1,0 +1,53 @@
+{
+  "name": "@ci/fulfillment",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.lib.json",
+    "typecheck": "tsc -p tsconfig.json",
+    "lint": "eslint .",
+    "test": "vitest run",
+    "clean": "rm -rf dist"
+  },
+  "nx": {
+    "tags": [
+      "type:lib",
+      "scope:modules",
+      "domain:fulfillment",
+      "kind:domain"
+    ]
+  },
+  "dependencies": {
+    "@ci/fulfillment-01": "workspace:*",
+    "@ci/fulfillment-02": "workspace:*",
+    "@ci/fulfillment-03": "workspace:*",
+    "@ci/fulfillment-06": "workspace:*",
+    "@ci/fulfillment-10": "workspace:*",
+    "@ci/fulfillment-11": "workspace:*",
+    "@ci/fulfillment-13": "workspace:*",
+    "@ci/fulfillment-17": "workspace:*",
+    "@ci/fulfillment-19": "workspace:*",
+    "@ci/fulfillment-cpu-07": "workspace:*",
+    "@ci/fulfillment-cpu-14": "workspace:*",
+    "@ci/fulfillment-flaky-05": "workspace:*",
+    "@ci/fulfillment-flaky-15": "workspace:*",
+    "@ci/fulfillment-mem-09": "workspace:*",
+    "@ci/fulfillment-mem-18": "workspace:*",
+    "@ci/fulfillment-slow-04": "workspace:*",
+    "@ci/fulfillment-slow-08": "workspace:*",
+    "@ci/fulfillment-slow-12": "workspace:*",
+    "@ci/fulfillment-slow-16": "workspace:*",
+    "@ci/fulfillment-slow-20": "workspace:*",
+    "@ci/utils": "workspace:*"
+  }
+}

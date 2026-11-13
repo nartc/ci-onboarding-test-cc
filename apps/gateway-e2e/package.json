@@ -1,0 +1,34 @@
+{
+  "name": "@ci/gateway-e2e",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json",
+    "lint": "eslint .",
+    "e2e": "vitest run",
+    "clean": "rm -rf dist"
+  },
+  "nx": {
+    "tags": [
+      "type:e2e"
+    ],
+    "targets": {
+      "e2e": {
+        "dependsOn": [
+          "^build",
+          {
+            "projects": [
+              "@ci/gateway"
+            ],
+            "target": "serve"
+          }
+        ]
+      }
+    }
+  },
+  "devDependencies": {
+    "@ci/gateway": "workspace:*",
+    "@ci/sdk-mocks": "workspace:*"
+  }
+}

@@ -1,0 +1,20 @@
+# A custom step template, used from ci.yaml through GitHub at the lab-steps-v1 tag:
+# `uses: nartc/ci-onboarding-test-cc/lab-steps-v1/.nx/pipelines/steps/report/step.yaml`.
+# Validate with: npx nx-cloud validate --workflow-file=./.nx/pipelines/steps/report/step.yaml --step-file
+name: 'Lab report'
+description: 'Writes a job summary from the results of the jobs a job needs, and keeps state for its post script.'
+# Script paths are from the repo root, as in nrwl/nx-cloud-workflows. With ./main.js (relative to
+# this file, as the custom-steps docs describe) every job using the step was killed before it
+# got a machine (RECONCILIATION_FAILED_WORKFLOW).
+definition:
+  using: 'node'
+  main: '.nx/pipelines/steps/report/main.js'
+  post: '.nx/pipelines/steps/report/post.js'
+inputs:
+  - name: 'title'
+    description: 'Heading of the summary'
+    default: 'CI lab'
+    required: false
+  - name: 'results'
+    description: 'The needs context of the job, as JSON (toJSON(needs))'
+    required: true

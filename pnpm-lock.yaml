@@ -150,6 +150,57 @@ importers:
         specifier: workspace:*
         version: link:../../packages/shared/utils
 
+  apps/gateway:
+    dependencies:
+      '@ci/catalog':
+        specifier: workspace:*
+        version: link:../../packages/modules/catalog
+      '@ci/checkout':
+        specifier: workspace:*
+        version: link:../../packages/modules/checkout
+      '@ci/config':
+        specifier: workspace:*
+        version: link:../../packages/shared/config
+      '@ci/crm':
+        specifier: workspace:*
+        version: link:../../packages/modules/crm
+      '@ci/finance':
+        specifier: workspace:*
+        version: link:../../packages/modules/finance
+      '@ci/fulfillment':
+        specifier: workspace:*
+        version: link:../../packages/modules/fulfillment
+      '@ci/http':
+        specifier: workspace:*
+        version: link:../../packages/platform/http
+      '@ci/identity':
+        specifier: workspace:*
+        version: link:../../packages/modules/identity
+      '@ci/marketing':
+        specifier: workspace:*
+        version: link:../../packages/modules/marketing
+      '@ci/pricing':
+        specifier: workspace:*
+        version: link:../../packages/modules/pricing
+      '@ci/support':
+        specifier: workspace:*
+        version: link:../../packages/modules/support
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../packages/shared/utils
+      '@ci/warehouse':
+        specifier: workspace:*
+        version: link:../../packages/modules/warehouse
+
+  apps/gateway-e2e:
+    devDependencies:
+      '@ci/gateway':
+        specifier: workspace:*
+        version: link:../gateway
+      '@ci/sdk-mocks':
+        specifier: workspace:*
+        version: link:../../packages/client/sdk-mocks
+
   apps/scheduler:
     dependencies:
       '@ci/config':
@@ -482,6 +533,3675 @@ importers:
       '@ci/validation':
         specifier: workspace:*
         version: link:../../shared/validation
+
+  packages/modules/catalog:
+    dependencies:
+      '@ci/catalog-01':
+        specifier: workspace:*
+        version: link:../catalog-01
+      '@ci/catalog-02':
+        specifier: workspace:*
+        version: link:../catalog-02
+      '@ci/catalog-03':
+        specifier: workspace:*
+        version: link:../catalog-03
+      '@ci/catalog-06':
+        specifier: workspace:*
+        version: link:../catalog-06
+      '@ci/catalog-10':
+        specifier: workspace:*
+        version: link:../catalog-10
+      '@ci/catalog-11':
+        specifier: workspace:*
+        version: link:../catalog-11
+      '@ci/catalog-13':
+        specifier: workspace:*
+        version: link:../catalog-13
+      '@ci/catalog-17':
+        specifier: workspace:*
+        version: link:../catalog-17
+      '@ci/catalog-19':
+        specifier: workspace:*
+        version: link:../catalog-19
+      '@ci/catalog-cpu-07':
+        specifier: workspace:*
+        version: link:../catalog-cpu-07
+      '@ci/catalog-cpu-14':
+        specifier: workspace:*
+        version: link:../catalog-cpu-14
+      '@ci/catalog-flaky-05':
+        specifier: workspace:*
+        version: link:../catalog-flaky-05
+      '@ci/catalog-flaky-15':
+        specifier: workspace:*
+        version: link:../catalog-flaky-15
+      '@ci/catalog-mem-09':
+        specifier: workspace:*
+        version: link:../catalog-mem-09
+      '@ci/catalog-mem-18':
+        specifier: workspace:*
+        version: link:../catalog-mem-18
+      '@ci/catalog-slow-04':
+        specifier: workspace:*
+        version: link:../catalog-slow-04
+      '@ci/catalog-slow-08':
+        specifier: workspace:*
+        version: link:../catalog-slow-08
+      '@ci/catalog-slow-12':
+        specifier: workspace:*
+        version: link:../catalog-slow-12
+      '@ci/catalog-slow-16':
+        specifier: workspace:*
+        version: link:../catalog-slow-16
+      '@ci/catalog-slow-20':
+        specifier: workspace:*
+        version: link:../catalog-slow-20
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/catalog-01:
+    dependencies:
+      '@ci/db':
+        specifier: workspace:*
+        version: link:../../platform/db
+      '@ci/events':
+        specifier: workspace:*
+        version: link:../../platform/events
+      '@ci/payments':
+        specifier: workspace:*
+        version: link:../../features/payments
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/catalog-02:
+    dependencies:
+      '@ci/billing':
+        specifier: workspace:*
+        version: link:../../features/billing
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/catalog-03:
+    dependencies:
+      '@ci/feature-flags':
+        specifier: workspace:*
+        version: link:../../platform/feature-flags
+      '@ci/payments':
+        specifier: workspace:*
+        version: link:../../features/payments
+      '@ci/users':
+        specifier: workspace:*
+        version: link:../../features/users
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/catalog-06:
+    dependencies:
+      '@ci/audit':
+        specifier: workspace:*
+        version: link:../../features/audit
+      '@ci/billing':
+        specifier: workspace:*
+        version: link:../../features/billing
+      '@ci/catalog-03':
+        specifier: workspace:*
+        version: link:../catalog-03
+      '@ci/catalog-flaky-05':
+        specifier: workspace:*
+        version: link:../catalog-flaky-05
+      '@ci/users':
+        specifier: workspace:*
+        version: link:../../features/users
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/catalog-10:
+    dependencies:
+      '@ci/catalog-cpu-07':
+        specifier: workspace:*
+        version: link:../catalog-cpu-07
+      '@ci/catalog-mem-09':
+        specifier: workspace:*
+        version: link:../catalog-mem-09
+      '@ci/errors':
+        specifier: workspace:*
+        version: link:../../shared/errors
+      '@ci/tracing':
+        specifier: workspace:*
+        version: link:../../platform/tracing
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/catalog-11:
+    dependencies:
+      '@ci/audit':
+        specifier: workspace:*
+        version: link:../../features/audit
+      '@ci/catalog-06':
+        specifier: workspace:*
+        version: link:../catalog-06
+      '@ci/catalog-10':
+        specifier: workspace:*
+        version: link:../catalog-10
+      '@ci/config':
+        specifier: workspace:*
+        version: link:../../shared/config
+      '@ci/metrics':
+        specifier: workspace:*
+        version: link:../../platform/metrics
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/catalog-13:
+    dependencies:
+      '@ci/catalog-slow-12':
+        specifier: workspace:*
+        version: link:../catalog-slow-12
+      '@ci/reports':
+        specifier: workspace:*
+        version: link:../../features/reports
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/catalog-17:
+    dependencies:
+      '@ci/catalog-mem-09':
+        specifier: workspace:*
+        version: link:../catalog-mem-09
+      '@ci/db':
+        specifier: workspace:*
+        version: link:../../platform/db
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/catalog-19:
+    dependencies:
+      '@ci/metrics':
+        specifier: workspace:*
+        version: link:../../platform/metrics
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/catalog-cpu-07:
+    dependencies:
+      '@ci/analytics':
+        specifier: workspace:*
+        version: link:../../features/analytics
+      '@ci/catalog-01':
+        specifier: workspace:*
+        version: link:../catalog-01
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/catalog-cpu-14:
+    dependencies:
+      '@ci/catalog-10':
+        specifier: workspace:*
+        version: link:../catalog-10
+      '@ci/catalog-13':
+        specifier: workspace:*
+        version: link:../catalog-13
+      '@ci/shipping':
+        specifier: workspace:*
+        version: link:../../features/shipping
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/catalog-flaky-05:
+    dependencies:
+      '@ci/catalog-02':
+        specifier: workspace:*
+        version: link:../catalog-02
+      '@ci/shipping':
+        specifier: workspace:*
+        version: link:../../features/shipping
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/catalog-flaky-15:
+    dependencies:
+      '@ci/audit':
+        specifier: workspace:*
+        version: link:../../features/audit
+      '@ci/catalog-mem-09':
+        specifier: workspace:*
+        version: link:../catalog-mem-09
+      '@ci/metrics':
+        specifier: workspace:*
+        version: link:../../platform/metrics
+      '@ci/payments':
+        specifier: workspace:*
+        version: link:../../features/payments
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/catalog-mem-09:
+    dependencies:
+      '@ci/analytics':
+        specifier: workspace:*
+        version: link:../../features/analytics
+      '@ci/audit':
+        specifier: workspace:*
+        version: link:../../features/audit
+      '@ci/catalog-slow-04':
+        specifier: workspace:*
+        version: link:../catalog-slow-04
+      '@ci/catalog-slow-08':
+        specifier: workspace:*
+        version: link:../catalog-slow-08
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/catalog-mem-18:
+    dependencies:
+      '@ci/catalog-17':
+        specifier: workspace:*
+        version: link:../catalog-17
+      '@ci/errors':
+        specifier: workspace:*
+        version: link:../../shared/errors
+      '@ci/users':
+        specifier: workspace:*
+        version: link:../../features/users
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/catalog-slow-04:
+    dependencies:
+      '@ci/catalog-01':
+        specifier: workspace:*
+        version: link:../catalog-01
+      '@ci/catalog-03':
+        specifier: workspace:*
+        version: link:../catalog-03
+      '@ci/i18n':
+        specifier: workspace:*
+        version: link:../../shared/i18n
+      '@ci/recommendations':
+        specifier: workspace:*
+        version: link:../../features/recommendations
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/catalog-slow-08:
+    dependencies:
+      '@ci/catalog-cpu-07':
+        specifier: workspace:*
+        version: link:../catalog-cpu-07
+      '@ci/queue':
+        specifier: workspace:*
+        version: link:../../platform/queue
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/catalog-slow-12:
+    dependencies:
+      '@ci/analytics':
+        specifier: workspace:*
+        version: link:../../features/analytics
+      '@ci/catalog-11':
+        specifier: workspace:*
+        version: link:../catalog-11
+      '@ci/orders':
+        specifier: workspace:*
+        version: link:../../features/orders
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/catalog-slow-16:
+    dependencies:
+      '@ci/catalog-flaky-15':
+        specifier: workspace:*
+        version: link:../catalog-flaky-15
+      '@ci/queue':
+        specifier: workspace:*
+        version: link:../../platform/queue
+      '@ci/reports':
+        specifier: workspace:*
+        version: link:../../features/reports
+      '@ci/serializer':
+        specifier: workspace:*
+        version: link:../../shared/serializer
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/catalog-slow-20:
+    dependencies:
+      '@ci/catalog-17':
+        specifier: workspace:*
+        version: link:../catalog-17
+      '@ci/recommendations':
+        specifier: workspace:*
+        version: link:../../features/recommendations
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/checkout:
+    dependencies:
+      '@ci/checkout-01':
+        specifier: workspace:*
+        version: link:../checkout-01
+      '@ci/checkout-02':
+        specifier: workspace:*
+        version: link:../checkout-02
+      '@ci/checkout-03':
+        specifier: workspace:*
+        version: link:../checkout-03
+      '@ci/checkout-06':
+        specifier: workspace:*
+        version: link:../checkout-06
+      '@ci/checkout-10':
+        specifier: workspace:*
+        version: link:../checkout-10
+      '@ci/checkout-11':
+        specifier: workspace:*
+        version: link:../checkout-11
+      '@ci/checkout-13':
+        specifier: workspace:*
+        version: link:../checkout-13
+      '@ci/checkout-17':
+        specifier: workspace:*
+        version: link:../checkout-17
+      '@ci/checkout-19':
+        specifier: workspace:*
+        version: link:../checkout-19
+      '@ci/checkout-cpu-07':
+        specifier: workspace:*
+        version: link:../checkout-cpu-07
+      '@ci/checkout-cpu-14':
+        specifier: workspace:*
+        version: link:../checkout-cpu-14
+      '@ci/checkout-flaky-05':
+        specifier: workspace:*
+        version: link:../checkout-flaky-05
+      '@ci/checkout-flaky-15':
+        specifier: workspace:*
+        version: link:../checkout-flaky-15
+      '@ci/checkout-mem-09':
+        specifier: workspace:*
+        version: link:../checkout-mem-09
+      '@ci/checkout-mem-18':
+        specifier: workspace:*
+        version: link:../checkout-mem-18
+      '@ci/checkout-slow-04':
+        specifier: workspace:*
+        version: link:../checkout-slow-04
+      '@ci/checkout-slow-08':
+        specifier: workspace:*
+        version: link:../checkout-slow-08
+      '@ci/checkout-slow-12':
+        specifier: workspace:*
+        version: link:../checkout-slow-12
+      '@ci/checkout-slow-16':
+        specifier: workspace:*
+        version: link:../checkout-slow-16
+      '@ci/checkout-slow-20':
+        specifier: workspace:*
+        version: link:../checkout-slow-20
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/checkout-01:
+    dependencies:
+      '@ci/catalog-11':
+        specifier: workspace:*
+        version: link:../catalog-11
+      '@ci/inventory':
+        specifier: workspace:*
+        version: link:../../features/inventory
+      '@ci/notifications':
+        specifier: workspace:*
+        version: link:../../features/notifications
+      '@ci/storage':
+        specifier: workspace:*
+        version: link:../../platform/storage
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/checkout-02:
+    dependencies:
+      '@ci/auth':
+        specifier: workspace:*
+        version: link:../../platform/auth
+      '@ci/billing':
+        specifier: workspace:*
+        version: link:../../features/billing
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/checkout-03:
+    dependencies:
+      '@ci/cache':
+        specifier: workspace:*
+        version: link:../../platform/cache
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/checkout-06:
+    dependencies:
+      '@ci/billing':
+        specifier: workspace:*
+        version: link:../../features/billing
+      '@ci/recommendations':
+        specifier: workspace:*
+        version: link:../../features/recommendations
+      '@ci/tracing':
+        specifier: workspace:*
+        version: link:../../platform/tracing
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/checkout-10:
+    dependencies:
+      '@ci/catalog-slow-04':
+        specifier: workspace:*
+        version: link:../catalog-slow-04
+      '@ci/checkout-03':
+        specifier: workspace:*
+        version: link:../checkout-03
+      '@ci/shipping':
+        specifier: workspace:*
+        version: link:../../features/shipping
+      '@ci/tracing':
+        specifier: workspace:*
+        version: link:../../platform/tracing
+      '@ci/users':
+        specifier: workspace:*
+        version: link:../../features/users
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/checkout-11:
+    dependencies:
+      '@ci/checkout-10':
+        specifier: workspace:*
+        version: link:../checkout-10
+      '@ci/checkout-slow-04':
+        specifier: workspace:*
+        version: link:../checkout-slow-04
+      '@ci/notifications':
+        specifier: workspace:*
+        version: link:../../features/notifications
+      '@ci/queue':
+        specifier: workspace:*
+        version: link:../../platform/queue
+      '@ci/tracing':
+        specifier: workspace:*
+        version: link:../../platform/tracing
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/checkout-13:
+    dependencies:
+      '@ci/checkout-slow-08':
+        specifier: workspace:*
+        version: link:../checkout-slow-08
+      '@ci/date':
+        specifier: workspace:*
+        version: link:../../shared/date
+      '@ci/recommendations':
+        specifier: workspace:*
+        version: link:../../features/recommendations
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/checkout-17:
+    dependencies:
+      '@ci/analytics':
+        specifier: workspace:*
+        version: link:../../features/analytics
+      '@ci/checkout-cpu-07':
+        specifier: workspace:*
+        version: link:../checkout-cpu-07
+      '@ci/reports':
+        specifier: workspace:*
+        version: link:../../features/reports
+      '@ci/serializer':
+        specifier: workspace:*
+        version: link:../../shared/serializer
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/checkout-19:
+    dependencies:
+      '@ci/analytics':
+        specifier: workspace:*
+        version: link:../../features/analytics
+      '@ci/catalog-10':
+        specifier: workspace:*
+        version: link:../catalog-10
+      '@ci/checkout-mem-18':
+        specifier: workspace:*
+        version: link:../checkout-mem-18
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/checkout-cpu-07:
+    dependencies:
+      '@ci/auth':
+        specifier: workspace:*
+        version: link:../../platform/auth
+      '@ci/checkout-02':
+        specifier: workspace:*
+        version: link:../checkout-02
+      '@ci/feature-flags':
+        specifier: workspace:*
+        version: link:../../platform/feature-flags
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/checkout-cpu-14:
+    dependencies:
+      '@ci/checkout-13':
+        specifier: workspace:*
+        version: link:../checkout-13
+      '@ci/checkout-mem-09':
+        specifier: workspace:*
+        version: link:../checkout-mem-09
+      '@ci/errors':
+        specifier: workspace:*
+        version: link:../../shared/errors
+      '@ci/http':
+        specifier: workspace:*
+        version: link:../../platform/http
+      '@ci/recommendations':
+        specifier: workspace:*
+        version: link:../../features/recommendations
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/checkout-flaky-05:
+    dependencies:
+      '@ci/checkout-01':
+        specifier: workspace:*
+        version: link:../checkout-01
+      '@ci/checkout-slow-04':
+        specifier: workspace:*
+        version: link:../checkout-slow-04
+      '@ci/logger':
+        specifier: workspace:*
+        version: link:../../shared/logger
+      '@ci/orders':
+        specifier: workspace:*
+        version: link:../../features/orders
+      '@ci/payments':
+        specifier: workspace:*
+        version: link:../../features/payments
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/checkout-flaky-15:
+    dependencies:
+      '@ci/checkout-cpu-14':
+        specifier: workspace:*
+        version: link:../checkout-cpu-14
+      '@ci/crypto':
+        specifier: workspace:*
+        version: link:../../shared/crypto
+      '@ci/serializer':
+        specifier: workspace:*
+        version: link:../../shared/serializer
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/checkout-mem-09:
+    dependencies:
+      '@ci/audit':
+        specifier: workspace:*
+        version: link:../../features/audit
+      '@ci/checkout-flaky-05':
+        specifier: workspace:*
+        version: link:../checkout-flaky-05
+      '@ci/checkout-slow-08':
+        specifier: workspace:*
+        version: link:../checkout-slow-08
+      '@ci/orders':
+        specifier: workspace:*
+        version: link:../../features/orders
+      '@ci/recommendations':
+        specifier: workspace:*
+        version: link:../../features/recommendations
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/checkout-mem-18:
+    dependencies:
+      '@ci/checkout-02':
+        specifier: workspace:*
+        version: link:../checkout-02
+      '@ci/tracing':
+        specifier: workspace:*
+        version: link:../../platform/tracing
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/checkout-slow-04:
+    dependencies:
+      '@ci/checkout-02':
+        specifier: workspace:*
+        version: link:../checkout-02
+      '@ci/i18n':
+        specifier: workspace:*
+        version: link:../../shared/i18n
+      '@ci/inventory':
+        specifier: workspace:*
+        version: link:../../features/inventory
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/checkout-slow-08:
+    dependencies:
+      '@ci/billing':
+        specifier: workspace:*
+        version: link:../../features/billing
+      '@ci/checkout-cpu-07':
+        specifier: workspace:*
+        version: link:../checkout-cpu-07
+      '@ci/recommendations':
+        specifier: workspace:*
+        version: link:../../features/recommendations
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/checkout-slow-12:
+    dependencies:
+      '@ci/catalog-13':
+        specifier: workspace:*
+        version: link:../catalog-13
+      '@ci/checkout-01':
+        specifier: workspace:*
+        version: link:../checkout-01
+      '@ci/crypto':
+        specifier: workspace:*
+        version: link:../../shared/crypto
+      '@ci/search':
+        specifier: workspace:*
+        version: link:../../features/search
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/checkout-slow-16:
+    dependencies:
+      '@ci/checkout-flaky-15':
+        specifier: workspace:*
+        version: link:../checkout-flaky-15
+      '@ci/notifications':
+        specifier: workspace:*
+        version: link:../../features/notifications
+      '@ci/storage':
+        specifier: workspace:*
+        version: link:../../platform/storage
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/checkout-slow-20:
+    dependencies:
+      '@ci/catalog-19':
+        specifier: workspace:*
+        version: link:../catalog-19
+      '@ci/checkout-19':
+        specifier: workspace:*
+        version: link:../checkout-19
+      '@ci/i18n':
+        specifier: workspace:*
+        version: link:../../shared/i18n
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/crm:
+    dependencies:
+      '@ci/crm-01':
+        specifier: workspace:*
+        version: link:../crm-01
+      '@ci/crm-02':
+        specifier: workspace:*
+        version: link:../crm-02
+      '@ci/crm-03':
+        specifier: workspace:*
+        version: link:../crm-03
+      '@ci/crm-06':
+        specifier: workspace:*
+        version: link:../crm-06
+      '@ci/crm-10':
+        specifier: workspace:*
+        version: link:../crm-10
+      '@ci/crm-11':
+        specifier: workspace:*
+        version: link:../crm-11
+      '@ci/crm-13':
+        specifier: workspace:*
+        version: link:../crm-13
+      '@ci/crm-17':
+        specifier: workspace:*
+        version: link:../crm-17
+      '@ci/crm-19':
+        specifier: workspace:*
+        version: link:../crm-19
+      '@ci/crm-cpu-07':
+        specifier: workspace:*
+        version: link:../crm-cpu-07
+      '@ci/crm-cpu-14':
+        specifier: workspace:*
+        version: link:../crm-cpu-14
+      '@ci/crm-flaky-05':
+        specifier: workspace:*
+        version: link:../crm-flaky-05
+      '@ci/crm-flaky-15':
+        specifier: workspace:*
+        version: link:../crm-flaky-15
+      '@ci/crm-mem-09':
+        specifier: workspace:*
+        version: link:../crm-mem-09
+      '@ci/crm-mem-18':
+        specifier: workspace:*
+        version: link:../crm-mem-18
+      '@ci/crm-slow-04':
+        specifier: workspace:*
+        version: link:../crm-slow-04
+      '@ci/crm-slow-08':
+        specifier: workspace:*
+        version: link:../crm-slow-08
+      '@ci/crm-slow-12':
+        specifier: workspace:*
+        version: link:../crm-slow-12
+      '@ci/crm-slow-16':
+        specifier: workspace:*
+        version: link:../crm-slow-16
+      '@ci/crm-slow-20':
+        specifier: workspace:*
+        version: link:../crm-slow-20
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/crm-01:
+    dependencies:
+      '@ci/metrics':
+        specifier: workspace:*
+        version: link:../../platform/metrics
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/crm-02:
+    dependencies:
+      '@ci/audit':
+        specifier: workspace:*
+        version: link:../../features/audit
+      '@ci/shipping':
+        specifier: workspace:*
+        version: link:../../features/shipping
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/crm-03:
+    dependencies:
+      '@ci/audit':
+        specifier: workspace:*
+        version: link:../../features/audit
+      '@ci/checkout-flaky-05':
+        specifier: workspace:*
+        version: link:../checkout-flaky-05
+      '@ci/crm-02':
+        specifier: workspace:*
+        version: link:../crm-02
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/crm-06:
+    dependencies:
+      '@ci/crm-02':
+        specifier: workspace:*
+        version: link:../crm-02
+      '@ci/crm-flaky-05':
+        specifier: workspace:*
+        version: link:../crm-flaky-05
+      '@ci/search':
+        specifier: workspace:*
+        version: link:../../features/search
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/crm-10:
+    dependencies:
+      '@ci/crm-flaky-05':
+        specifier: workspace:*
+        version: link:../crm-flaky-05
+      '@ci/crm-mem-09':
+        specifier: workspace:*
+        version: link:../crm-mem-09
+      '@ci/queue':
+        specifier: workspace:*
+        version: link:../../platform/queue
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/crm-11:
+    dependencies:
+      '@ci/audit':
+        specifier: workspace:*
+        version: link:../../features/audit
+      '@ci/db':
+        specifier: workspace:*
+        version: link:../../platform/db
+      '@ci/inventory':
+        specifier: workspace:*
+        version: link:../../features/inventory
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/crm-13:
+    dependencies:
+      '@ci/crm-mem-09':
+        specifier: workspace:*
+        version: link:../crm-mem-09
+      '@ci/queue':
+        specifier: workspace:*
+        version: link:../../platform/queue
+      '@ci/recommendations':
+        specifier: workspace:*
+        version: link:../../features/recommendations
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/crm-17:
+    dependencies:
+      '@ci/inventory':
+        specifier: workspace:*
+        version: link:../../features/inventory
+      '@ci/metrics':
+        specifier: workspace:*
+        version: link:../../platform/metrics
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/crm-19:
+    dependencies:
+      '@ci/audit':
+        specifier: workspace:*
+        version: link:../../features/audit
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/crm-cpu-07:
+    dependencies:
+      '@ci/billing':
+        specifier: workspace:*
+        version: link:../../features/billing
+      '@ci/crm-06':
+        specifier: workspace:*
+        version: link:../crm-06
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/crm-cpu-14:
+    dependencies:
+      '@ci/crm-01':
+        specifier: workspace:*
+        version: link:../crm-01
+      '@ci/crm-13':
+        specifier: workspace:*
+        version: link:../crm-13
+      '@ci/metrics':
+        specifier: workspace:*
+        version: link:../../platform/metrics
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/crm-flaky-05:
+    dependencies:
+      '@ci/checkout-10':
+        specifier: workspace:*
+        version: link:../checkout-10
+      '@ci/crm-01':
+        specifier: workspace:*
+        version: link:../crm-01
+      '@ci/crm-slow-04':
+        specifier: workspace:*
+        version: link:../crm-slow-04
+      '@ci/reports':
+        specifier: workspace:*
+        version: link:../../features/reports
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/crm-flaky-15:
+    dependencies:
+      '@ci/recommendations':
+        specifier: workspace:*
+        version: link:../../features/recommendations
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/crm-mem-09:
+    dependencies:
+      '@ci/crm-slow-08':
+        specifier: workspace:*
+        version: link:../crm-slow-08
+      '@ci/notifications':
+        specifier: workspace:*
+        version: link:../../features/notifications
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/crm-mem-18:
+    dependencies:
+      '@ci/analytics':
+        specifier: workspace:*
+        version: link:../../features/analytics
+      '@ci/crm-17':
+        specifier: workspace:*
+        version: link:../crm-17
+      '@ci/crm-slow-04':
+        specifier: workspace:*
+        version: link:../crm-slow-04
+      '@ci/metrics':
+        specifier: workspace:*
+        version: link:../../platform/metrics
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/crm-slow-04:
+    dependencies:
+      '@ci/auth':
+        specifier: workspace:*
+        version: link:../../platform/auth
+      '@ci/crm-03':
+        specifier: workspace:*
+        version: link:../crm-03
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/crm-slow-08:
+    dependencies:
+      '@ci/crm-03':
+        specifier: workspace:*
+        version: link:../crm-03
+      '@ci/crm-cpu-07':
+        specifier: workspace:*
+        version: link:../crm-cpu-07
+      '@ci/events':
+        specifier: workspace:*
+        version: link:../../platform/events
+      '@ci/orders':
+        specifier: workspace:*
+        version: link:../../features/orders
+      '@ci/search':
+        specifier: workspace:*
+        version: link:../../features/search
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/crm-slow-12:
+    dependencies:
+      '@ci/billing':
+        specifier: workspace:*
+        version: link:../../features/billing
+      '@ci/crm-10':
+        specifier: workspace:*
+        version: link:../crm-10
+      '@ci/crm-11':
+        specifier: workspace:*
+        version: link:../crm-11
+      '@ci/recommendations':
+        specifier: workspace:*
+        version: link:../../features/recommendations
+      '@ci/users':
+        specifier: workspace:*
+        version: link:../../features/users
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/crm-slow-16:
+    dependencies:
+      '@ci/crm-flaky-15':
+        specifier: workspace:*
+        version: link:../crm-flaky-15
+      '@ci/inventory':
+        specifier: workspace:*
+        version: link:../../features/inventory
+      '@ci/recommendations':
+        specifier: workspace:*
+        version: link:../../features/recommendations
+      '@ci/search':
+        specifier: workspace:*
+        version: link:../../features/search
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/crm-slow-20:
+    dependencies:
+      '@ci/checkout-01':
+        specifier: workspace:*
+        version: link:../checkout-01
+      '@ci/inventory':
+        specifier: workspace:*
+        version: link:../../features/inventory
+      '@ci/search':
+        specifier: workspace:*
+        version: link:../../features/search
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/finance:
+    dependencies:
+      '@ci/finance-01':
+        specifier: workspace:*
+        version: link:../finance-01
+      '@ci/finance-02':
+        specifier: workspace:*
+        version: link:../finance-02
+      '@ci/finance-03':
+        specifier: workspace:*
+        version: link:../finance-03
+      '@ci/finance-06':
+        specifier: workspace:*
+        version: link:../finance-06
+      '@ci/finance-10':
+        specifier: workspace:*
+        version: link:../finance-10
+      '@ci/finance-11':
+        specifier: workspace:*
+        version: link:../finance-11
+      '@ci/finance-13':
+        specifier: workspace:*
+        version: link:../finance-13
+      '@ci/finance-17':
+        specifier: workspace:*
+        version: link:../finance-17
+      '@ci/finance-19':
+        specifier: workspace:*
+        version: link:../finance-19
+      '@ci/finance-cpu-07':
+        specifier: workspace:*
+        version: link:../finance-cpu-07
+      '@ci/finance-cpu-14':
+        specifier: workspace:*
+        version: link:../finance-cpu-14
+      '@ci/finance-flaky-05':
+        specifier: workspace:*
+        version: link:../finance-flaky-05
+      '@ci/finance-flaky-15':
+        specifier: workspace:*
+        version: link:../finance-flaky-15
+      '@ci/finance-mem-09':
+        specifier: workspace:*
+        version: link:../finance-mem-09
+      '@ci/finance-mem-18':
+        specifier: workspace:*
+        version: link:../finance-mem-18
+      '@ci/finance-slow-04':
+        specifier: workspace:*
+        version: link:../finance-slow-04
+      '@ci/finance-slow-08':
+        specifier: workspace:*
+        version: link:../finance-slow-08
+      '@ci/finance-slow-12':
+        specifier: workspace:*
+        version: link:../finance-slow-12
+      '@ci/finance-slow-16':
+        specifier: workspace:*
+        version: link:../finance-slow-16
+      '@ci/finance-slow-20':
+        specifier: workspace:*
+        version: link:../finance-slow-20
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/finance-01:
+    dependencies:
+      '@ci/audit':
+        specifier: workspace:*
+        version: link:../../features/audit
+      '@ci/notifications':
+        specifier: workspace:*
+        version: link:../../features/notifications
+      '@ci/users':
+        specifier: workspace:*
+        version: link:../../features/users
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/finance-02:
+    dependencies:
+      '@ci/feature-flags':
+        specifier: workspace:*
+        version: link:../../platform/feature-flags
+      '@ci/finance-01':
+        specifier: workspace:*
+        version: link:../finance-01
+      '@ci/shipping':
+        specifier: workspace:*
+        version: link:../../features/shipping
+      '@ci/users':
+        specifier: workspace:*
+        version: link:../../features/users
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/finance-03:
+    dependencies:
+      '@ci/finance-02':
+        specifier: workspace:*
+        version: link:../finance-02
+      '@ci/users':
+        specifier: workspace:*
+        version: link:../../features/users
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/finance-06:
+    dependencies:
+      '@ci/billing':
+        specifier: workspace:*
+        version: link:../../features/billing
+      '@ci/finance-flaky-05':
+        specifier: workspace:*
+        version: link:../finance-flaky-05
+      '@ci/metrics':
+        specifier: workspace:*
+        version: link:../../platform/metrics
+      '@ci/orders':
+        specifier: workspace:*
+        version: link:../../features/orders
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/finance-10:
+    dependencies:
+      '@ci/crm-mem-09':
+        specifier: workspace:*
+        version: link:../crm-mem-09
+      '@ci/finance-slow-08':
+        specifier: workspace:*
+        version: link:../finance-slow-08
+      '@ci/storage':
+        specifier: workspace:*
+        version: link:../../platform/storage
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/finance-11:
+    dependencies:
+      '@ci/analytics':
+        specifier: workspace:*
+        version: link:../../features/analytics
+      '@ci/crm-10':
+        specifier: workspace:*
+        version: link:../crm-10
+      '@ci/finance-10':
+        specifier: workspace:*
+        version: link:../finance-10
+      '@ci/finance-slow-08':
+        specifier: workspace:*
+        version: link:../finance-slow-08
+      '@ci/inventory':
+        specifier: workspace:*
+        version: link:../../features/inventory
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/finance-13:
+    dependencies:
+      '@ci/finance-02':
+        specifier: workspace:*
+        version: link:../finance-02
+      '@ci/finance-slow-12':
+        specifier: workspace:*
+        version: link:../finance-slow-12
+      '@ci/users':
+        specifier: workspace:*
+        version: link:../../features/users
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/finance-17:
+    dependencies:
+      '@ci/finance-slow-16':
+        specifier: workspace:*
+        version: link:../finance-slow-16
+      '@ci/serializer':
+        specifier: workspace:*
+        version: link:../../shared/serializer
+      '@ci/shipping':
+        specifier: workspace:*
+        version: link:../../features/shipping
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/finance-19:
+    dependencies:
+      '@ci/billing':
+        specifier: workspace:*
+        version: link:../../features/billing
+      '@ci/reports':
+        specifier: workspace:*
+        version: link:../../features/reports
+      '@ci/serializer':
+        specifier: workspace:*
+        version: link:../../shared/serializer
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/finance-cpu-07:
+    dependencies:
+      '@ci/finance-06':
+        specifier: workspace:*
+        version: link:../finance-06
+      '@ci/notifications':
+        specifier: workspace:*
+        version: link:../../features/notifications
+      '@ci/queue':
+        specifier: workspace:*
+        version: link:../../platform/queue
+      '@ci/users':
+        specifier: workspace:*
+        version: link:../../features/users
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/finance-cpu-14:
+    dependencies:
+      '@ci/analytics':
+        specifier: workspace:*
+        version: link:../../features/analytics
+      '@ci/audit':
+        specifier: workspace:*
+        version: link:../../features/audit
+      '@ci/users':
+        specifier: workspace:*
+        version: link:../../features/users
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/finance-flaky-05:
+    dependencies:
+      '@ci/finance-01':
+        specifier: workspace:*
+        version: link:../finance-01
+      '@ci/finance-slow-04':
+        specifier: workspace:*
+        version: link:../finance-slow-04
+      '@ci/schema':
+        specifier: workspace:*
+        version: link:../../shared/schema
+      '@ci/search':
+        specifier: workspace:*
+        version: link:../../features/search
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/finance-flaky-15:
+    dependencies:
+      '@ci/finance-slow-04':
+        specifier: workspace:*
+        version: link:../finance-slow-04
+      '@ci/notifications':
+        specifier: workspace:*
+        version: link:../../features/notifications
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/finance-mem-09:
+    dependencies:
+      '@ci/analytics':
+        specifier: workspace:*
+        version: link:../../features/analytics
+      '@ci/notifications':
+        specifier: workspace:*
+        version: link:../../features/notifications
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/finance-mem-18:
+    dependencies:
+      '@ci/auth':
+        specifier: workspace:*
+        version: link:../../platform/auth
+      '@ci/finance-17':
+        specifier: workspace:*
+        version: link:../finance-17
+      '@ci/payments':
+        specifier: workspace:*
+        version: link:../../features/payments
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/finance-slow-04:
+    dependencies:
+      '@ci/db':
+        specifier: workspace:*
+        version: link:../../platform/db
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/finance-slow-08:
+    dependencies:
+      '@ci/metrics':
+        specifier: workspace:*
+        version: link:../../platform/metrics
+      '@ci/schema':
+        specifier: workspace:*
+        version: link:../../shared/schema
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/finance-slow-12:
+    dependencies:
+      '@ci/crm-slow-08':
+        specifier: workspace:*
+        version: link:../crm-slow-08
+      '@ci/payments':
+        specifier: workspace:*
+        version: link:../../features/payments
+      '@ci/search':
+        specifier: workspace:*
+        version: link:../../features/search
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/finance-slow-16:
+    dependencies:
+      '@ci/billing':
+        specifier: workspace:*
+        version: link:../../features/billing
+      '@ci/crm-13':
+        specifier: workspace:*
+        version: link:../crm-13
+      '@ci/finance-06':
+        specifier: workspace:*
+        version: link:../finance-06
+      '@ci/finance-flaky-15':
+        specifier: workspace:*
+        version: link:../finance-flaky-15
+      '@ci/logger':
+        specifier: workspace:*
+        version: link:../../shared/logger
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/finance-slow-20:
+    dependencies:
+      '@ci/finance-03':
+        specifier: workspace:*
+        version: link:../finance-03
+      '@ci/finance-19':
+        specifier: workspace:*
+        version: link:../finance-19
+      '@ci/shipping':
+        specifier: workspace:*
+        version: link:../../features/shipping
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/fulfillment:
+    dependencies:
+      '@ci/fulfillment-01':
+        specifier: workspace:*
+        version: link:../fulfillment-01
+      '@ci/fulfillment-02':
+        specifier: workspace:*
+        version: link:../fulfillment-02
+      '@ci/fulfillment-03':
+        specifier: workspace:*
+        version: link:../fulfillment-03
+      '@ci/fulfillment-06':
+        specifier: workspace:*
+        version: link:../fulfillment-06
+      '@ci/fulfillment-10':
+        specifier: workspace:*
+        version: link:../fulfillment-10
+      '@ci/fulfillment-11':
+        specifier: workspace:*
+        version: link:../fulfillment-11
+      '@ci/fulfillment-13':
+        specifier: workspace:*
+        version: link:../fulfillment-13
+      '@ci/fulfillment-17':
+        specifier: workspace:*
+        version: link:../fulfillment-17
+      '@ci/fulfillment-19':
+        specifier: workspace:*
+        version: link:../fulfillment-19
+      '@ci/fulfillment-cpu-07':
+        specifier: workspace:*
+        version: link:../fulfillment-cpu-07
+      '@ci/fulfillment-cpu-14':
+        specifier: workspace:*
+        version: link:../fulfillment-cpu-14
+      '@ci/fulfillment-flaky-05':
+        specifier: workspace:*
+        version: link:../fulfillment-flaky-05
+      '@ci/fulfillment-flaky-15':
+        specifier: workspace:*
+        version: link:../fulfillment-flaky-15
+      '@ci/fulfillment-mem-09':
+        specifier: workspace:*
+        version: link:../fulfillment-mem-09
+      '@ci/fulfillment-mem-18':
+        specifier: workspace:*
+        version: link:../fulfillment-mem-18
+      '@ci/fulfillment-slow-04':
+        specifier: workspace:*
+        version: link:../fulfillment-slow-04
+      '@ci/fulfillment-slow-08':
+        specifier: workspace:*
+        version: link:../fulfillment-slow-08
+      '@ci/fulfillment-slow-12':
+        specifier: workspace:*
+        version: link:../fulfillment-slow-12
+      '@ci/fulfillment-slow-16':
+        specifier: workspace:*
+        version: link:../fulfillment-slow-16
+      '@ci/fulfillment-slow-20':
+        specifier: workspace:*
+        version: link:../fulfillment-slow-20
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/fulfillment-01:
+    dependencies:
+      '@ci/users':
+        specifier: workspace:*
+        version: link:../../features/users
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/fulfillment-02:
+    dependencies:
+      '@ci/cache':
+        specifier: workspace:*
+        version: link:../../platform/cache
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/fulfillment-03:
+    dependencies:
+      '@ci/fulfillment-02':
+        specifier: workspace:*
+        version: link:../fulfillment-02
+      '@ci/orders':
+        specifier: workspace:*
+        version: link:../../features/orders
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/fulfillment-06:
+    dependencies:
+      '@ci/fulfillment-flaky-05':
+        specifier: workspace:*
+        version: link:../fulfillment-flaky-05
+      '@ci/search':
+        specifier: workspace:*
+        version: link:../../features/search
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/fulfillment-10:
+    dependencies:
+      '@ci/fulfillment-mem-09':
+        specifier: workspace:*
+        version: link:../fulfillment-mem-09
+      '@ci/payments':
+        specifier: workspace:*
+        version: link:../../features/payments
+      '@ci/reports':
+        specifier: workspace:*
+        version: link:../../features/reports
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/fulfillment-11:
+    dependencies:
+      '@ci/analytics':
+        specifier: workspace:*
+        version: link:../../features/analytics
+      '@ci/fulfillment-10':
+        specifier: workspace:*
+        version: link:../fulfillment-10
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/fulfillment-13:
+    dependencies:
+      '@ci/audit':
+        specifier: workspace:*
+        version: link:../../features/audit
+      '@ci/fulfillment-slow-08':
+        specifier: workspace:*
+        version: link:../fulfillment-slow-08
+      '@ci/fulfillment-slow-12':
+        specifier: workspace:*
+        version: link:../fulfillment-slow-12
+      '@ci/notifications':
+        specifier: workspace:*
+        version: link:../../features/notifications
+      '@ci/orders':
+        specifier: workspace:*
+        version: link:../../features/orders
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/fulfillment-17:
+    dependencies:
+      '@ci/fulfillment-slow-16':
+        specifier: workspace:*
+        version: link:../fulfillment-slow-16
+      '@ci/users':
+        specifier: workspace:*
+        version: link:../../features/users
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/fulfillment-19:
+    dependencies:
+      '@ci/finance-13':
+        specifier: workspace:*
+        version: link:../finance-13
+      '@ci/fulfillment-mem-18':
+        specifier: workspace:*
+        version: link:../fulfillment-mem-18
+      '@ci/reports':
+        specifier: workspace:*
+        version: link:../../features/reports
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+      '@ci/validation':
+        specifier: workspace:*
+        version: link:../../shared/validation
+
+  packages/modules/fulfillment-cpu-07:
+    dependencies:
+      '@ci/audit':
+        specifier: workspace:*
+        version: link:../../features/audit
+      '@ci/fulfillment-06':
+        specifier: workspace:*
+        version: link:../fulfillment-06
+      '@ci/orders':
+        specifier: workspace:*
+        version: link:../../features/orders
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/fulfillment-cpu-14:
+    dependencies:
+      '@ci/audit':
+        specifier: workspace:*
+        version: link:../../features/audit
+      '@ci/db':
+        specifier: workspace:*
+        version: link:../../platform/db
+      '@ci/fulfillment-13':
+        specifier: workspace:*
+        version: link:../fulfillment-13
+      '@ci/reports':
+        specifier: workspace:*
+        version: link:../../features/reports
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/fulfillment-flaky-05:
+    dependencies:
+      '@ci/fulfillment-02':
+        specifier: workspace:*
+        version: link:../fulfillment-02
+      '@ci/fulfillment-slow-04':
+        specifier: workspace:*
+        version: link:../fulfillment-slow-04
+      '@ci/orders':
+        specifier: workspace:*
+        version: link:../../features/orders
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/fulfillment-flaky-15:
+    dependencies:
+      '@ci/fulfillment-13':
+        specifier: workspace:*
+        version: link:../fulfillment-13
+      '@ci/fulfillment-cpu-14':
+        specifier: workspace:*
+        version: link:../fulfillment-cpu-14
+      '@ci/shipping':
+        specifier: workspace:*
+        version: link:../../features/shipping
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/fulfillment-mem-09:
+    dependencies:
+      '@ci/billing':
+        specifier: workspace:*
+        version: link:../../features/billing
+      '@ci/fulfillment-cpu-07':
+        specifier: workspace:*
+        version: link:../fulfillment-cpu-07
+      '@ci/users':
+        specifier: workspace:*
+        version: link:../../features/users
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/fulfillment-mem-18:
+    dependencies:
+      '@ci/fulfillment-17':
+        specifier: workspace:*
+        version: link:../fulfillment-17
+      '@ci/fulfillment-cpu-07':
+        specifier: workspace:*
+        version: link:../fulfillment-cpu-07
+      '@ci/inventory':
+        specifier: workspace:*
+        version: link:../../features/inventory
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/fulfillment-slow-04:
+    dependencies:
+      '@ci/db':
+        specifier: workspace:*
+        version: link:../../platform/db
+      '@ci/feature-flags':
+        specifier: workspace:*
+        version: link:../../platform/feature-flags
+      '@ci/fulfillment-02':
+        specifier: workspace:*
+        version: link:../fulfillment-02
+      '@ci/fulfillment-03':
+        specifier: workspace:*
+        version: link:../fulfillment-03
+      '@ci/storage':
+        specifier: workspace:*
+        version: link:../../platform/storage
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/fulfillment-slow-08:
+    dependencies:
+      '@ci/fulfillment-cpu-07':
+        specifier: workspace:*
+        version: link:../fulfillment-cpu-07
+      '@ci/tracing':
+        specifier: workspace:*
+        version: link:../../platform/tracing
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/fulfillment-slow-12:
+    dependencies:
+      '@ci/finance-01':
+        specifier: workspace:*
+        version: link:../finance-01
+      '@ci/recommendations':
+        specifier: workspace:*
+        version: link:../../features/recommendations
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/fulfillment-slow-16:
+    dependencies:
+      '@ci/fulfillment-flaky-15':
+        specifier: workspace:*
+        version: link:../fulfillment-flaky-15
+      '@ci/schema':
+        specifier: workspace:*
+        version: link:../../shared/schema
+      '@ci/search':
+        specifier: workspace:*
+        version: link:../../features/search
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/fulfillment-slow-20:
+    dependencies:
+      '@ci/feature-flags':
+        specifier: workspace:*
+        version: link:../../platform/feature-flags
+      '@ci/fulfillment-06':
+        specifier: workspace:*
+        version: link:../fulfillment-06
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/identity:
+    dependencies:
+      '@ci/identity-01':
+        specifier: workspace:*
+        version: link:../identity-01
+      '@ci/identity-02':
+        specifier: workspace:*
+        version: link:../identity-02
+      '@ci/identity-03':
+        specifier: workspace:*
+        version: link:../identity-03
+      '@ci/identity-06':
+        specifier: workspace:*
+        version: link:../identity-06
+      '@ci/identity-10':
+        specifier: workspace:*
+        version: link:../identity-10
+      '@ci/identity-11':
+        specifier: workspace:*
+        version: link:../identity-11
+      '@ci/identity-13':
+        specifier: workspace:*
+        version: link:../identity-13
+      '@ci/identity-17':
+        specifier: workspace:*
+        version: link:../identity-17
+      '@ci/identity-19':
+        specifier: workspace:*
+        version: link:../identity-19
+      '@ci/identity-cpu-07':
+        specifier: workspace:*
+        version: link:../identity-cpu-07
+      '@ci/identity-cpu-14':
+        specifier: workspace:*
+        version: link:../identity-cpu-14
+      '@ci/identity-flaky-05':
+        specifier: workspace:*
+        version: link:../identity-flaky-05
+      '@ci/identity-flaky-15':
+        specifier: workspace:*
+        version: link:../identity-flaky-15
+      '@ci/identity-mem-09':
+        specifier: workspace:*
+        version: link:../identity-mem-09
+      '@ci/identity-mem-18':
+        specifier: workspace:*
+        version: link:../identity-mem-18
+      '@ci/identity-slow-04':
+        specifier: workspace:*
+        version: link:../identity-slow-04
+      '@ci/identity-slow-08':
+        specifier: workspace:*
+        version: link:../identity-slow-08
+      '@ci/identity-slow-12':
+        specifier: workspace:*
+        version: link:../identity-slow-12
+      '@ci/identity-slow-16':
+        specifier: workspace:*
+        version: link:../identity-slow-16
+      '@ci/identity-slow-20':
+        specifier: workspace:*
+        version: link:../identity-slow-20
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/identity-01:
+    dependencies:
+      '@ci/cache':
+        specifier: workspace:*
+        version: link:../../platform/cache
+      '@ci/fulfillment-slow-12':
+        specifier: workspace:*
+        version: link:../fulfillment-slow-12
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/identity-02:
+    dependencies:
+      '@ci/audit':
+        specifier: workspace:*
+        version: link:../../features/audit
+      '@ci/fulfillment-cpu-14':
+        specifier: workspace:*
+        version: link:../fulfillment-cpu-14
+      '@ci/payments':
+        specifier: workspace:*
+        version: link:../../features/payments
+      '@ci/recommendations':
+        specifier: workspace:*
+        version: link:../../features/recommendations
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/identity-03:
+    dependencies:
+      '@ci/feature-flags':
+        specifier: workspace:*
+        version: link:../../platform/feature-flags
+      '@ci/metrics':
+        specifier: workspace:*
+        version: link:../../platform/metrics
+      '@ci/users':
+        specifier: workspace:*
+        version: link:../../features/users
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/identity-06:
+    dependencies:
+      '@ci/identity-03':
+        specifier: workspace:*
+        version: link:../identity-03
+      '@ci/identity-flaky-05':
+        specifier: workspace:*
+        version: link:../identity-flaky-05
+      '@ci/shipping':
+        specifier: workspace:*
+        version: link:../../features/shipping
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/identity-10:
+    dependencies:
+      '@ci/audit':
+        specifier: workspace:*
+        version: link:../../features/audit
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/identity-11:
+    dependencies:
+      '@ci/billing':
+        specifier: workspace:*
+        version: link:../../features/billing
+      '@ci/identity-10':
+        specifier: workspace:*
+        version: link:../identity-10
+      '@ci/recommendations':
+        specifier: workspace:*
+        version: link:../../features/recommendations
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/identity-13:
+    dependencies:
+      '@ci/identity-03':
+        specifier: workspace:*
+        version: link:../identity-03
+      '@ci/payments':
+        specifier: workspace:*
+        version: link:../../features/payments
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/identity-17:
+    dependencies:
+      '@ci/analytics':
+        specifier: workspace:*
+        version: link:../../features/analytics
+      '@ci/identity-03':
+        specifier: workspace:*
+        version: link:../identity-03
+      '@ci/identity-slow-16':
+        specifier: workspace:*
+        version: link:../identity-slow-16
+      '@ci/orders':
+        specifier: workspace:*
+        version: link:../../features/orders
+      '@ci/recommendations':
+        specifier: workspace:*
+        version: link:../../features/recommendations
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/identity-19:
+    dependencies:
+      '@ci/db':
+        specifier: workspace:*
+        version: link:../../platform/db
+      '@ci/identity-mem-18':
+        specifier: workspace:*
+        version: link:../identity-mem-18
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/identity-cpu-07:
+    dependencies:
+      '@ci/identity-06':
+        specifier: workspace:*
+        version: link:../identity-06
+      '@ci/reports':
+        specifier: workspace:*
+        version: link:../../features/reports
+      '@ci/serializer':
+        specifier: workspace:*
+        version: link:../../shared/serializer
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/identity-cpu-14:
+    dependencies:
+      '@ci/billing':
+        specifier: workspace:*
+        version: link:../../features/billing
+      '@ci/feature-flags':
+        specifier: workspace:*
+        version: link:../../platform/feature-flags
+      '@ci/identity-13':
+        specifier: workspace:*
+        version: link:../identity-13
+      '@ci/identity-mem-09':
+        specifier: workspace:*
+        version: link:../identity-mem-09
+      '@ci/reports':
+        specifier: workspace:*
+        version: link:../../features/reports
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/identity-flaky-05:
+    dependencies:
+      '@ci/analytics':
+        specifier: workspace:*
+        version: link:../../features/analytics
+      '@ci/identity-01':
+        specifier: workspace:*
+        version: link:../identity-01
+      '@ci/recommendations':
+        specifier: workspace:*
+        version: link:../../features/recommendations
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/identity-flaky-15:
+    dependencies:
+      '@ci/i18n':
+        specifier: workspace:*
+        version: link:../../shared/i18n
+      '@ci/queue':
+        specifier: workspace:*
+        version: link:../../platform/queue
+      '@ci/storage':
+        specifier: workspace:*
+        version: link:../../platform/storage
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/identity-mem-09:
+    dependencies:
+      '@ci/fulfillment-cpu-07':
+        specifier: workspace:*
+        version: link:../fulfillment-cpu-07
+      '@ci/inventory':
+        specifier: workspace:*
+        version: link:../../features/inventory
+      '@ci/storage':
+        specifier: workspace:*
+        version: link:../../platform/storage
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/identity-mem-18:
+    dependencies:
+      '@ci/identity-17':
+        specifier: workspace:*
+        version: link:../identity-17
+      '@ci/recommendations':
+        specifier: workspace:*
+        version: link:../../features/recommendations
+      '@ci/shipping':
+        specifier: workspace:*
+        version: link:../../features/shipping
+      '@ci/users':
+        specifier: workspace:*
+        version: link:../../features/users
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/identity-slow-04:
+    dependencies:
+      '@ci/fulfillment-03':
+        specifier: workspace:*
+        version: link:../fulfillment-03
+      '@ci/identity-03':
+        specifier: workspace:*
+        version: link:../identity-03
+      '@ci/queue':
+        specifier: workspace:*
+        version: link:../../platform/queue
+      '@ci/storage':
+        specifier: workspace:*
+        version: link:../../platform/storage
+      '@ci/users':
+        specifier: workspace:*
+        version: link:../../features/users
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/identity-slow-08:
+    dependencies:
+      '@ci/feature-flags':
+        specifier: workspace:*
+        version: link:../../platform/feature-flags
+      '@ci/identity-01':
+        specifier: workspace:*
+        version: link:../identity-01
+      '@ci/identity-cpu-07':
+        specifier: workspace:*
+        version: link:../identity-cpu-07
+      '@ci/users':
+        specifier: workspace:*
+        version: link:../../features/users
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/identity-slow-12:
+    dependencies:
+      '@ci/events':
+        specifier: workspace:*
+        version: link:../../platform/events
+      '@ci/feature-flags':
+        specifier: workspace:*
+        version: link:../../platform/feature-flags
+      '@ci/identity-cpu-07':
+        specifier: workspace:*
+        version: link:../identity-cpu-07
+      '@ci/payments':
+        specifier: workspace:*
+        version: link:../../features/payments
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/identity-slow-16:
+    dependencies:
+      '@ci/identity-mem-09':
+        specifier: workspace:*
+        version: link:../identity-mem-09
+      '@ci/storage':
+        specifier: workspace:*
+        version: link:../../platform/storage
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/identity-slow-20:
+    dependencies:
+      '@ci/identity-11':
+        specifier: workspace:*
+        version: link:../identity-11
+      '@ci/recommendations':
+        specifier: workspace:*
+        version: link:../../features/recommendations
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/marketing:
+    dependencies:
+      '@ci/marketing-01':
+        specifier: workspace:*
+        version: link:../marketing-01
+      '@ci/marketing-02':
+        specifier: workspace:*
+        version: link:../marketing-02
+      '@ci/marketing-03':
+        specifier: workspace:*
+        version: link:../marketing-03
+      '@ci/marketing-06':
+        specifier: workspace:*
+        version: link:../marketing-06
+      '@ci/marketing-10':
+        specifier: workspace:*
+        version: link:../marketing-10
+      '@ci/marketing-11':
+        specifier: workspace:*
+        version: link:../marketing-11
+      '@ci/marketing-13':
+        specifier: workspace:*
+        version: link:../marketing-13
+      '@ci/marketing-17':
+        specifier: workspace:*
+        version: link:../marketing-17
+      '@ci/marketing-19':
+        specifier: workspace:*
+        version: link:../marketing-19
+      '@ci/marketing-cpu-07':
+        specifier: workspace:*
+        version: link:../marketing-cpu-07
+      '@ci/marketing-cpu-14':
+        specifier: workspace:*
+        version: link:../marketing-cpu-14
+      '@ci/marketing-flaky-05':
+        specifier: workspace:*
+        version: link:../marketing-flaky-05
+      '@ci/marketing-flaky-15':
+        specifier: workspace:*
+        version: link:../marketing-flaky-15
+      '@ci/marketing-mem-09':
+        specifier: workspace:*
+        version: link:../marketing-mem-09
+      '@ci/marketing-mem-18':
+        specifier: workspace:*
+        version: link:../marketing-mem-18
+      '@ci/marketing-slow-04':
+        specifier: workspace:*
+        version: link:../marketing-slow-04
+      '@ci/marketing-slow-08':
+        specifier: workspace:*
+        version: link:../marketing-slow-08
+      '@ci/marketing-slow-12':
+        specifier: workspace:*
+        version: link:../marketing-slow-12
+      '@ci/marketing-slow-16':
+        specifier: workspace:*
+        version: link:../marketing-slow-16
+      '@ci/marketing-slow-20':
+        specifier: workspace:*
+        version: link:../marketing-slow-20
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/marketing-01:
+    dependencies:
+      '@ci/inventory':
+        specifier: workspace:*
+        version: link:../../features/inventory
+      '@ci/shipping':
+        specifier: workspace:*
+        version: link:../../features/shipping
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/marketing-02:
+    dependencies:
+      '@ci/auth':
+        specifier: workspace:*
+        version: link:../../platform/auth
+      '@ci/queue':
+        specifier: workspace:*
+        version: link:../../platform/queue
+      '@ci/users':
+        specifier: workspace:*
+        version: link:../../features/users
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/marketing-03:
+    dependencies:
+      '@ci/analytics':
+        specifier: workspace:*
+        version: link:../../features/analytics
+      '@ci/recommendations':
+        specifier: workspace:*
+        version: link:../../features/recommendations
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/marketing-06:
+    dependencies:
+      '@ci/audit':
+        specifier: workspace:*
+        version: link:../../features/audit
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/marketing-10:
+    dependencies:
+      '@ci/marketing-mem-09':
+        specifier: workspace:*
+        version: link:../marketing-mem-09
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+      '@ci/validation':
+        specifier: workspace:*
+        version: link:../../shared/validation
+
+  packages/modules/marketing-11:
+    dependencies:
+      '@ci/billing':
+        specifier: workspace:*
+        version: link:../../features/billing
+      '@ci/marketing-01':
+        specifier: workspace:*
+        version: link:../marketing-01
+      '@ci/marketing-10':
+        specifier: workspace:*
+        version: link:../marketing-10
+      '@ci/notifications':
+        specifier: workspace:*
+        version: link:../../features/notifications
+      '@ci/search':
+        specifier: workspace:*
+        version: link:../../features/search
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/marketing-13:
+    dependencies:
+      '@ci/marketing-slow-12':
+        specifier: workspace:*
+        version: link:../marketing-slow-12
+      '@ci/reports':
+        specifier: workspace:*
+        version: link:../../features/reports
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/marketing-17:
+    dependencies:
+      '@ci/analytics':
+        specifier: workspace:*
+        version: link:../../features/analytics
+      '@ci/marketing-slow-16':
+        specifier: workspace:*
+        version: link:../marketing-slow-16
+      '@ci/payments':
+        specifier: workspace:*
+        version: link:../../features/payments
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/marketing-19:
+    dependencies:
+      '@ci/db':
+        specifier: workspace:*
+        version: link:../../platform/db
+      '@ci/notifications':
+        specifier: workspace:*
+        version: link:../../features/notifications
+      '@ci/payments':
+        specifier: workspace:*
+        version: link:../../features/payments
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/marketing-cpu-07:
+    dependencies:
+      '@ci/billing':
+        specifier: workspace:*
+        version: link:../../features/billing
+      '@ci/identity-11':
+        specifier: workspace:*
+        version: link:../identity-11
+      '@ci/marketing-06':
+        specifier: workspace:*
+        version: link:../marketing-06
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/marketing-cpu-14:
+    dependencies:
+      '@ci/marketing-13':
+        specifier: workspace:*
+        version: link:../marketing-13
+      '@ci/search':
+        specifier: workspace:*
+        version: link:../../features/search
+      '@ci/users':
+        specifier: workspace:*
+        version: link:../../features/users
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/marketing-flaky-05:
+    dependencies:
+      '@ci/billing':
+        specifier: workspace:*
+        version: link:../../features/billing
+      '@ci/identity-flaky-15':
+        specifier: workspace:*
+        version: link:../identity-flaky-15
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/marketing-flaky-15:
+    dependencies:
+      '@ci/analytics':
+        specifier: workspace:*
+        version: link:../../features/analytics
+      '@ci/db':
+        specifier: workspace:*
+        version: link:../../platform/db
+      '@ci/i18n':
+        specifier: workspace:*
+        version: link:../../shared/i18n
+      '@ci/marketing-cpu-14':
+        specifier: workspace:*
+        version: link:../marketing-cpu-14
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/marketing-mem-09:
+    dependencies:
+      '@ci/identity-10':
+        specifier: workspace:*
+        version: link:../identity-10
+      '@ci/marketing-slow-08':
+        specifier: workspace:*
+        version: link:../marketing-slow-08
+      '@ci/notifications':
+        specifier: workspace:*
+        version: link:../../features/notifications
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/marketing-mem-18:
+    dependencies:
+      '@ci/http':
+        specifier: workspace:*
+        version: link:../../platform/http
+      '@ci/marketing-17':
+        specifier: workspace:*
+        version: link:../marketing-17
+      '@ci/marketing-flaky-05':
+        specifier: workspace:*
+        version: link:../marketing-flaky-05
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/marketing-slow-04:
+    dependencies:
+      '@ci/marketing-03':
+        specifier: workspace:*
+        version: link:../marketing-03
+      '@ci/recommendations':
+        specifier: workspace:*
+        version: link:../../features/recommendations
+      '@ci/schema':
+        specifier: workspace:*
+        version: link:../../shared/schema
+      '@ci/users':
+        specifier: workspace:*
+        version: link:../../features/users
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/marketing-slow-08:
+    dependencies:
+      '@ci/analytics':
+        specifier: workspace:*
+        version: link:../../features/analytics
+      '@ci/auth':
+        specifier: workspace:*
+        version: link:../../platform/auth
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/marketing-slow-12:
+    dependencies:
+      '@ci/analytics':
+        specifier: workspace:*
+        version: link:../../features/analytics
+      '@ci/marketing-03':
+        specifier: workspace:*
+        version: link:../marketing-03
+      '@ci/marketing-11':
+        specifier: workspace:*
+        version: link:../marketing-11
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/marketing-slow-16:
+    dependencies:
+      '@ci/cache':
+        specifier: workspace:*
+        version: link:../../platform/cache
+      '@ci/marketing-flaky-15':
+        specifier: workspace:*
+        version: link:../marketing-flaky-15
+      '@ci/marketing-slow-08':
+        specifier: workspace:*
+        version: link:../marketing-slow-08
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/marketing-slow-20:
+    dependencies:
+      '@ci/identity-slow-04':
+        specifier: workspace:*
+        version: link:../identity-slow-04
+      '@ci/marketing-10':
+        specifier: workspace:*
+        version: link:../marketing-10
+      '@ci/shipping':
+        specifier: workspace:*
+        version: link:../../features/shipping
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/pricing:
+    dependencies:
+      '@ci/pricing-01':
+        specifier: workspace:*
+        version: link:../pricing-01
+      '@ci/pricing-02':
+        specifier: workspace:*
+        version: link:../pricing-02
+      '@ci/pricing-03':
+        specifier: workspace:*
+        version: link:../pricing-03
+      '@ci/pricing-06':
+        specifier: workspace:*
+        version: link:../pricing-06
+      '@ci/pricing-10':
+        specifier: workspace:*
+        version: link:../pricing-10
+      '@ci/pricing-11':
+        specifier: workspace:*
+        version: link:../pricing-11
+      '@ci/pricing-13':
+        specifier: workspace:*
+        version: link:../pricing-13
+      '@ci/pricing-17':
+        specifier: workspace:*
+        version: link:../pricing-17
+      '@ci/pricing-19':
+        specifier: workspace:*
+        version: link:../pricing-19
+      '@ci/pricing-cpu-07':
+        specifier: workspace:*
+        version: link:../pricing-cpu-07
+      '@ci/pricing-cpu-14':
+        specifier: workspace:*
+        version: link:../pricing-cpu-14
+      '@ci/pricing-flaky-05':
+        specifier: workspace:*
+        version: link:../pricing-flaky-05
+      '@ci/pricing-flaky-15':
+        specifier: workspace:*
+        version: link:../pricing-flaky-15
+      '@ci/pricing-mem-09':
+        specifier: workspace:*
+        version: link:../pricing-mem-09
+      '@ci/pricing-mem-18':
+        specifier: workspace:*
+        version: link:../pricing-mem-18
+      '@ci/pricing-slow-04':
+        specifier: workspace:*
+        version: link:../pricing-slow-04
+      '@ci/pricing-slow-08':
+        specifier: workspace:*
+        version: link:../pricing-slow-08
+      '@ci/pricing-slow-12':
+        specifier: workspace:*
+        version: link:../pricing-slow-12
+      '@ci/pricing-slow-16':
+        specifier: workspace:*
+        version: link:../pricing-slow-16
+      '@ci/pricing-slow-20':
+        specifier: workspace:*
+        version: link:../pricing-slow-20
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/pricing-01:
+    dependencies:
+      '@ci/auth':
+        specifier: workspace:*
+        version: link:../../platform/auth
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/pricing-02:
+    dependencies:
+      '@ci/audit':
+        specifier: workspace:*
+        version: link:../../features/audit
+      '@ci/config':
+        specifier: workspace:*
+        version: link:../../shared/config
+      '@ci/pricing-01':
+        specifier: workspace:*
+        version: link:../pricing-01
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/pricing-03:
+    dependencies:
+      '@ci/marketing-slow-16':
+        specifier: workspace:*
+        version: link:../marketing-slow-16
+      '@ci/users':
+        specifier: workspace:*
+        version: link:../../features/users
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/pricing-06:
+    dependencies:
+      '@ci/analytics':
+        specifier: workspace:*
+        version: link:../../features/analytics
+      '@ci/marketing-cpu-14':
+        specifier: workspace:*
+        version: link:../marketing-cpu-14
+      '@ci/payments':
+        specifier: workspace:*
+        version: link:../../features/payments
+      '@ci/pricing-01':
+        specifier: workspace:*
+        version: link:../pricing-01
+      '@ci/recommendations':
+        specifier: workspace:*
+        version: link:../../features/recommendations
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/pricing-10:
+    dependencies:
+      '@ci/analytics':
+        specifier: workspace:*
+        version: link:../../features/analytics
+      '@ci/pricing-mem-09':
+        specifier: workspace:*
+        version: link:../pricing-mem-09
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/pricing-11:
+    dependencies:
+      '@ci/pricing-06':
+        specifier: workspace:*
+        version: link:../pricing-06
+      '@ci/pricing-10':
+        specifier: workspace:*
+        version: link:../pricing-10
+      '@ci/recommendations':
+        specifier: workspace:*
+        version: link:../../features/recommendations
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/pricing-13:
+    dependencies:
+      '@ci/pricing-03':
+        specifier: workspace:*
+        version: link:../pricing-03
+      '@ci/recommendations':
+        specifier: workspace:*
+        version: link:../../features/recommendations
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/pricing-17:
+    dependencies:
+      '@ci/audit':
+        specifier: workspace:*
+        version: link:../../features/audit
+      '@ci/pricing-slow-16':
+        specifier: workspace:*
+        version: link:../pricing-slow-16
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/pricing-19:
+    dependencies:
+      '@ci/orders':
+        specifier: workspace:*
+        version: link:../../features/orders
+      '@ci/recommendations':
+        specifier: workspace:*
+        version: link:../../features/recommendations
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/pricing-cpu-07:
+    dependencies:
+      '@ci/pricing-01':
+        specifier: workspace:*
+        version: link:../pricing-01
+      '@ci/pricing-06':
+        specifier: workspace:*
+        version: link:../pricing-06
+      '@ci/search':
+        specifier: workspace:*
+        version: link:../../features/search
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/pricing-cpu-14:
+    dependencies:
+      '@ci/analytics':
+        specifier: workspace:*
+        version: link:../../features/analytics
+      '@ci/crypto':
+        specifier: workspace:*
+        version: link:../../shared/crypto
+      '@ci/marketing-cpu-14':
+        specifier: workspace:*
+        version: link:../marketing-cpu-14
+      '@ci/pricing-03':
+        specifier: workspace:*
+        version: link:../pricing-03
+      '@ci/pricing-13':
+        specifier: workspace:*
+        version: link:../pricing-13
+      '@ci/queue':
+        specifier: workspace:*
+        version: link:../../platform/queue
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/pricing-flaky-05:
+    dependencies:
+      '@ci/pricing-slow-04':
+        specifier: workspace:*
+        version: link:../pricing-slow-04
+      '@ci/reports':
+        specifier: workspace:*
+        version: link:../../features/reports
+      '@ci/shipping':
+        specifier: workspace:*
+        version: link:../../features/shipping
+      '@ci/users':
+        specifier: workspace:*
+        version: link:../../features/users
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/pricing-flaky-15:
+    dependencies:
+      '@ci/feature-flags':
+        specifier: workspace:*
+        version: link:../../platform/feature-flags
+      '@ci/pricing-13':
+        specifier: workspace:*
+        version: link:../pricing-13
+      '@ci/pricing-cpu-14':
+        specifier: workspace:*
+        version: link:../pricing-cpu-14
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/pricing-mem-09:
+    dependencies:
+      '@ci/marketing-06':
+        specifier: workspace:*
+        version: link:../marketing-06
+      '@ci/pricing-slow-08':
+        specifier: workspace:*
+        version: link:../pricing-slow-08
+      '@ci/users':
+        specifier: workspace:*
+        version: link:../../features/users
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/pricing-mem-18:
+    dependencies:
+      '@ci/pricing-flaky-15':
+        specifier: workspace:*
+        version: link:../pricing-flaky-15
+      '@ci/reports':
+        specifier: workspace:*
+        version: link:../../features/reports
+      '@ci/users':
+        specifier: workspace:*
+        version: link:../../features/users
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/pricing-slow-04:
+    dependencies:
+      '@ci/analytics':
+        specifier: workspace:*
+        version: link:../../features/analytics
+      '@ci/shipping':
+        specifier: workspace:*
+        version: link:../../features/shipping
+      '@ci/users':
+        specifier: workspace:*
+        version: link:../../features/users
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/pricing-slow-08:
+    dependencies:
+      '@ci/payments':
+        specifier: workspace:*
+        version: link:../../features/payments
+      '@ci/pricing-cpu-07':
+        specifier: workspace:*
+        version: link:../pricing-cpu-07
+      '@ci/recommendations':
+        specifier: workspace:*
+        version: link:../../features/recommendations
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/pricing-slow-12:
+    dependencies:
+      '@ci/inventory':
+        specifier: workspace:*
+        version: link:../../features/inventory
+      '@ci/logger':
+        specifier: workspace:*
+        version: link:../../shared/logger
+      '@ci/pricing-03':
+        specifier: workspace:*
+        version: link:../pricing-03
+      '@ci/pricing-11':
+        specifier: workspace:*
+        version: link:../pricing-11
+      '@ci/queue':
+        specifier: workspace:*
+        version: link:../../platform/queue
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/pricing-slow-16:
+    dependencies:
+      '@ci/analytics':
+        specifier: workspace:*
+        version: link:../../features/analytics
+      '@ci/payments':
+        specifier: workspace:*
+        version: link:../../features/payments
+      '@ci/pricing-06':
+        specifier: workspace:*
+        version: link:../pricing-06
+      '@ci/pricing-flaky-15':
+        specifier: workspace:*
+        version: link:../pricing-flaky-15
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/pricing-slow-20:
+    dependencies:
+      '@ci/payments':
+        specifier: workspace:*
+        version: link:../../features/payments
+      '@ci/pricing-19':
+        specifier: workspace:*
+        version: link:../pricing-19
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/support:
+    dependencies:
+      '@ci/support-01':
+        specifier: workspace:*
+        version: link:../support-01
+      '@ci/support-02':
+        specifier: workspace:*
+        version: link:../support-02
+      '@ci/support-03':
+        specifier: workspace:*
+        version: link:../support-03
+      '@ci/support-06':
+        specifier: workspace:*
+        version: link:../support-06
+      '@ci/support-10':
+        specifier: workspace:*
+        version: link:../support-10
+      '@ci/support-11':
+        specifier: workspace:*
+        version: link:../support-11
+      '@ci/support-13':
+        specifier: workspace:*
+        version: link:../support-13
+      '@ci/support-17':
+        specifier: workspace:*
+        version: link:../support-17
+      '@ci/support-19':
+        specifier: workspace:*
+        version: link:../support-19
+      '@ci/support-cpu-07':
+        specifier: workspace:*
+        version: link:../support-cpu-07
+      '@ci/support-cpu-14':
+        specifier: workspace:*
+        version: link:../support-cpu-14
+      '@ci/support-flaky-05':
+        specifier: workspace:*
+        version: link:../support-flaky-05
+      '@ci/support-flaky-15':
+        specifier: workspace:*
+        version: link:../support-flaky-15
+      '@ci/support-mem-09':
+        specifier: workspace:*
+        version: link:../support-mem-09
+      '@ci/support-mem-18':
+        specifier: workspace:*
+        version: link:../support-mem-18
+      '@ci/support-slow-04':
+        specifier: workspace:*
+        version: link:../support-slow-04
+      '@ci/support-slow-08':
+        specifier: workspace:*
+        version: link:../support-slow-08
+      '@ci/support-slow-12':
+        specifier: workspace:*
+        version: link:../support-slow-12
+      '@ci/support-slow-16':
+        specifier: workspace:*
+        version: link:../support-slow-16
+      '@ci/support-slow-20':
+        specifier: workspace:*
+        version: link:../support-slow-20
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/support-01:
+    dependencies:
+      '@ci/auth':
+        specifier: workspace:*
+        version: link:../../platform/auth
+      '@ci/pricing-03':
+        specifier: workspace:*
+        version: link:../pricing-03
+      '@ci/search':
+        specifier: workspace:*
+        version: link:../../features/search
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/support-02:
+    dependencies:
+      '@ci/payments':
+        specifier: workspace:*
+        version: link:../../features/payments
+      '@ci/support-01':
+        specifier: workspace:*
+        version: link:../support-01
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/support-03:
+    dependencies:
+      '@ci/http':
+        specifier: workspace:*
+        version: link:../../platform/http
+      '@ci/support-02':
+        specifier: workspace:*
+        version: link:../support-02
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/support-06:
+    dependencies:
+      '@ci/support-02':
+        specifier: workspace:*
+        version: link:../support-02
+      '@ci/support-flaky-05':
+        specifier: workspace:*
+        version: link:../support-flaky-05
+      '@ci/tracing':
+        specifier: workspace:*
+        version: link:../../platform/tracing
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/support-10:
+    dependencies:
+      '@ci/payments':
+        specifier: workspace:*
+        version: link:../../features/payments
+      '@ci/pricing-cpu-07':
+        specifier: workspace:*
+        version: link:../pricing-cpu-07
+      '@ci/support-01':
+        specifier: workspace:*
+        version: link:../support-01
+      '@ci/support-mem-09':
+        specifier: workspace:*
+        version: link:../support-mem-09
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/support-11:
+    dependencies:
+      '@ci/metrics':
+        specifier: workspace:*
+        version: link:../../platform/metrics
+      '@ci/notifications':
+        specifier: workspace:*
+        version: link:../../features/notifications
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/support-13:
+    dependencies:
+      '@ci/config':
+        specifier: workspace:*
+        version: link:../../shared/config
+      '@ci/payments':
+        specifier: workspace:*
+        version: link:../../features/payments
+      '@ci/reports':
+        specifier: workspace:*
+        version: link:../../features/reports
+      '@ci/support-slow-12':
+        specifier: workspace:*
+        version: link:../support-slow-12
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/support-17:
+    dependencies:
+      '@ci/support-slow-16':
+        specifier: workspace:*
+        version: link:../support-slow-16
+      '@ci/tracing':
+        specifier: workspace:*
+        version: link:../../platform/tracing
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/support-19:
+    dependencies:
+      '@ci/support-mem-18':
+        specifier: workspace:*
+        version: link:../support-mem-18
+      '@ci/users':
+        specifier: workspace:*
+        version: link:../../features/users
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/support-cpu-07:
+    dependencies:
+      '@ci/billing':
+        specifier: workspace:*
+        version: link:../../features/billing
+      '@ci/support-flaky-05':
+        specifier: workspace:*
+        version: link:../support-flaky-05
+      '@ci/tracing':
+        specifier: workspace:*
+        version: link:../../platform/tracing
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/support-cpu-14:
+    dependencies:
+      '@ci/pricing-03':
+        specifier: workspace:*
+        version: link:../pricing-03
+      '@ci/reports':
+        specifier: workspace:*
+        version: link:../../features/reports
+      '@ci/support-13':
+        specifier: workspace:*
+        version: link:../support-13
+      '@ci/support-slow-12':
+        specifier: workspace:*
+        version: link:../support-slow-12
+      '@ci/users':
+        specifier: workspace:*
+        version: link:../../features/users
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/support-flaky-05:
+    dependencies:
+      '@ci/crypto':
+        specifier: workspace:*
+        version: link:../../shared/crypto
+      '@ci/support-slow-04':
+        specifier: workspace:*
+        version: link:../support-slow-04
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/support-flaky-15:
+    dependencies:
+      '@ci/queue':
+        specifier: workspace:*
+        version: link:../../platform/queue
+      '@ci/shipping':
+        specifier: workspace:*
+        version: link:../../features/shipping
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/support-mem-09:
+    dependencies:
+      '@ci/cache':
+        specifier: workspace:*
+        version: link:../../platform/cache
+      '@ci/inventory':
+        specifier: workspace:*
+        version: link:../../features/inventory
+      '@ci/pricing-cpu-07':
+        specifier: workspace:*
+        version: link:../pricing-cpu-07
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/support-mem-18:
+    dependencies:
+      '@ci/notifications':
+        specifier: workspace:*
+        version: link:../../features/notifications
+      '@ci/support-10':
+        specifier: workspace:*
+        version: link:../support-10
+      '@ci/support-17':
+        specifier: workspace:*
+        version: link:../support-17
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/support-slow-04:
+    dependencies:
+      '@ci/notifications':
+        specifier: workspace:*
+        version: link:../../features/notifications
+      '@ci/reports':
+        specifier: workspace:*
+        version: link:../../features/reports
+      '@ci/support-02':
+        specifier: workspace:*
+        version: link:../support-02
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/support-slow-08:
+    dependencies:
+      '@ci/pricing-flaky-15':
+        specifier: workspace:*
+        version: link:../pricing-flaky-15
+      '@ci/shipping':
+        specifier: workspace:*
+        version: link:../../features/shipping
+      '@ci/support-cpu-07':
+        specifier: workspace:*
+        version: link:../support-cpu-07
+      '@ci/support-slow-04':
+        specifier: workspace:*
+        version: link:../support-slow-04
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/support-slow-12:
+    dependencies:
+      '@ci/http':
+        specifier: workspace:*
+        version: link:../../platform/http
+      '@ci/pricing-03':
+        specifier: workspace:*
+        version: link:../pricing-03
+      '@ci/recommendations':
+        specifier: workspace:*
+        version: link:../../features/recommendations
+      '@ci/result':
+        specifier: workspace:*
+        version: link:../../shared/result
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/support-slow-16:
+    dependencies:
+      '@ci/http':
+        specifier: workspace:*
+        version: link:../../platform/http
+      '@ci/support-06':
+        specifier: workspace:*
+        version: link:../support-06
+      '@ci/support-flaky-15':
+        specifier: workspace:*
+        version: link:../support-flaky-15
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/support-slow-20:
+    dependencies:
+      '@ci/inventory':
+        specifier: workspace:*
+        version: link:../../features/inventory
+      '@ci/notifications':
+        specifier: workspace:*
+        version: link:../../features/notifications
+      '@ci/reports':
+        specifier: workspace:*
+        version: link:../../features/reports
+      '@ci/support-17':
+        specifier: workspace:*
+        version: link:../support-17
+      '@ci/support-19':
+        specifier: workspace:*
+        version: link:../support-19
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/warehouse:
+    dependencies:
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+      '@ci/warehouse-01':
+        specifier: workspace:*
+        version: link:../warehouse-01
+      '@ci/warehouse-02':
+        specifier: workspace:*
+        version: link:../warehouse-02
+      '@ci/warehouse-03':
+        specifier: workspace:*
+        version: link:../warehouse-03
+      '@ci/warehouse-06':
+        specifier: workspace:*
+        version: link:../warehouse-06
+      '@ci/warehouse-10':
+        specifier: workspace:*
+        version: link:../warehouse-10
+      '@ci/warehouse-11':
+        specifier: workspace:*
+        version: link:../warehouse-11
+      '@ci/warehouse-13':
+        specifier: workspace:*
+        version: link:../warehouse-13
+      '@ci/warehouse-17':
+        specifier: workspace:*
+        version: link:../warehouse-17
+      '@ci/warehouse-19':
+        specifier: workspace:*
+        version: link:../warehouse-19
+      '@ci/warehouse-cpu-07':
+        specifier: workspace:*
+        version: link:../warehouse-cpu-07
+      '@ci/warehouse-cpu-14':
+        specifier: workspace:*
+        version: link:../warehouse-cpu-14
+      '@ci/warehouse-flaky-05':
+        specifier: workspace:*
+        version: link:../warehouse-flaky-05
+      '@ci/warehouse-flaky-15':
+        specifier: workspace:*
+        version: link:../warehouse-flaky-15
+      '@ci/warehouse-mem-09':
+        specifier: workspace:*
+        version: link:../warehouse-mem-09
+      '@ci/warehouse-mem-18':
+        specifier: workspace:*
+        version: link:../warehouse-mem-18
+      '@ci/warehouse-slow-04':
+        specifier: workspace:*
+        version: link:../warehouse-slow-04
+      '@ci/warehouse-slow-08':
+        specifier: workspace:*
+        version: link:../warehouse-slow-08
+      '@ci/warehouse-slow-12':
+        specifier: workspace:*
+        version: link:../warehouse-slow-12
+      '@ci/warehouse-slow-16':
+        specifier: workspace:*
+        version: link:../warehouse-slow-16
+      '@ci/warehouse-slow-20':
+        specifier: workspace:*
+        version: link:../warehouse-slow-20
+
+  packages/modules/warehouse-01:
+    dependencies:
+      '@ci/billing':
+        specifier: workspace:*
+        version: link:../../features/billing
+      '@ci/http':
+        specifier: workspace:*
+        version: link:../../platform/http
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/warehouse-02:
+    dependencies:
+      '@ci/orders':
+        specifier: workspace:*
+        version: link:../../features/orders
+      '@ci/payments':
+        specifier: workspace:*
+        version: link:../../features/payments
+      '@ci/recommendations':
+        specifier: workspace:*
+        version: link:../../features/recommendations
+      '@ci/support-slow-12':
+        specifier: workspace:*
+        version: link:../support-slow-12
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/warehouse-03:
+    dependencies:
+      '@ci/inventory':
+        specifier: workspace:*
+        version: link:../../features/inventory
+      '@ci/shipping':
+        specifier: workspace:*
+        version: link:../../features/shipping
+      '@ci/tracing':
+        specifier: workspace:*
+        version: link:../../platform/tracing
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+      '@ci/warehouse-02':
+        specifier: workspace:*
+        version: link:../warehouse-02
+
+  packages/modules/warehouse-06:
+    dependencies:
+      '@ci/feature-flags':
+        specifier: workspace:*
+        version: link:../../platform/feature-flags
+      '@ci/users':
+        specifier: workspace:*
+        version: link:../../features/users
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/warehouse-10:
+    dependencies:
+      '@ci/billing':
+        specifier: workspace:*
+        version: link:../../features/billing
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+      '@ci/warehouse-06':
+        specifier: workspace:*
+        version: link:../warehouse-06
+
+  packages/modules/warehouse-11:
+    dependencies:
+      '@ci/http':
+        specifier: workspace:*
+        version: link:../../platform/http
+      '@ci/support-11':
+        specifier: workspace:*
+        version: link:../support-11
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/warehouse-13:
+    dependencies:
+      '@ci/billing':
+        specifier: workspace:*
+        version: link:../../features/billing
+      '@ci/events':
+        specifier: workspace:*
+        version: link:../../platform/events
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/warehouse-17:
+    dependencies:
+      '@ci/billing':
+        specifier: workspace:*
+        version: link:../../features/billing
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/warehouse-19:
+    dependencies:
+      '@ci/analytics':
+        specifier: workspace:*
+        version: link:../../features/analytics
+      '@ci/notifications':
+        specifier: workspace:*
+        version: link:../../features/notifications
+      '@ci/orders':
+        specifier: workspace:*
+        version: link:../../features/orders
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+      '@ci/warehouse-02':
+        specifier: workspace:*
+        version: link:../warehouse-02
+
+  packages/modules/warehouse-cpu-07:
+    dependencies:
+      '@ci/analytics':
+        specifier: workspace:*
+        version: link:../../features/analytics
+      '@ci/search':
+        specifier: workspace:*
+        version: link:../../features/search
+      '@ci/support-slow-12':
+        specifier: workspace:*
+        version: link:../support-slow-12
+      '@ci/users':
+        specifier: workspace:*
+        version: link:../../features/users
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+      '@ci/warehouse-06':
+        specifier: workspace:*
+        version: link:../warehouse-06
+
+  packages/modules/warehouse-cpu-14:
+    dependencies:
+      '@ci/db':
+        specifier: workspace:*
+        version: link:../../platform/db
+      '@ci/metrics':
+        specifier: workspace:*
+        version: link:../../platform/metrics
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+      '@ci/warehouse-13':
+        specifier: workspace:*
+        version: link:../warehouse-13
+      '@ci/warehouse-cpu-07':
+        specifier: workspace:*
+        version: link:../warehouse-cpu-07
+
+  packages/modules/warehouse-flaky-05:
+    dependencies:
+      '@ci/billing':
+        specifier: workspace:*
+        version: link:../../features/billing
+      '@ci/inventory':
+        specifier: workspace:*
+        version: link:../../features/inventory
+      '@ci/queue':
+        specifier: workspace:*
+        version: link:../../platform/queue
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/warehouse-flaky-15:
+    dependencies:
+      '@ci/support-flaky-15':
+        specifier: workspace:*
+        version: link:../support-flaky-15
+      '@ci/users':
+        specifier: workspace:*
+        version: link:../../features/users
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+      '@ci/warehouse-cpu-14':
+        specifier: workspace:*
+        version: link:../warehouse-cpu-14
+
+  packages/modules/warehouse-mem-09:
+    dependencies:
+      '@ci/reports':
+        specifier: workspace:*
+        version: link:../../features/reports
+      '@ci/users':
+        specifier: workspace:*
+        version: link:../../features/users
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+
+  packages/modules/warehouse-mem-18:
+    dependencies:
+      '@ci/audit':
+        specifier: workspace:*
+        version: link:../../features/audit
+      '@ci/storage':
+        specifier: workspace:*
+        version: link:../../platform/storage
+      '@ci/users':
+        specifier: workspace:*
+        version: link:../../features/users
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+      '@ci/warehouse-10':
+        specifier: workspace:*
+        version: link:../warehouse-10
+      '@ci/warehouse-17':
+        specifier: workspace:*
+        version: link:../warehouse-17
+
+  packages/modules/warehouse-slow-04:
+    dependencies:
+      '@ci/events':
+        specifier: workspace:*
+        version: link:../../platform/events
+      '@ci/support-03':
+        specifier: workspace:*
+        version: link:../support-03
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+      '@ci/warehouse-02':
+        specifier: workspace:*
+        version: link:../warehouse-02
+      '@ci/warehouse-03':
+        specifier: workspace:*
+        version: link:../warehouse-03
+
+  packages/modules/warehouse-slow-08:
+    dependencies:
+      '@ci/i18n':
+        specifier: workspace:*
+        version: link:../../shared/i18n
+      '@ci/payments':
+        specifier: workspace:*
+        version: link:../../features/payments
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+      '@ci/warehouse-cpu-07':
+        specifier: workspace:*
+        version: link:../warehouse-cpu-07
+
+  packages/modules/warehouse-slow-12:
+    dependencies:
+      '@ci/metrics':
+        specifier: workspace:*
+        version: link:../../platform/metrics
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+      '@ci/warehouse-11':
+        specifier: workspace:*
+        version: link:../warehouse-11
+
+  packages/modules/warehouse-slow-16:
+    dependencies:
+      '@ci/events':
+        specifier: workspace:*
+        version: link:../../platform/events
+      '@ci/schema':
+        specifier: workspace:*
+        version: link:../../shared/schema
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+      '@ci/warehouse-flaky-15':
+        specifier: workspace:*
+        version: link:../warehouse-flaky-15
+
+  packages/modules/warehouse-slow-20:
+    dependencies:
+      '@ci/billing':
+        specifier: workspace:*
+        version: link:../../features/billing
+      '@ci/events':
+        specifier: workspace:*
+        version: link:../../platform/events
+      '@ci/shipping':
+        specifier: workspace:*
+        version: link:../../features/shipping
+      '@ci/utils':
+        specifier: workspace:*
+        version: link:../../shared/utils
+      '@ci/warehouse-19':
+        specifier: workspace:*
+        version: link:../warehouse-19
 
   packages/platform/auth:
     dependencies:

@@ -1,0 +1,53 @@
+{
+  "name": "@ci/finance",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.lib.json",
+    "typecheck": "tsc -p tsconfig.json",
+    "lint": "eslint .",
+    "test": "vitest run",
+    "clean": "rm -rf dist"
+  },
+  "nx": {
+    "tags": [
+      "type:lib",
+      "scope:modules",
+      "domain:finance",
+      "kind:domain"
+    ]
+  },
+  "dependencies": {
+    "@ci/finance-01": "workspace:*",
+    "@ci/finance-02": "workspace:*",
+    "@ci/finance-03": "workspace:*",
+    "@ci/finance-06": "workspace:*",
+    "@ci/finance-10": "workspace:*",
+    "@ci/finance-11": "workspace:*",
+    "@ci/finance-13": "workspace:*",
+    "@ci/finance-17": "workspace:*",
+    "@ci/finance-19": "workspace:*",
+    "@ci/finance-cpu-07": "workspace:*",
+    "@ci/finance-cpu-14": "workspace:*",
+    "@ci/finance-flaky-05": "workspace:*",
+    "@ci/finance-flaky-15": "workspace:*",
+    "@ci/finance-mem-09": "workspace:*",
+    "@ci/finance-mem-18": "workspace:*",
+    "@ci/finance-slow-04": "workspace:*",
+    "@ci/finance-slow-08": "workspace:*",
+    "@ci/finance-slow-12": "workspace:*",
+    "@ci/finance-slow-16": "workspace:*",
+    "@ci/finance-slow-20": "workspace:*",
+    "@ci/utils": "workspace:*"
+  }
+}

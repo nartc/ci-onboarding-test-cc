@@ -15,7 +15,15 @@
     ],
     "targets": {
       "e2e": {
-        "parallelism": false
+        "dependsOn": [
+          "^build",
+          {
+            "projects": [
+              "@ci/api"
+            ],
+            "target": "serve"
+          }
+        ]
       }
     }
   },

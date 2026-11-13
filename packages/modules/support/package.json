@@ -1,0 +1,53 @@
+{
+  "name": "@ci/support",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.lib.json",
+    "typecheck": "tsc -p tsconfig.json",
+    "lint": "eslint .",
+    "test": "vitest run",
+    "clean": "rm -rf dist"
+  },
+  "nx": {
+    "tags": [
+      "type:lib",
+      "scope:modules",
+      "domain:support",
+      "kind:domain"
+    ]
+  },
+  "dependencies": {
+    "@ci/support-01": "workspace:*",
+    "@ci/support-02": "workspace:*",
+    "@ci/support-03": "workspace:*",
+    "@ci/support-06": "workspace:*",
+    "@ci/support-10": "workspace:*",
+    "@ci/support-11": "workspace:*",
+    "@ci/support-13": "workspace:*",
+    "@ci/support-17": "workspace:*",
+    "@ci/support-19": "workspace:*",
+    "@ci/support-cpu-07": "workspace:*",
+    "@ci/support-cpu-14": "workspace:*",
+    "@ci/support-flaky-05": "workspace:*",
+    "@ci/support-flaky-15": "workspace:*",
+    "@ci/support-mem-09": "workspace:*",
+    "@ci/support-mem-18": "workspace:*",
+    "@ci/support-slow-04": "workspace:*",
+    "@ci/support-slow-08": "workspace:*",
+    "@ci/support-slow-12": "workspace:*",
+    "@ci/support-slow-16": "workspace:*",
+    "@ci/support-slow-20": "workspace:*",
+    "@ci/utils": "workspace:*"
+  }
+}

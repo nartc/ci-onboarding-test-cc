@@ -1,0 +1,52 @@
+{
+  "name": "@ci/gateway",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/app.d.ts",
+      "default": "./dist/app.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.lib.json",
+    "typecheck": "tsc -p tsconfig.json",
+    "lint": "eslint .",
+    "test": "vitest run",
+    "serve": "PORT=4330 node dist/main.js",
+    "start": "node dist/main.js",
+    "clean": "rm -rf dist"
+  },
+  "nx": {
+    "tags": [
+      "type:app"
+    ],
+    "targets": {
+      "serve": {
+        "continuous": true,
+        "dependsOn": [
+          "build"
+        ]
+      }
+    }
+  },
+  "dependencies": {
+    "@ci/catalog": "workspace:*",
+    "@ci/checkout": "workspace:*",
+    "@ci/config": "workspace:*",
+    "@ci/crm": "workspace:*",
+    "@ci/finance": "workspace:*",
+    "@ci/fulfillment": "workspace:*",
+    "@ci/http": "workspace:*",
+    "@ci/identity": "workspace:*",
+    "@ci/marketing": "workspace:*",
+    "@ci/pricing": "workspace:*",
+    "@ci/support": "workspace:*",
+    "@ci/utils": "workspace:*",
+    "@ci/warehouse": "workspace:*"
+  }
+}

@@ -1,17 +1,17 @@
 # Worker setups for the Nx Cloud CI lab. Imported by ci.yaml.
-# Every count names lab-medium, lab-large and lab-small, because the assignment rules send
-# tasks to each of them.
+# Nx Cloud needs at least 3 workers to distribute.
 
 # Used by the main job. Sized by the work left after cache hits. A run with no stored
-# timings yet (the first one) always picks large: 10 workers plus the main-job worker.
+# timings yet always picks large: 16 workers plus the main-job worker. Every count names
+# lab-medium, lab-large and lab-utility, because the assignment rules send tasks to each.
 pr:
   small:
-    count: 2 lab-medium; 1 lab-large; 1 lab-small
+    count: 3 lab-medium; 1 lab-large; 1 lab-utility
     workload: 20%
   medium:
-    count: 4 lab-medium; 1 lab-large; 1 lab-small
-    workload: 60%
-  large: 6 lab-medium; 2 lab-large; 2 lab-small
+    count: 6 lab-medium; 2 lab-large; 1 lab-utility
+    workload: 55%
+  large: 10 lab-medium; 4 lab-large; 2 lab-utility
   main-job-worker:
     cpu: 2
     memory: 4GB
@@ -19,24 +19,51 @@ pr:
   stop-after:
     - env-check
     - test
-  # Keep going after the first failures, to see more of the run.
-  fail-after: 3
+  # Flaky tests fail now and then. Keep going, to see more of the run.
+  fail-after: 5
   assignment-rules:
-    # Proves secrets reach a lab-small worker through the launch-template env.
+    # Secrets reach a lab-utility worker through the launch-template env as well.
     - targets:
         - env-check
+        - secret-echo
       run-on:
-        - agent: lab-small
-    - targets:
-        - lint
+        - agent: lab-utility
+    # Memory-heavy tests need the large machines.
+    - projects:
+        - '@ci/*-mem-*'
+      targets:
+        - test
       run-on:
-        - agent: lab-small
+        - agent: lab-large
+    - projects:
+        - '@ci/*-cpu-*'
+      targets:
+        - test
+      run-on:
+        - agent: lab-large
         - agent: lab-medium
-    # The roots of the graph run on the main job's own machine.
+    # `?` matches one character: the two-digit slow modules.
+    - projects:
+        - '@ci/*-slow-??'
+      targets:
+        - build
+        - typecheck
+      run-on:
+        - agent: lab-large
+    # Comma-joined globs must all match: slow modules outside finance.
+    - projects:
+        - '@ci/*-slow-*,!@ci/finance-*'
+      targets:
+        - codegen
+      run-on:
+        - agent: lab-utility
+    # The roots of the graph run on the main job's own machine, and so do the finance slow
+    # modules' tasks that no narrower rule claims (their codegen and test).
     - projects:
         - '@ci/types'
         - '@ci/constants'
         - '@ci/utils'
+        - '@ci/finance-slow-*'
       run-on:
         - agent: main
     # Apps sit at the top of the graph and import the most code.
@@ -47,6 +74,7 @@ pr:
         - '@ci/web'
         - '@ci/admin'
         - '@ci/cli'
+        - '@ci/gateway'
       targets:
         - build
         - typecheck
@@ -64,9 +92,20 @@ pr:
             - '@ci/scheduler'
           targets:
             - test
+    # Never two memory-heavy tests on one worker, and no CPU-heavy test next to one.
+    - projects:
+        - '@ci/*-mem-*'
+      targets:
+        - test
+      cannot-run-with:
+        - projects:
+            - '@ci/*-mem-*'
+            - '@ci/*-cpu-*'
+          targets:
+            - test
 
-# Used by the e2e job: a fixed count (3 is the minimum Nx Cloud distributes on), no
-# main-job worker, never stops on failures.
+# Used by the e2e job: a fixed count, no main-job worker, never stops on failures. The e2e
+# suites depend on continuous serve tasks, which run on the same worker.
 e2e:
   workers: 3 lab-large
   main-job-worker: false
@@ -76,6 +115,7 @@ e2e:
   assignment-rules:
     - targets:
         - e2e
+        - serve
       run-on:
         - agent: lab-large
   scheduling-constraints:
@@ -84,3 +124,6 @@ e2e:
       cannot-run-with:
         - targets:
             - e2e
+
+# Used by the gateway-smoke job: a count string on its own.
+smoke: 3 lab-utility
