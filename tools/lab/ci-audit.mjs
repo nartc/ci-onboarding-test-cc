@@ -53,7 +53,7 @@ const fmt = (n) => (Number.isFinite(n) ? `${n.toFixed(n < 10 ? 1 : 0)}s` : '-');
 const pct = (xs, p) => [...xs].sort((a, b) => a - b)[Math.floor(p * (xs.length - 1))];
 const short = (name) => name.replace(/^job-[0-9a-f]+-/, '');
 
-function findCipe(spec) {
+function findExecution(spec) {
   const execs = api('/nx-cloud/data/v0/ci', '--page-size', '30').items.filter(
     (e) => e.definition?.name === 'CI',
   );
@@ -68,13 +68,28 @@ function findCipe(spec) {
     match = execs.filter((e) => e.branch === spec.slice('latest:'.length));
   }
   if (!match.length) throw new Error(`no CI pipeline found for "${spec}"`);
-  return match[0].links.cipe.split('/').pop();
+  return match[0].id;
 }
 
 const spec = target ?? (onCi ? 'current' : 'latest');
-const cipeId = /^[0-9a-f]{24}$/.test(spec) ? spec : findCipe(spec);
-const cipe = api(`/nx-cloud/data/v1/cipes/${cipeId}`);
-const exec = api(`/nx-cloud/data/v0/ci/${cipe.ciExecutionId}`);
+const byCipeId = /^[0-9a-f]{24}$/.test(spec);
+let cipe = byCipeId ? api(`/nx-cloud/data/v1/cipes/${spec}`) : null;
+const exec = api(`/nx-cloud/data/v0/ci/${cipe?.ciExecutionId ?? findExecution(spec)}`);
+const cipeId = cipe?.id ?? exec.links.cipe.split('/').pop();
+try {
+  cipe ??= api(`/nx-cloud/data/v1/cipes/${cipeId}`);
+} catch (e) {
+  // A CIPE is served by id only once it finishes (409 before that), and the report job runs
+  // inside it. The execution has what the audit needs.
+  if (!e.message.includes('"status":409')) throw e;
+  cipe = {
+    id: cipeId,
+    ciExecutionId: exec.id,
+    branch: exec.branch,
+    status: exec.status,
+    vcsContext: { headSha: exec.commitSha },
+  };
+}
 const jobs = list(`/nx-cloud/data/v0/ci/${cipe.ciExecutionId}/jobs`);
 const runs = list('/nx-cloud/data/v1/runs', '-f', `cipeId=${cipeId}`);
 
