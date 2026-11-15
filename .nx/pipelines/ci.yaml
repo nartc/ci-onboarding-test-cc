@@ -8,7 +8,7 @@
 # Stored variables (Nx Cloud workspace settings > Environment variables):
 #   CI_LAB_SECRET        secret    checked by @ci/config:env-check against a SHA-256
 #   CI_LAB_VAR           variable  must be "nx-cloud-ci-lab"
-#   CI_LAB_FLAKE_RATE    variable  optional, chance that a flaky test fails (default 0.05)
+#   CI_LAB_FLAKE_RATE    variable  optional, chance that a flaky test fails (default 0, so comparison runs stay green)
 #   CI_LAB_CPU_SECONDS   variable  optional, how long CPU-heavy tests run (default 5)
 #   CI_LAB_MEM_MB        variable  optional, how much memory-heavy tests hold (default 2048)
 #
@@ -43,7 +43,7 @@ env:
   CI_LAB_REQUIRE_SECRETS: 'true'
   CI_LAB_SECRET: ${{ secrets.CI_LAB_SECRET }}
   CI_LAB_VAR: ${{ vars.CI_LAB_VAR || 'unset' }}
-  CI_LAB_FLAKE_RATE: ${{ vars.CI_LAB_FLAKE_RATE || '0.05' }}
+  CI_LAB_FLAKE_RATE: ${{ vars.CI_LAB_FLAKE_RATE || '0' }}
   CI_LAB_CPU_SECONDS: ${{ vars.CI_LAB_CPU_SECONDS || '5' }}
   CI_LAB_MEM_MB: ${{ vars.CI_LAB_MEM_MB || '2048' }}
   CI_LAB_SLOW_SECONDS: '3'

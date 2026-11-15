@@ -36,7 +36,7 @@ Heavy tests read their size from the environment:
 | `CI_LAB_CPU_SECONDS`  | 5 / 5                | how long CPU-heavy tests keep every core busy |
 | `CI_LAB_MEM_MB`       | 2048 / 2048          | how much memory memory-heavy tests hold       |
 | `CI_LAB_SLOW_SECONDS` | 3 / 3                | how long slow tests hash on one core          |
-| `CI_LAB_FLAKE_RATE`   | 0 / 0.05             | chance that each flaky test fails             |
+| `CI_LAB_FLAKE_RATE`   | 0 / 0                | chance that each flaky test fails             |
 
 ## How the tasks depend on each other
 
