@@ -34,10 +34,9 @@ env:
   CI_LAB_CPU_SECONDS: ${{ vars.CI_LAB_CPU_SECONDS || '5' }}
   CI_LAB_MEM_MB: ${{ vars.CI_LAB_MEM_MB || '2048' }}
   CI_LAB_SLOW_SECONDS: '3'
-  CI_LAB_LOCK_HASH: ${{ hashFiles('pnpm-lock.yaml') }}
-  # Part of every task's hash. A different prefix from the Nx Cloud pipeline, so neither
-  # restores the other's cache results.
-  CI_LAB_CACHE_SALT: gha-mirror-${{ hashFiles('tools/lab/cache-salt.txt') }}
+  # Part of every task's hash, with tools/lab/cache-salt.txt. A different value from the Nx Cloud
+  # pipeline, so neither restores the other's cache results.
+  CI_LAB_CACHE_SALT: gha-mirror
 
 defaults:
   run:
@@ -86,6 +85,9 @@ jobs:
 
       - name: Describe the run
         id: describe
+        # GitHub allows hashFiles() in step env, not in workflow env.
+        env:
+          CI_LAB_LOCK_HASH: ${{ hashFiles('pnpm-lock.yaml') }}
         run: |
           count=$(nx show projects --affected --json | node -p 'JSON.parse(require("fs").readFileSync(0, "utf8")).length')
           echo "affected=$count" >> "$GITHUB_OUTPUT"

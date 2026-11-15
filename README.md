@@ -120,7 +120,8 @@ on the same work, so keep the two in step. It needs the same `CI_LAB_SECRET` sec
 `CI_LAB_VAR` variable in the repository's Actions settings.
 
 Each pipeline sets its own `CI_LAB_CACHE_SALT`, which is part of every task's hash, so neither
-restores the other's cache results. To start both cold, change `tools/lab/cache-salt.txt`.
+restores the other's cache results. `tools/lab/cache-salt.txt` is part of every task's hash too:
+change it to start both cold.
 
 `.github/workflows/ci.yml` is the older baseline: it runs `run-many` for every project on one
 runner.

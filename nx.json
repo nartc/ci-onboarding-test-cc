@@ -6,6 +6,7 @@
       "{workspaceRoot}/tsconfig.base.json",
       "{workspaceRoot}/.nvmrc",
       "{workspaceRoot}/pnpm-lock.yaml",
+      "{workspaceRoot}/tools/lab/cache-salt.txt",
       { "env": "CI_LAB_CACHE_SALT" }
     ],
     "default": ["{projectRoot}/**/*", "sharedGlobals"],
@@ -22,6 +23,7 @@
       "inputs": [
         "{projectRoot}/schemas/**/*",
         "{projectRoot}/scripts/codegen.mjs",
+        "{workspaceRoot}/tools/lab/cache-salt.txt",
         { "env": "CI_LAB_CACHE_SALT" }
       ],
       "outputs": ["{projectRoot}/src/generated"]

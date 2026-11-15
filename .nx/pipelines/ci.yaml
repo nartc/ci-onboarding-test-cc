@@ -48,9 +48,10 @@ env:
   CI_LAB_MEM_MB: ${{ vars.CI_LAB_MEM_MB || '2048' }}
   CI_LAB_SLOW_SECONDS: '3'
   CI_LAB_LOCK_HASH: ${{ hashFiles('pnpm-lock.yaml') }}
-  # Part of every task's hash. Each pipeline gets its own salt, so neither restores the other's
-  # cache results. Change tools/lab/cache-salt.txt to start both pipelines cold.
-  CI_LAB_CACHE_SALT: nx-cloud-ci-${{ hashFiles('tools/lab/cache-salt.txt') }}
+  # Part of every task's hash, with tools/lab/cache-salt.txt. Each pipeline sets its own value,
+  # so neither restores the other's cache results. Change cache-salt.txt to start both cold.
+  # (Not built with hashFiles(): in this env it returns an empty string, like CI_LAB_LOCK_HASH.)
+  CI_LAB_CACHE_SALT: nx-cloud-ci
 
 defaults:
   run:
