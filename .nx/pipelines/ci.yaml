@@ -189,8 +189,13 @@ jobs:
     init-steps:
       - name: Checkout
         uses: nrwl/nx-cloud-workflows/v6/workflow-steps/checkout/main.yaml
+      # The audit step runs nx to read each distributed run's task graph.
+      - name: Install Node from .nvmrc
+        uses: nrwl/nx-cloud-workflows/v6/workflow-steps/install-node/main.yaml
+      - name: Install node modules
+        uses: nrwl/nx-cloud-workflows/v6/workflow-steps/install-node-modules/main.yaml
     workers: false
-    timeout-minutes: 5
+    timeout-minutes: 10
     steps:
       # The custom step comes from GitHub at the lab-steps-v1 tag, not through file://. Any
       # file:// step (job step or launch-template init step) got the job killed before it had
@@ -202,6 +207,15 @@ jobs:
         with:
           title: ${{ format('CI lab on {0}', nxcloud.ref_name) }}
           results: ${{ toJSON(needs) }}
+
+      # Green jobs can hide a run that did no useful work. The audit flags distribution that never
+      # reached a worker, workers that ran nothing, wall time spent waiting instead of running
+      # tasks, and a main run that recorded no cache-miss timings. Flags go to the step summary
+      # and never fail the job.
+      - name: Audit the pipeline
+        continue-on-error: true
+        timeout-minutes: 6
+        run: node tools/lab/ci-audit.mjs current --no-fail
 
       - name: Show the expression context
         run: |

@@ -104,6 +104,16 @@ the first two don't arrive:
 `CI_LAB_SECRET` is a throwaway lab value: the `main` job and `@ci/config:secret-echo` print it
 on purpose, to check what Nx Cloud CI redacts.
 
+The `report` job runs `tools/lab/ci-audit.mjs`, which reads the pipeline back from the Nx Cloud
+API and flags what passing jobs hide: a command replayed from cache so no task reached a worker,
+workers that ran nothing, wall time spent waiting rather than running tasks, the wait between a
+dependency finishing and its dependent starting, and a `main` run with no cache misses (so no
+new timings). Run it locally on any pipeline from the workspace root:
+
+```sh
+node tools/lab/ci-audit.mjs <cipeId | latest | latest:main> --graph-dir /tmp/ci-audit-graphs
+```
+
 `.github/workflows/ci.yml` still runs the same scripts on GitHub Actions, through Nx.
 
 ## Layout
@@ -117,7 +127,7 @@ on purpose, to check what Nx Cloud CI redacts.
 | `packages/client`   | The SDK and its mocks                                              |
 | `packages/modules`  | Generated modules and domain libraries                             |
 | `apps`              | api, worker, scheduler, web, admin, cli, gateway and e2e suites    |
-| `tools/lab`         | The module generator and the slow modules' codegen                 |
+| `tools/lab`         | The module generator, the slow modules' codegen and the CI audit   |
 
 Each library exports a `ModuleInfo` that lists its dependencies at runtime. Each test
 checks the direct dependencies, the depth and the full set of transitive dependencies. So
