@@ -11,6 +11,9 @@
 #   CI_LAB_FLAKE_RATE    variable  optional, chance that a flaky test fails (default 0.05)
 #   CI_LAB_CPU_SECONDS   variable  optional, how long CPU-heavy tests run (default 5)
 #   CI_LAB_MEM_MB        variable  optional, how much memory-heavy tests hold (default 2048)
+#
+# .github/workflows/mirror.yml runs the same jobs and commands on GitHub Actions without
+# distribution, to compare the two on the same work. Keep the two in step.
 name: CI
 
 on:
@@ -45,6 +48,9 @@ env:
   CI_LAB_MEM_MB: ${{ vars.CI_LAB_MEM_MB || '2048' }}
   CI_LAB_SLOW_SECONDS: '3'
   CI_LAB_LOCK_HASH: ${{ hashFiles('pnpm-lock.yaml') }}
+  # Part of every task's hash. Each pipeline gets its own salt, so neither restores the other's
+  # cache results. Change tools/lab/cache-salt.txt to start both pipelines cold.
+  CI_LAB_CACHE_SALT: nx-cloud-ci-${{ hashFiles('tools/lab/cache-salt.txt') }}
 
 defaults:
   run:
@@ -86,6 +92,9 @@ jobs:
           echo "CI_LAB_AFFECTED=$count" >> "$NX_CLOUD_ENV"
           echo "${{ format('{0} of {1} at {2}', nxcloud.event_name, nxcloud.ref_name, nxcloud.sha) }}: $count affected projects" >> "$NX_CLOUD_STEP_SUMMARY"
           echo "lockfile hash: $CI_LAB_LOCK_HASH"
+          echo "cache salt: $CI_LAB_CACHE_SALT"
+          echo "affected base: ${NX_BASE:-unset}, head: ${NX_HEAD:-unset}, HEAD: $(git rev-parse HEAD)"
+          echo "knobs: cpu ${CI_LAB_CPU_SECONDS}s, mem ${CI_LAB_MEM_MB}MB, slow ${CI_LAB_SLOW_SECONDS}s, flake ${CI_LAB_FLAKE_RATE}"
 
       # Redaction check, part 1: a job step prints the secret. @ci/config:secret-echo does the
       # same inside a task on a worker.
