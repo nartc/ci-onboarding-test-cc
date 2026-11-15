@@ -48,10 +48,11 @@ env:
   CI_LAB_MEM_MB: ${{ vars.CI_LAB_MEM_MB || '2048' }}
   CI_LAB_SLOW_SECONDS: '15'
   CI_LAB_LOCK_HASH: ${{ hashFiles('pnpm-lock.yaml') }}
-  # Part of every task's hash, with tools/lab/cache-salt.txt. Each pipeline sets its own value,
-  # so neither restores the other's cache results. Change cache-salt.txt to start both cold.
-  # (Not built with hashFiles(): in this env it returns an empty string, like CI_LAB_LOCK_HASH.)
-  CI_LAB_CACHE_SALT: nx-cloud-ci
+  # Part of every task's hash. Each pipeline sets its own value, so neither restores the other's
+  # cache results. Bump the number here and in mirror.yml to start both cold. It is an env input
+  # because Nx Cloud CI left a file input (a salt file every task declared) out of the task hashes,
+  # and hashFiles() returns an empty string in this env, like CI_LAB_LOCK_HASH.
+  CI_LAB_CACHE_SALT: nx-cloud-ci-3
 
 defaults:
   run:

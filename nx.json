@@ -6,7 +6,6 @@
       "{workspaceRoot}/tsconfig.base.json",
       "{workspaceRoot}/.nvmrc",
       "{workspaceRoot}/pnpm-lock.yaml",
-      "{workspaceRoot}/tools/lab/cache-salt.txt",
       { "env": "CI_LAB_CACHE_SALT" }
     ],
     "default": ["{projectRoot}/**/*", "sharedGlobals"],
@@ -23,7 +22,6 @@
       "inputs": [
         "{projectRoot}/schemas/**/*",
         "{projectRoot}/scripts/codegen.mjs",
-        "{workspaceRoot}/tools/lab/cache-salt.txt",
         { "env": "CI_LAB_CACHE_SALT" }
       ],
       "outputs": ["{projectRoot}/src/generated"]
@@ -46,7 +44,13 @@
     "test": {
       "cache": true,
       "dependsOn": ["^build"],
-      "inputs": ["default", "^production"]
+      "inputs": [
+        "default",
+        "^production",
+        { "env": "CI_LAB_CPU_SECONDS" },
+        { "env": "CI_LAB_SLOW_SECONDS" },
+        { "env": "CI_LAB_MEM_MB" }
+      ]
     },
     "e2e": {
       "cache": true,

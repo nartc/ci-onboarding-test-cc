@@ -34,7 +34,6 @@
         "cache": true,
         "inputs": [
           "{projectRoot}/scripts/secret-echo.mjs",
-          "{workspaceRoot}/tools/lab/cache-salt.txt",
           {
             "env": "CI_LAB_CACHE_SALT"
           }
