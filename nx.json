@@ -5,7 +5,8 @@
     "sharedGlobals": [
       "{workspaceRoot}/tsconfig.base.json",
       "{workspaceRoot}/.nvmrc",
-      "{workspaceRoot}/pnpm-lock.yaml"
+      "{workspaceRoot}/pnpm-lock.yaml",
+      { "env": "CI_LAB_CACHE_SALT" }
     ],
     "default": ["{projectRoot}/**/*", "sharedGlobals"],
     "production": [
@@ -18,7 +19,11 @@
   "targetDefaults": {
     "codegen": {
       "cache": true,
-      "inputs": ["{projectRoot}/schemas/**/*", "{projectRoot}/scripts/codegen.mjs"],
+      "inputs": [
+        "{projectRoot}/schemas/**/*",
+        "{projectRoot}/scripts/codegen.mjs",
+        { "env": "CI_LAB_CACHE_SALT" }
+      ],
       "outputs": ["{projectRoot}/src/generated"]
     },
     "build": {
@@ -39,7 +44,13 @@
     "test": {
       "cache": true,
       "dependsOn": ["^build"],
-      "inputs": ["default", "^production"]
+      "inputs": [
+        "default",
+        "^production",
+        { "env": "CI_LAB_CPU_SECONDS" },
+        { "env": "CI_LAB_SLOW_SECONDS" },
+        { "env": "CI_LAB_MEM_MB" }
+      ]
     },
     "e2e": {
       "cache": true,

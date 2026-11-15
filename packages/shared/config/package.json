@@ -33,7 +33,10 @@
       "secret-echo": {
         "cache": true,
         "inputs": [
-          "{projectRoot}/scripts/secret-echo.mjs"
+          "{projectRoot}/scripts/secret-echo.mjs",
+          {
+            "env": "CI_LAB_CACHE_SALT"
+          }
         ]
       }
     }

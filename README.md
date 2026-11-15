@@ -33,10 +33,10 @@ Heavy tests read their size from the environment:
 
 | Variable              | Default (local / CI) | Effect                                        |
 | --------------------- | -------------------- | --------------------------------------------- |
-| `CI_LAB_CPU_SECONDS`  | 5 / 5                | how long CPU-heavy tests keep every core busy |
+| `CI_LAB_CPU_SECONDS`  | 5 / 30               | how long CPU-heavy tests keep every core busy |
 | `CI_LAB_MEM_MB`       | 2048 / 2048          | how much memory memory-heavy tests hold       |
-| `CI_LAB_SLOW_SECONDS` | 3 / 3                | how long slow tests hash on one core          |
-| `CI_LAB_FLAKE_RATE`   | 0 / 0.05             | chance that each flaky test fails             |
+| `CI_LAB_SLOW_SECONDS` | 3 / 15               | how long slow tests hash on one core          |
+| `CI_LAB_FLAKE_RATE`   | 0 / 0                | chance that each flaky test fails             |
 
 ## How the tasks depend on each other
 
@@ -114,7 +114,18 @@ new timings). Run it locally on any pipeline from the workspace root:
 node tools/lab/ci-audit.mjs <cipeId | latest | latest:main> --graph-dir /tmp/ci-audit-graphs
 ```
 
-`.github/workflows/ci.yml` still runs the same scripts on GitHub Actions, through Nx.
+`.github/workflows/mirror.yml` runs the same jobs and commands as `ci.yaml` on GitHub Actions,
+one runner per job, with the Nx remote cache but no distribution. It exists to compare the two
+on the same work, so keep the two in step. It needs the same `CI_LAB_SECRET` secret and
+`CI_LAB_VAR` variable in the repository's Actions settings.
+
+Each pipeline sets its own `CI_LAB_CACHE_SALT`, which is part of every task's hash, so neither
+restores the other's cache results. To start both cold, bump the number at the end of both
+values. The test knobs (`CI_LAB_CPU_SECONDS`, `CI_LAB_SLOW_SECONDS`, `CI_LAB_MEM_MB`) are inputs
+of every `test` task too, so changing one reruns the tests.
+
+`.github/workflows/ci.yml` is the older baseline: it runs `run-many` for every project on one
+runner.
 
 ## Layout
 

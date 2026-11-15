@@ -1,0 +1,213 @@
+# The Nx Cloud CI pipeline (.nx/pipelines/ci.yaml) on GitHub Actions, without distribution.
+# Same jobs, same needs and conditions, same commands, same environment. Each job runs on one
+# GitHub runner with the Nx remote cache. Keep the two in step, so they can be compared on
+# the same work. ci.yml is the older baseline and stays as it is.
+#
+# Left out on purpose, because they have no GitHub Actions equivalent: workers and their
+# assignment rules and scheduling constraints, launch templates, Ultracache and self-healing.
+#
+# Repository settings (Settings > Secrets and variables > Actions), matching Nx Cloud:
+#   CI_LAB_SECRET        secret    checked by @ci/config:env-check against a SHA-256
+#   CI_LAB_VAR           variable  must be "nx-cloud-ci-lab"
+#   CI_LAB_FLAKE_RATE, CI_LAB_CPU_SECONDS, CI_LAB_MEM_MB   optional variables, same defaults
+name: CI mirror
+
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened]
+    paths-ignore: ['**/*.md']
+  push:
+    branches: [main]
+    paths-ignore: ['**/*.md']
+
+permissions:
+  contents: read
+  # nx-set-shas reads past runs of this workflow to find the last successful main commit.
+  actions: read
+
+env:
+  CI_LAB_REQUIRE_SECRETS: 'true'
+  CI_LAB_SECRET: ${{ secrets.CI_LAB_SECRET }}
+  CI_LAB_VAR: ${{ vars.CI_LAB_VAR || 'unset' }}
+  CI_LAB_FLAKE_RATE: ${{ vars.CI_LAB_FLAKE_RATE || '0' }}
+  CI_LAB_CPU_SECONDS: ${{ vars.CI_LAB_CPU_SECONDS || '30' }}
+  CI_LAB_MEM_MB: ${{ vars.CI_LAB_MEM_MB || '2048' }}
+  CI_LAB_SLOW_SECONDS: '15'
+  # Part of every task's hash. A different value from the Nx Cloud pipeline, so neither restores
+  # the other's cache results. Bump the number here and in ci.yaml to start both cold.
+  CI_LAB_CACHE_SALT: gha-mirror-3
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - &checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - &pnpm
+        uses: pnpm/action-setup@v4
+      - &node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - &install
+        run: pnpm install --frozen-lockfile
+      - &shas
+        uses: nrwl/nx-set-shas@v5
+        with:
+          main-branch-name: main
+      - name: Lint affected projects
+        run: npx nx affected -t lint
+
+  main:
+    name: Typecheck, build, test
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    env:
+      CI_LAB_JOB: main
+    steps:
+      - *checkout
+      - *pnpm
+      - *node
+      - *install
+      - *shas
+      - name: Put node_modules/.bin on PATH
+        run: echo "$GITHUB_WORKSPACE/node_modules/.bin" >> "$GITHUB_PATH"
+
+      - name: Describe the run
+        id: describe
+        # GitHub allows hashFiles() in step env, not in workflow env.
+        env:
+          CI_LAB_LOCK_HASH: ${{ hashFiles('pnpm-lock.yaml') }}
+        run: |
+          count=$(nx show projects --affected --json | node -p 'JSON.parse(require("fs").readFileSync(0, "utf8")).length')
+          echo "affected=$count" >> "$GITHUB_OUTPUT"
+          echo "CI_LAB_AFFECTED=$count" >> "$GITHUB_ENV"
+          echo "${{ format('{0} of {1} at {2}', github.event_name, github.ref_name, github.sha) }}: $count affected projects" >> "$GITHUB_STEP_SUMMARY"
+          echo "lockfile hash: $CI_LAB_LOCK_HASH"
+          echo "cache salt: $CI_LAB_CACHE_SALT"
+          echo "affected base: ${NX_BASE:-unset}, head: ${NX_HEAD:-unset}, HEAD: $(git rev-parse HEAD)"
+          echo "knobs: cpu ${CI_LAB_CPU_SECONDS}s, mem ${CI_LAB_MEM_MB}MB, slow ${CI_LAB_SLOW_SECONDS}s, flake ${CI_LAB_FLAKE_RATE}"
+
+      - name: Print the lab secret from a step
+        shell: sh
+        timeout-minutes: 2
+        env:
+          STEP_SECRET: ${{ secrets.CI_LAB_SECRET }}
+        run: |
+          echo "1. exact value:   $STEP_SECRET"
+          echo "2. inside a word: before${STEP_SECRET}after"
+          echo "3. base64:        $(printf '%s' "$STEP_SECRET" | base64)"
+          echo "4. first half:    $(printf '%s' "$STEP_SECRET" | cut -c1-22)"
+          echo "5. from env:      $CI_LAB_SECRET"
+
+      - name: Check that stored variables reach the runner, and print the secret from a task
+        id: env
+        continue-on-error: true
+        run: nx run-many -t env-check secret-echo -p @ci/config
+
+      - name: Typecheck, build and test ${{ steps.describe.outputs.affected }} affected projects
+        run: nx affected -t typecheck build test
+
+      - name: Explain a failed env-check
+        if: steps.env.outcome == 'failure'
+        run: |
+          echo "env-check failed. Set CI_LAB_SECRET (secret) and CI_LAB_VAR (variable) in the repository settings." | tee -a "$GITHUB_STEP_SUMMARY"
+          exit 1
+
+  e2e:
+    name: E2E suites
+    needs: main
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - *checkout
+      - *pnpm
+      - *node
+      - *install
+      - *shas
+      - name: Run affected e2e suites (each with its continuous serve task)
+        run: npx nx affected -t e2e
+
+  gateway-smoke:
+    name: Gateway from the remote cache
+    needs: main
+    if: needs.main.result == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - *checkout
+      - *pnpm
+      - *node
+      - *install
+      - name: Build the gateway and everything under it (remote cache hits)
+        run: npx nx run @ci/gateway:build
+      - name: Ask the built gateway for its depth
+        id: gateway
+        working-directory: apps/gateway
+        run: |
+          depth=$(node --input-type=module -e "import('./dist/app.js').then((m) => console.log(m.handle('GET', '/depth').body.depth))")
+          echo "depth=$depth" >> "$GITHUB_OUTPUT"
+      - name: Check the gateway depth
+        if: steps.gateway.outputs.depth != '34'
+        run: |
+          echo "Expected @ci/gateway at depth 34, got ${{ steps.gateway.outputs.depth }}"
+          exit 1
+
+  cli-smoke:
+    name: CLI from the remote cache
+    needs: main
+    if: needs.main.result == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: apps/cli
+    steps:
+      - *checkout
+      - *pnpm
+      - *node
+      - *install
+      - name: Build the CLI (remote cache hits from the main job)
+        run: npx nx run @ci/cli:build
+      - name: Run the CLI
+        id: cli
+        run: |
+          echo "depth=$(node dist/main.js depth)" >> "$GITHUB_OUTPUT"
+          node dist/main.js graph | head -n 20
+      - name: Check the graph depth
+        if: steps.cli.outputs.depth != '10'
+        run: |
+          echo "Expected @ci/cli at depth 10, got ${{ steps.cli.outputs.depth }}"
+          exit 1
+
+  report:
+    name: Report
+    needs: [lint, main, e2e, gateway-smoke, cli-smoke]
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Summarize the jobs
+        env:
+          RESULTS: ${{ toJSON(needs) }}
+        run: |
+          {
+            echo "### CI mirror on ${{ github.ref_name }}"
+            echo
+            echo "| Job | Result |"
+            echo "| --- | --- |"
+            node -e 'for (const [k, v] of Object.entries(JSON.parse(process.env.RESULTS))) console.log(`| ${k} | ${v.result} |`)'
+          } >> "$GITHUB_STEP_SUMMARY"
+      - name: Fail when a job failed
+        if: contains(needs.*.result, 'failure')
+        run: exit 1
