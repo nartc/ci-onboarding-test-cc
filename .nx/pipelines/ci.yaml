@@ -9,7 +9,7 @@
 #   CI_LAB_SECRET        secret    checked by @ci/config:env-check against a SHA-256
 #   CI_LAB_VAR           variable  must be "nx-cloud-ci-lab"
 #   CI_LAB_FLAKE_RATE    variable  optional, chance that a flaky test fails (default 0, so comparison runs stay green)
-#   CI_LAB_CPU_SECONDS   variable  optional, how long CPU-heavy tests run (default 5)
+#   CI_LAB_CPU_SECONDS   variable  optional, how long CPU-heavy tests run (default 30)
 #   CI_LAB_MEM_MB        variable  optional, how much memory-heavy tests hold (default 2048)
 #
 # .github/workflows/mirror.yml runs the same jobs and commands on GitHub Actions without
@@ -44,9 +44,9 @@ env:
   CI_LAB_SECRET: ${{ secrets.CI_LAB_SECRET }}
   CI_LAB_VAR: ${{ vars.CI_LAB_VAR || 'unset' }}
   CI_LAB_FLAKE_RATE: ${{ vars.CI_LAB_FLAKE_RATE || '0' }}
-  CI_LAB_CPU_SECONDS: ${{ vars.CI_LAB_CPU_SECONDS || '5' }}
+  CI_LAB_CPU_SECONDS: ${{ vars.CI_LAB_CPU_SECONDS || '30' }}
   CI_LAB_MEM_MB: ${{ vars.CI_LAB_MEM_MB || '2048' }}
-  CI_LAB_SLOW_SECONDS: '3'
+  CI_LAB_SLOW_SECONDS: '15'
   CI_LAB_LOCK_HASH: ${{ hashFiles('pnpm-lock.yaml') }}
   # Part of every task's hash, with tools/lab/cache-salt.txt. Each pipeline sets its own value,
   # so neither restores the other's cache results. Change cache-salt.txt to start both cold.
